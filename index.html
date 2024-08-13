@@ -4,13 +4,17 @@ title: Home
 custom_css_class: home-page
 ---
 
-<div class="profile">
-    <img src="{{ site.url }}/assets/img/your-photo.jpg" alt="Sundaresh Iyer" class="profile-photo" height="150px">
-    <h2>About Me</h2>
-    <p>Hi I'm Sundaresh, and I'm a Data Scientist and a Business Analyst.  My portfolio showcased here focuses on interesting data science projects I've undertaken, with a strong emphasis on business impact. Please visit my Github & LinkedIn pages (or download my Resume) by using the links below!</p>
-</div>
+<section class="about-me">
+    <div class="profile">
+        <img src="{{ site.url }}/assets/img/your-photo.jpg" alt="Sundaresh Iyer" class="profile-photo" height="150px">
+    </div>
+    <div class="about-content">
+        <h2>About Me</h2>
+        <p>Hi, I'm Sundaresh, a Data Scientist and Business Analyst. My portfolio showcases interesting data science projects I've undertaken, with a strong emphasis on business impact. Please visit my Github & LinkedIn pages (or download my Resume) by using the links below!</p>
+    </div>
+</section>
 
-<div class="projects">
+<section class="projects">
     <h2>Projects</h2>
     <div class="project-grid">
         {% for post in site.posts %}
@@ -29,4 +33,4 @@ custom_css_class: home-page
         </div>
         {% endfor %}
     </div>
-</div>
+</section>
