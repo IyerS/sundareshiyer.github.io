@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Enhancing Targeting Accuracy Using ML
-image: "/assets/img/classification-title-img.png"
+image: "/assets/project-images/classification-title-img.png"
 tags: [Customer Targeting, Machine Learning, Classification, Python]
 ---
 
@@ -380,7 +380,7 @@ plt.show()
 This creates the below plot, which shows us that the highest cross-validated classification accuracy (0.904) is when we include seven of our original input variables.  The variable that has been dropped is *total_sales* but from the chart we can see that the difference is negligible.  However, we will continue on with the selected seven!
 
 <br>
-![alt text](/assets/img/log-reg-feature-selection-plot.png "Logistic Regression Feature Selection Plot")
+![alt text](/assets/project-images/log-reg-feature-selection-plot.png "Logistic Regression Feature Selection Plot")
 
 <br>
 ### Model Training <a name="logreg-model-training"></a>
@@ -440,7 +440,7 @@ plt.show()
 ```
 
 <br>
-![alt text](/img/posts/log-reg-confusion-matrix.png "Logistic Regression Confusion Matrix")
+![alt text](/assets/project-images/log-reg-confusion-matrix.png "Logistic Regression Confusion Matrix")
 
 <br>
 The aim is to have a high proportion of observations falling into the top left cell (predicted non-signup and actual non-signup) and the bottom right cell (predicted signup and actual signup).
@@ -570,7 +570,7 @@ plt.show()
 
 ```
 <br>
-![alt text](/img/posts/log-reg-optimal-threshold-plot.png "Logistic Regression Optimal Threshold Plot")
+![alt text](/assets/project-images/log-reg-optimal-threshold-plot.png "Logistic Regression Optimal Threshold Plot")
 
 <br>
 Along the x-axis of the above plot we have the different classification thresholds that were testing.  Along the y-axis we have the performance score for each of our three metrics.  As per the legend, we have Precision as a blue dotted line, Recall as an orange dotted line, and F1-Score as a thick green line.  You can see the interesting "zero-sum" relationship between Precision & Recall *and* you can see that the point where Precision & Recall meet is where F1-Score is maximised.
@@ -758,7 +758,7 @@ plt.show()
 ```
 
 <br>
-![alt text](/img/posts/clf-tree-confusion-matrix.png "Decision Tree Confusion Matrix")
+![alt text](/assets/project-images/clf-tree-confusion-matrix.png "Decision Tree Confusion Matrix")
 
 <br>
 The aim is to have a high proportion of observations falling into the top left cell (predicted non-signup and actual non-signup) and the bottom right cell (predicted signup and actual signup).
@@ -821,7 +821,7 @@ tree = plot_tree(clf,
 That code gives us the below plot:
 
 <br>
-![alt text](/img/posts/clf-tree-nodes-plot.png "Decision Tree Max Depth Plot")
+![alt text](/assets/project-images/clf-tree-nodes-plot.png "Decision Tree Max Depth Plot")
 
 <br>
 This is a very powerful visual, and one that can be shown to stakeholders in the business to ensure they understand exactly what is driving the predictions.
@@ -874,7 +874,7 @@ plt.show()
 That code gives us the below plot - which visualises the results!
 
 <br>
-![alt text](/img/posts/clf-tree-max-depth-plot.png "Decision Tree Max Depth Plot")
+![alt text](/assets/project-images/clf-tree-max-depth-plot.png "Decision Tree Max Depth Plot")
 
 <br>
 In the plot we can see that the *maximum* F1-Score on the test set is found when applying a *max_depth* value of 9 which takes our F1-Score up to 0.925
@@ -1059,7 +1059,7 @@ plt.show()
 ```
 
 <br>
-![alt text](/img/posts/rf-confusion-matrix.png "Random Forest Confusion Matrix")
+![alt text](/assets/project-images/rf-confusion-matrix.png "Random Forest Confusion Matrix")
 
 <br>
 The aim is to have a high proportion of observations falling into the top left cell (predicted non-signup and actual non-signup) and the bottom right cell (predicted signup and actual signup).
@@ -1166,10 +1166,10 @@ plt.show()
 That code gives us the below plots - the first being for *Feature Importance* and the second for *Permutation Importance*!
 
 <br>
-![alt text](/img/posts/rf-classification-feature-importance.png "Random Forest Feature Importance Plot")
+![alt text](/assets/project-images/rf-classification-feature-importance.png "Random Forest Feature Importance Plot")
 <br>
 <br>
-![alt text](/img/posts/rf-classification-permutation-importance.png "Random Forest Permutation Importance Plot")
+![alt text](/assets/project-images/rf-classification-permutation-importance.png "Random Forest Permutation Importance Plot")
 
 <br>
 The overall story from both approaches is very similar, in that by far, the most important or impactful input variables are *distance_from_store* and *transaction_count*
@@ -1451,7 +1451,7 @@ This creates the below plot, which shows us that the highest cross-validated cla
 The variables that have been dropped are *total_items* and *credit score* - we will continue on with the remaining six!
 
 <br>
-![alt text](/img/posts/knn-feature-selection-plot.png "KNN Feature Selection Plot")
+![alt text](/assets/project-images/knn-feature-selection-plot.png "KNN Feature Selection Plot")
 
 <br>
 ### Model Training <a name="knn-model-training"></a>
@@ -1514,7 +1514,7 @@ plt.show()
 ```
 
 <br>
-![alt text](/img/posts/knn-confusion-matrix.png "KNN Confusion Matrix")
+![alt text](/assets/project-images/knn-confusion-matrix.png "KNN Confusion Matrix")
 
 <br>
 The aim is to have a high proportion of observations falling into the top left cell (predicted non-signup and actual non-signup) and the bottom right cell (predicted signup and actual signup).
@@ -1601,7 +1601,7 @@ plt.show()
 That code gives us the below plot - which visualises the results!
 
 <br>
-![alt text](/img/posts/knn-optimal-k-value-plot.png "KNN Optimal k Value Plot")
+![alt text](/assets/project-images/knn-optimal-k-value-plot.png "KNN Optimal k Value Plot")
 
 <br>
 In the plot we can see that the *maximum* F1-Score on the test set is found when applying a k value of 5 - which is exactly what we started with, so nothing needs to change!
