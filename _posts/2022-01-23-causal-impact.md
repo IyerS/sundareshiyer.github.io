@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Quantifying Sales Uplift With Causal Impact Analysis
-image: "/assets/img/causal-impact-title-img.png"
+image: "/assets/project-images/causal-impact-title-img.png"
 tags: [Causal Impact Analysis, Python]
 ---
 
@@ -230,7 +230,7 @@ ci.plot()
 The resulting plot(s) can be seen below.
 
 <br>
-![alt text](/assets/img/causal-impact-results-plot.png "Causal Impact Results Plot")
+![alt text](/assets/project-images/causal-impact-results-plot.png "Causal Impact Results Plot")
 
 <br>
 To explain what we have in the above image...
