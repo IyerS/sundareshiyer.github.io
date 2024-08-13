@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 <div class="profile">
-    <img src="{{ '/assets/img/your-photo.jpg' | relative_url }}" alt="Sundaresh Iyer" class="profile-photo">
+    <img src="{{ site.url }}/assets/img/your-photo.jpg" alt="Sundaresh Iyer" class="profile-photo">
     <h2>About Me</h2>
     <p>A brief introduction about yourself and your expertise in data science.</p>
 </div>
@@ -13,10 +13,10 @@ title: Home
     <div class="project-grid">
         {% for post in site.posts %}
         <div class="project-card">
-            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}">
+            <img src="{{ site.url }}{{ post.image }}" alt="{{ post.title }}">
             <h3>{{ post.title }}</h3>
             <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
-            <a href="{{ post.url | relative_url }}" class="read-more">Read More</a>
+            <a href="{{ site.url }}{{ post.url }}" class="read-more">Read More</a>
         </div>
         {% endfor %}
     </div>
