@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }} - {{ page.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="profile-image">
+                <img src="{{ '/assets/img/your-photo.jpg' | relative_url }}" alt="{{ site.title }}">
+            </div>
+            <div class="title-description">
+                <h1>{{ site.title }}</h1>
+                <h2>Data Science <span>Portfolio</span></h2>
+            </div>
+        </div>
+        <div class="intro-text">
+            <p>{{ site.description }}</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/projects' | relative_url }}">Projects</a>
+        <a href="{{ '/about' | relative_url }}">About</a>
+        <a href="{{ '/assets/resume.pdf' | relative_url }}">Resume</a>
+        <a href="https://linkedin.com/in/{{ site.linkedin_username }}">LinkedIn</a>
+        <a href="https://github.com/{{ site.github_username }}">GitHub</a>
+    </nav>
+
+    <main>
+        {{ content }}
+    </main>
+
+    <footer>
+        <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>
