@@ -179,3 +179,14 @@ nav a:active {
         margin: 5px 0;
     }
 }
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    header p {
+        font-size: 1rem;
+    }
+}
