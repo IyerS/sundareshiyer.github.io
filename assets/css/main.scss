@@ -233,13 +233,12 @@ nav a:active {
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
-        text-align: center;
+        align-items: flex-start;
     }
 
     .title-description {
-        margin-left: 0;
+        margin-left: 30px;
         margin-top: 15px;
-        text-align: center;
     }
 
     .title-description h1 {
