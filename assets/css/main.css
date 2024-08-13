@@ -1,0 +1,53 @@
+/* Header Styles */
+header {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 20px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    object-fit: cover;
+}
+
+.title-description {
+    margin-left: 30px;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.title-description h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+.title-description h2 {
+    font-size: 1.8rem;
+    margin: 5px 0 0;
+    font-weight: 300;
+}
+
+.title-description h2 span {
+    color: #ff6600; /* Orange color for 'Portfolio' */
+}
+
+.intro-text {
+    border-top: 1px solid #ffffff;
+    padding-top: 15px;
+}
+
+.intro-text p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}
