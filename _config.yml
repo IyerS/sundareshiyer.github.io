@@ -6,8 +6,23 @@ baseurl: ""
 # Social links
 linkedin_username: sundaresh-iyer
 github_username: sundareshiyer
-# Add other social media usernames as needed
 
 # Build settings
 markdown: kramdown
 permalink: /:title/
+
+# Include custom directories
+include: ['_pages']
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
