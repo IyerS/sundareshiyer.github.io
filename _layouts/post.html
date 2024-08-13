@@ -13,6 +13,6 @@ layout: default
     </header>
 
     <div class="post-content">
-        {{ content }}
+        {{ content | replace: '](/', ']({{ site.baseurl }}/' }}
     </div>
 </article>
