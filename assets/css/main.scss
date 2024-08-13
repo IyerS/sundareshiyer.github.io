@@ -20,10 +20,39 @@ header h1 {
     margin-bottom: 10px;
 }
 
+/* Navigation Styles */
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
 nav a {
-    margin: 0 10px;
-    color: #333;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    color: #ffffff;
+    background-color: #3498db;
     text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+nav a:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+nav a:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 
 .home-page {
@@ -117,5 +146,19 @@ nav a {
 @media (max-width: 768px) {
     .project-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+* For smaller screens */
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav a {
+        width: 80%;
+        text-align: center;
+        margin: 5px 0;
     }
 }
