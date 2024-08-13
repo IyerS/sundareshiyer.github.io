@@ -39,19 +39,37 @@ nav a {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
+    padding: 20px;
 }
 
 .project-card {
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 5px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .project-card img {
-    width: 50%;
+    width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 5px;
+}
+
+.card-title {
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-excerpt {
+    color: #cccccc;
+    font-size: 0.9em;
+    margin-bottom: 15px;
 }
 
 .read-more {
@@ -73,11 +91,20 @@ nav a {
     margin-top: 20px;
 }
 
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
 .tag {
-    background-color: #f4f4f4;
+    background-color: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+    border: 1px solid #00ff00;
     padding: 5px 10px;
-    border-radius: 3px;
-    margin-right: 5px;
+    border-radius: 20px;
+    font-size: 0.8em;
 }
 
 @media (max-width: 768px) {
