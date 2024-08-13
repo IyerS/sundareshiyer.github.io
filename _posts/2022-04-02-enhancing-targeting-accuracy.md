@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Enhancing Targeting Accuracy Using ML
-image: "/posts/classification-title-img.png"
+image: "/assets/img/classification-title-img.png"
 tags: [Customer Targeting, Machine Learning, Classification, Python]
 ---
 
@@ -380,7 +380,7 @@ plt.show()
 This creates the below plot, which shows us that the highest cross-validated classification accuracy (0.904) is when we include seven of our original input variables.  The variable that has been dropped is *total_sales* but from the chart we can see that the difference is negligible.  However, we will continue on with the selected seven!
 
 <br>
-![alt text](/img/posts/log-reg-feature-selection-plot.png "Logistic Regression Feature Selection Plot")
+![alt text](/assets/img/log-reg-feature-selection-plot.png "Logistic Regression Feature Selection Plot")
 
 <br>
 ### Model Training <a name="logreg-model-training"></a>
