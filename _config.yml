@@ -1,1 +1,13 @@
+title: "Sundaresh Iyer"
+description: "Data Science Portfolio"
+url: "https://sundareshiyer.github.io"
+baseurl: ""
 
+# Social links
+linkedin_username: sundaresh-iyer
+github_username: sundareshiyer
+# Add other social media usernames as needed
+
+# Build settings
+markdown: kramdown
+permalink: /:title/
