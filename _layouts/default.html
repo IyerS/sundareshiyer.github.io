@@ -18,12 +18,9 @@
             </div>
         </div>
     </header>
-
     <nav>
-        <a href="{{ '/' | relative_url }}">Home</a>
-        <a href="{{ '/projects' | relative_url }}">Projects</a>
-        <a href="{{ '/about' | relative_url }}">About</a>
-        <a href="{{ '/assets/resume.pdf' | relative_url }}">Resume</a>
+        <a href="{{ site.baseurl }}/">Home</a>
+        <a href="{{ site.baseurl }}/assets/resume.pdf">Resume</a>
         <a href="https://linkedin.com/in/{{ site.linkedin_username }}">LinkedIn</a>
         <a href="https://github.com/{{ site.github_username }}">GitHub</a>
     </nav>
