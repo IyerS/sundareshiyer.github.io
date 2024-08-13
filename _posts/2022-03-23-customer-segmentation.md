@@ -1,7 +1,7 @@
 ---
 layout: post
 title: The "You Are What You Eat" Customer Segmentation
-image: "/assets/img/clustering-title-img.png"
+image: "/assets/project-images/clustering-title-img.png"
 tags: [Customer Segmentation, Machine Learning, Clustering, Python]
 ---
 
@@ -263,7 +263,7 @@ plt.show()
 That code gives us the below plot - which visualises our results!
 
 <br>
-![alt text](/assets/img/kmeans-optimal-k-value-plot.png "K-Means Optimal k Value Plot")
+![alt text](/assets/project-images/kmeans-optimal-k-value-plot.png "K-Means Optimal k Value Plot")
 
 <br>
 Based upon the shape of the above plot - there does appear to be an elbow at k = 3.  Prior to that we see a significant drop in the WCSS score, but following the decreases are much smaller, meaning this could be a point that suggests adding *more clusters* will provide little extra benefit in terms of separating our data.  A small number of clusters can be beneficial when considering how easy it is for the business to focus on, and understand, each - so we will continue on, and fit our k-means clustering solution with k = 3.
