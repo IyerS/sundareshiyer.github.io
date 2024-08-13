@@ -21,6 +21,7 @@ header h1 {
 }
 
 /* Navigation Styles */
+
 nav {
     display: flex;
     justify-content: center;
@@ -149,7 +150,7 @@ nav a:active {
     }
 }
 
-* For smaller screens */
+/* For smaller screens */
 @media (max-width: 600px) {
     nav {
         flex-direction: column;
