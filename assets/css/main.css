@@ -48,7 +48,7 @@ nav a {
 }
 
 .project-card img {
-    width: 100%;
+    width: 50%;
     height: 200px;
     object-fit: cover;
     border-radius: 5px;
@@ -65,7 +65,7 @@ nav a {
 }
 
 .post-content img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
 }
 
