@@ -14,9 +14,16 @@ title: Home
         {% for post in site.posts %}
         <div class="project-card">
             <img src="{{ site.url }}{{ post.image }}" alt="{{ post.title }}">
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
-            <a href="{{ site.url }}{{ post.url }}" class="read-more">Read More</a>
+            <div class="card-content">
+                <div class="tags">
+                    {% for tag in post.tags %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                <h3 class="card-title">{{ post.title }}</h3>
+                <p class="card-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                <a href="{{ site.url }}{{ post.url }}" class="read-more">Read More</a>
+            </div>
         </div>
         {% endfor %}
     </div>
