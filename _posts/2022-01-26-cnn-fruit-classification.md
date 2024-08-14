@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Fruit Classification Using A Convolutional Neural Network
-image: "/posts/cnn-fruit-classification-title-img.png"
+image: "/assets/img/project-images/cnn-fruit-classification-title-img.png"
 tags: [Deep Learning, CNN, Data Science, Computer Vision, Python]
 ---
 
@@ -104,7 +104,7 @@ We randomly split the images for each fruit into training (60%), validation (30%
 Examples of four images of each fruit class can be seen in the image below:
 
 <br>
-![alt text](/img/posts/cnn-image-examples.png "CNN Fruit Classification Samples")
+![alt text](/assets/img/project-images/cnn-image-examples.png "CNN Fruit Classification Samples")
 
 <br>
 For ease of use in Keras, our folder structure first splits into training, validation, and test directories, and within each of those is split again into directories based upon the six fruit classes.
@@ -331,7 +331,7 @@ max(history.history['val_accuracy'])
 The below image contains two plots, the first showing the epoch by epoch **Loss** for both the training set (blue) and the validation set (orange) & the second show the epoch by epoch **Classification Accuracy** again, for both the training set (blue) and the validation set (orange).
 
 <br>
-![alt text](/img/posts/cnn-baseline-accuracy-plot.png "CNN Baseline Accuracy Plot")
+![alt text](/assets/img/project-images/cnn-baseline-accuracy-plot.png "CNN Baseline Accuracy Plot")
 
 <br>
 There are two key learnings from above plots. The first is that, with this baseline architecture & the parameters we set for training, we are reaching our best performance in around 10-20 epochs - after that, not much improvement is seen.  This isn't to say that 50 epochs is wrong, especially if we change our network - but is interesting to note at this point.
@@ -590,7 +590,7 @@ With the baseline network we saw very strong overfitting in action - it will be 
 The below image shows the same two plots we analysed for the updated network, the first showing the epoch by epoch **Loss** for both the training set (blue) and the validation set (orange) & the second show the epoch by epoch **Classification Accuracy** again, for both the training set (blue) and the validation set (orange).
 
 <br>
-![alt text](/img/posts/cnn-dropout-accuracy-plot.png "CNN Dropout Accuracy Plot")
+![alt text](/assets/img/project-images/cnn-dropout-accuracy-plot.png "CNN Dropout Accuracy Plot")
 
 <br>
 Firstly, we can see a peak Classification Accuracy on the validation set of around **89%** which is higher than the **83%** we saw for the baseline network.
@@ -729,7 +729,7 @@ With the baseline network we saw very strong overfitting in action - it will be 
 The below image shows the same two plots we analysed for the updated network, the first showing the epoch by epoch **Loss** for both the training set (blue) and the validation set (orange) & the second show the epoch by epoch **Classification Accuracy** again, for both the training set (blue) and the validation set (orange).
 
 <br>
-![alt text](/img/posts/cnn-augmentation-accuracy-plot.png "CNN Dropout Accuracy Plot")
+![alt text](/assets/img/project-images/cnn-augmentation-accuracy-plot.png "CNN Dropout Accuracy Plot")
 
 <br>
 Firstly, we can see a peak Classification Accuracy on the validation set of around **97%** which is higher than the **83%** we saw for the baseline network, and higher than the **89%** we saw for the network with Dropout added.
@@ -1048,7 +1048,7 @@ As we again saved our training process to the *history* object, we can now analy
 The below image shows the same two plots we analysed for the tuned network, the first showing the epoch by epoch **Loss** for both the training set (blue) and the validation set (orange) & the second show the epoch by epoch **Classification Accuracy** again, for both the training set (blue) and the validation set (orange).
 
 <br>
-![alt text](/img/posts/cnn-tuned-accuracy-plot.png "CNN Tuned Accuracy Plot")
+![alt text](/assets/img/project-images/cnn-tuned-accuracy-plot.png "CNN Tuned Accuracy Plot")
 
 <br>
 Firstly, we can see a peak Classification Accuracy on the validation set of around **98%** which is the highest we have seen from all networks so far, just higher than the 97% we saw for the addition of Image Augmentation to our baseline network.
@@ -1118,7 +1118,7 @@ The hope is, that the features which have already been learned will be good enou
 For our Fruit Classification task we will be utilising a famous network known as **VGG16**.  This was designed back in 2014, but even by todays standards is a fairly heft network.  It was trained on the famous *ImageNet* dataset, with over a million images across one thousand different image classes. Everything from goldfish to cauliflowers to bottles of wine, to scuba divers!
 
 <br>
-![alt text](/img/posts/vgg16-architecture.png "VGG16 Architecture")
+![alt text](/assets/img/project-images/vgg16-architecture.png "VGG16 Architecture")
 
 <br>
 The VGG16 network won the 2014 ImageNet competition, meaning that it predicted more accurately than any other model on that set of images (although this has now been surpassed).
@@ -1287,7 +1287,7 @@ As we again saved our training process to the *history* object, we can now analy
 The below image shows the same two plots we analysed for the tuned network, the first showing the epoch by epoch **Loss** for both the training set (blue) and the validation set (orange) & the second show the epoch by epoch **Classification Accuracy** again, for both the training set (blue) and the validation set (orange).
 
 <br>
-![alt text](/img/posts/cnn-vgg16-accuracy-plot.png "VGG16 Accuracy Plot")
+![alt text](/assets/img/project-images/cnn-vgg16-accuracy-plot.png "VGG16 Accuracy Plot")
 
 <br>
 Firstly, we can see a peak Classification Accuracy on the validation set of around **98%** which is equal to the highest we have seen from all networks so far, but what is impressive is that it achieved this in only 10 epochs!
