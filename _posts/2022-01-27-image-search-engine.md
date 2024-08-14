@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Creating An Image Search Engine Using Deep Learning
-image: "/posts/dl-search-engine-title-img.png"
+image: "assets/img/project-images/dl-search-engine-title-img.png"
 tags: [Deep Learning, CNN, Data Science, Computer Vision, Python]
 ---
 
@@ -85,7 +85,7 @@ For our proof on concept we are working in only one section of the client's prod
 We have been provided with images of the 300 shoes that are currently available to purchase.  A random selection of 18 of these can be seen in the image below.
 
 <br>
-![alt text](/img/posts/search-engine-image-examples.png "Deep Learning Search Engine - Image Examples")
+![alt text](/assets/img/project-images/search-engine-image-examples.png "Deep Learning Search Engine - Image Examples")
 
 <br>
 We will need to extract & capture the "features" of this base image set, and compare them to the "features" found in any given search image.  The images with the closest match will be returned to the customer!
@@ -107,7 +107,7 @@ The hope is, that the features which have already been learned will be good enou
 For our Fruit Classification task we will be utilising a famous network known as **VGG16**.  This was designed back in 2014, but even by todays standards is a fairly heft network.  It was trained on the famous *ImageNet* dataset, with over a million images across one thousand different image classes. Everything from goldfish to cauliflowers to bottles of wine, to scuba divers!
 
 <br>
-![alt text](/img/posts/vgg16-architecture.png "VGG16 Architecture")
+![alt text](/assets/img/project-images/vgg16-architecture.png "VGG16 Architecture")
 
 <br>
 The VGG16 network won the 2014 ImageNet competition, meaning that it predicted more accurately than any other model on that set of images (although this has now been surpassed).
@@ -347,7 +347,7 @@ search_image = 'search_image_02.jpg'
 The search image we are going to use for illustration here is below:
 
 <br>
-![alt text](/img/posts/search-engine-search1.jpg "VGG16 Architecture")
+![alt text](/assets/img/project-images/search-engine-search1.jpg "VGG16 Architecture")
 
 <br>
 #### Preprocess & Featurise Search Image
@@ -429,11 +429,11 @@ The search image, and search results are below:
 
 **Search Image**
 <br>
-![alt text](/img/posts/search-engine-search1.jpg "Search 1: Search Image")
+![alt text](/assets/img/project-images/search-engine-search1.jpg "Search 1: Search Image")
 <br>
 <br>
 **Search Results**
-![alt text](/img/posts/search-engine-search1-results.png "Search 1: Search Results")
+![alt text](/assets/img/project-images/search-engine-search1-results.png "Search 1: Search Results")
 
 <br>
 Very impressive results!  From the 300 base-set images, these are the eight that have been deemed to be *most similar*!
@@ -443,11 +443,11 @@ Let's take a look at a second search image...
 
 **Search Image**
 <br>
-![alt text](/img/posts/search-engine-search2.jpg "Search 2: Search Image")
+![alt text](/assets/img/project-images/search-engine-search2.jpg "Search 2: Search Image")
 <br>
 <br>
 **Search Results**
-![alt text](/img/posts/search-engine-search2-results.png "Search 2: Search Results")
+![alt text](/assets/img/project-images/search-engine-search2-results.png "Search 2: Search Results")
 
 <br>
 Again, these have come out really well - the features from VGG16 combined with Cosine Similarity have done a great job!
