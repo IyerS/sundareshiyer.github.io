@@ -1,0 +1,27 @@
+---
+layout: default
+title: Home
+---
+<div class="container">
+    <h1>Welcome to My Portfolio</h1>
+    <section class="projects">
+        <h2>Recent Projects</h2>
+        <div class="project-grid">
+            {% for post in site.posts limit:6 %}
+            <div class="project-card">
+                <img src="{{ site.url }}{{ post.image }}" alt="{{ post.title }}">
+                <div class="card-content">
+                    <h3 class="card-title">{{ post.title }}</h3>
+                    <div class="tags">
+                        {% for tag in post.tags %}
+                        <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                    <a href="{{ site.url }}{{ post.url }}" class="read-more">Read More</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
