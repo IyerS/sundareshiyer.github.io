@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Pricing Science Examples from time at FedEx Express
-image: "/assets/img/project-images/ab-testing-title-img.png"
+image: "/assets/img/project-images/FedEx-Logo.png"
 tags: [predictive, clustering, Python]
 ---
 
