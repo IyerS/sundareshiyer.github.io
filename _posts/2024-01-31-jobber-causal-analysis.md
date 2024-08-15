@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Causal Analysis of Influencer Marketing on Jobber Summit Sign-ups
-image: "/assets/img/project-images/logo_1681402541.473742.png"
+image: "/assets/img/project-images/jobber-logo.png"
 tags: [Causal Impact, Python]
 ---
 
