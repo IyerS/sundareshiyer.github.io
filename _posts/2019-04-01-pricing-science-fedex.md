@@ -3,9 +3,9 @@ layout: post
 title: Pricing Science Examples from time at FedEx Express
 image: "/assets/img/project-images/FedEx-Logo.png"
 tags: [predictive, clustering, Python]
+excerpt: This document outlines the three pricing science problem statements that I worked on along with the Pricing Science department at FedEx Express.
 ---
 
-# Pricing Science Examples for FedEx Express
 
 This document outlines the three pricing science problem statements that I worked on along with the Pricing Science department at FedEx Express. For each case, I will provide a detailed problem statement, description of the data used (representative and cleaned), methodology, and code snippets (representative) to implement the solution.
 
