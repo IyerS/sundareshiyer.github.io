@@ -1,6 +1,6 @@
 # Pricing Science Examples for FedEx Express
 
-This document outlines three key pricing science problem statements that the Pricing Science department at FedEx Express might work on. For each example, we'll provide a detailed problem statement, description of the data used, methodology, and code snippets to implement the solution.
+This document outlines the three pricing science problem statements that I worked on along with the Pricing Science department at FedEx Express. For each case, I will provide a detailed problem statement, description of the data used (representative and cleaned), methodology, and code snippets (representative) to implement the solution.
 
 ## Table of Contents
 
