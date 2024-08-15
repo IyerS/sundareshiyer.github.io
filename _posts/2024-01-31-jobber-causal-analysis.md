@@ -1,3 +1,8 @@
+---
+
+img: assets/img/project-images/logo_1681402541.473742.png
+---
+
 # Causal Analysis of Influencer Marketing on Jobber Summit Sign-ups
 
 ## Table of Contents
