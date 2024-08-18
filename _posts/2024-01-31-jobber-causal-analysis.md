@@ -3,6 +3,7 @@ layout: post
 title: Causal Analysis of Influencer Marketing on Jobber Summit Sign-ups
 image: "/assets/img/project-images/jobber-logo.png"
 tags: [Causal Impact, Python]
+excerpt: As a marketing analyst at Jobber, I conducted a pre-post analysis to evaluate the causal impact of influencer marketing spend on Facebook and Instagram on sign-ups for Jobber Summit. This analysis aimed to quantify the effectiveness of this marketing channel and inform future marketing strategies.
 ---
 
 
