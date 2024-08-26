@@ -3,6 +3,8 @@ layout: post
 title: Predicting Customer Loyalty Using ML
 image: "/assets/img/project-images/regression-title-img.png"
 tags: [Customer Loyalty, Machine Learning, Regression, Python]
+category: skill
+date: 2022-10-04
 ---
 
 Our client, a grocery retailer, hired a market research consultancy to append market level customer loyalty information to the database.  However, only around 50% of the client's customer base could be tagged, thus the other half did not have this information present.  Let's use ML to solve this!
