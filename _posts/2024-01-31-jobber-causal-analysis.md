@@ -127,10 +127,10 @@ The influencer campaign resulted in a increase in signups, with a 40% rise durin
 
 1. **Influencer Selection**: The varied performance of the influencers highlighted the importance of selecting individuals whose audience closely aligns with the campaign goals. Influencer D, despite lower reach, delivered the best conversion rate, making them a valuable asset for future campaigns.
   
-2. **Concurrent Campaigns**: Adjusting for other campaigns revealed that the influencer campaign was a major driver of signups, but care must be taken in future analyses to properly attribute results.
+2. **Concurrent Campaigns**: Adjusting for other campaigns revealed that the influencer campaign was a driver of signups, but the inference of the post campaign effect was not as straight forward as during the campaign
 
 3. **Data-Driven Adjustments**: Continuous monitoring and adjustments during the campaign could have optimized results further, especially by shifting focus to higher-performing influencers.
 
 ## Conclusion
 
-This case study demonstrated the effectiveness of a well-executed influencer campaign in driving signups for the Jobber Summit, even amid other concurrent marketing efforts. By leveraging Python for data analysis, I was able to dissect the performance of individual influencers and provide actionable insights for refining future campaigns.
+This case study demonstrated the effectiveness of a well-executed influencer campaign in driving signups for the Jobber Summit, even amid other concurrent marketing efforts. But it was far less obvious for any lingering effects of the campaign.
