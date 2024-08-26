@@ -103,7 +103,7 @@ print(f'Average Signups (Pre-Campaign): {avg_signups_pre:.2f}')
 print(f'Average Signups (During Campaign): {avg_signups_during:.2f}')
 print(f'Average Signups (Post-Campaign): {avg_signups_post:.2f}')
 print(f'Z-Statistic: {z_stat:.2f}, P-Value: {p_val:.4f}')
-```python
+```
 
 ## Results (only for illustration)
 
