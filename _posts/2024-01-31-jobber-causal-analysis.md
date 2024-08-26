@@ -5,6 +5,7 @@ image: "/assets/img/project-images/jobber-logo.png"
 tags: [Causal Impact, Python]
 category: experience
 date: 2024-01-18
+excerpt: This post details a case study involving analysing the impact of a influencer campaign on Sign-ups for Jobber Summit
 ---
 
 
