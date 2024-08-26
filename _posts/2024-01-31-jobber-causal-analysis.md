@@ -51,7 +51,7 @@ To isolate the influencer campaign’s impact, I used a combination of methods:
 
 Four influencers were chosen for this campaign, each with different audience demographics and engagement levels. I analyzed the performance of each influencer to understand their unique contributions to the campaign’s success.
 
-\`\`\`python
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -61,7 +61,8 @@ from statsmodels.stats.weightstats import ztest
 data = pd.read_csv('jobber_summit_signups.csv')
 
 # Filter out data from other campaigns
-data = data[data['channel'] == 'influencer']
+data = data[(data['channel'] == 'influencer') & 
+            ((data['medium'] == 'facebook') | (data['medium'] == 'instagram'))]
 
 # Analyze influencer-specific performance
 influencer_data = data.groupby('influencer').agg({
@@ -70,10 +71,18 @@ influencer_data = data.groupby('influencer').agg({
     'signups': 'sum'
 }).reset_index()
 
-# Calculate the overall campaign impact
-pre_campaign = data[data['period'] == 'pre_campaign']
-during_campaign = data[data['period'] == 'during_campaign']
-post_campaign = data[data['period'] == 'post_campaign']
+# Convert the 'date' column to datetime if it's not already
+data['date'] = pd.to_datetime(data['date'])
+
+# Define the date ranges for each period
+pre_campaign_dates = (data['date'] >= '2023-11-01') & (data['date'] <= '2023-11-14')
+campaign_dates = (data['date'] >= '2023-11-15') & (data['date'] <= '2023-11-30')
+post_campaign_dates = (data['date'] >= '2023-12-01') & (data['date'] <= '2023-12-14')
+
+# Filter the data for each period
+pre_campaign = data[pre_campaign_dates]
+during_campaign = data[campaign_dates]
+post_campaign = data[post_campaign_dates]
 
 avg_signups_pre = pre_campaign['signups'].mean()
 avg_signups_during = during_campaign['signups'].mean()
@@ -94,16 +103,16 @@ print(f'Average Signups (Pre-Campaign): {avg_signups_pre:.2f}')
 print(f'Average Signups (During Campaign): {avg_signups_during:.2f}')
 print(f'Average Signups (Post-Campaign): {avg_signups_post:.2f}')
 print(f'Z-Statistic: {z_stat:.2f}, P-Value: {p_val:.4f}')
-\`\`\`
+```python
 
-## Results
+## Results (only for illustration)
 
 - **Average Signups**:
   - **Pre-Campaign**: 50 signups/day
-  - **During Campaign**: 120 signups/day
-  - **Post-Campaign**: 80 signups/day
+  - **During Campaign**: 70 signups/day
+  - **Post-Campaign**: 55 signups/day
 
-The influencer campaign resulted in a significant increase in signups, with a 140% rise during the campaign period compared to pre-campaign levels. Even after the campaign ended, signups remained 60% higher.
+The influencer campaign resulted in a increase in signups, with a 40% rise during the campaign period compared to pre-campaign levels. Even after the campaign ended, signups remained 10% higher.
 
 - **Influencer Performance**:
   - **Influencer A**: Generated the highest reach but moderate signups.
@@ -112,7 +121,7 @@ The influencer campaign resulted in a significant increase in signups, with a 14
   - **Influencer D**: Had the least reach but the highest conversion rate, driving a significant number of signups per engagement.
 
 - **Statistical Significance**:  
-  The Z-test confirmed that the difference in signup rates before and after the campaign was statistically significant.
+  The Z-test did not confirm that the difference in signup rates before and after the campaign was statistically significant.
 
 ## Insights and Recommendations
 
@@ -125,5 +134,3 @@ The influencer campaign resulted in a significant increase in signups, with a 14
 ## Conclusion
 
 This case study demonstrated the effectiveness of a well-executed influencer campaign in driving signups for the Jobber Summit, even amid other concurrent marketing efforts. By leveraging Python for data analysis, I was able to dissect the performance of individual influencers and provide actionable insights for refining future campaigns.
-"""
-
