@@ -1,9 +1,29 @@
+---
+layout: post
+title: Marketing Analytics Reporting
+image: "/assets/img/project-images/mode-to-tableau.png"
+tags: [BI, SQL, Mode, Tableau, Data Pipeline]
+category: experience
+date: 2024-03-21
+excerpt: This post details the work I did involving the migration of marketing analytics reporting from Mode to Tableau
+---
 
-# Migrating from Mode to Tableau: Addressing Discrepancies and Inefficiencies in BI Reporting
+## Table of Contents
+1. [Migrating from Mode to Tableau](#migrating-from-mode-to-tableau)
+2. [The Challenge](#the-challenge)
+3. [Data Collection](#data-collection)
+5. [The Solution](#the-solution)
+6. [The Migration Process](#the-migration-process)
+7. [The Impact](#the-impact)
 
-In a fast-paced business environment, having accurate and efficient reporting tools is essential for making informed decisions. During my time at [Your Company], I led a critical project that involved migrating our marketing reporting from Mode to Tableau. This migration was driven by the realization that Mode, while initially effective for our needs, was increasingly revealing its limitations as a business intelligence (BI) platform.
 
-## The Challenge: Discrepancies and Inefficiencies with Mode
+## Migrating from Mode to Tableau
+# Addressing Discrepancies and Inefficiencies in BI Reporting
+
+In a fast-paced business environment, having accurate and efficient reporting tools is essential for making informed decisions. During my time at Jobber, I led a critical project that involved migrating our marketing reporting from Mode to Tableau. This migration was driven by the realization that Mode, while initially effective for our needs, was increasingly revealing its limitations as a business intelligence (BI) platform.
+
+## The Challenge
+# Discrepancies and Inefficiencies with Mode
 
 Mode was originally adopted for its user-friendly interface and ease of use. However, as our data needs grew, several significant issues became apparent:
 
@@ -13,7 +33,8 @@ Mode was originally adopted for its user-friendly interface and ease of use. How
 
 3. **Limited Scalability:** With Mode not being a true BI platform, it lacked the advanced features and scalability that our growing company required. The platform struggled with more complex queries and visualizations, which limited our ability to extract actionable insights from our data.
 
-## The Solution: Migrating to Tableau
+## The Solution
+# Migrating to Tableau
 
 Recognizing the need for a more robust BI solution, I led the migration to Tableau. This decision was based on several critical factors:
 
