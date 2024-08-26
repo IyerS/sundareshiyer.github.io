@@ -340,6 +340,16 @@ nav a:active {
     background-color: #f6f8fa;
 }
 
+.skill-showcase, .work-experience {
+  margin-bottom: 40px;
+}
+
+.skill-showcase h2, .work-experience h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #132b50;
+}
+
 /* Images */
 .post-content img {
     max-width: 100%;
