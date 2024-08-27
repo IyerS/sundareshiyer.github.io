@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Pre - Post Analysis of Influencer Marketing on Jobber Summit Sign-ups
-image: "/assets/img/project-images/jobber-logo.png"
+image: "/assets/img/project-images/inf-mkt.png"
 tags: [Causal Impact, Python]
 category: experience
 date: 2024-01-18
