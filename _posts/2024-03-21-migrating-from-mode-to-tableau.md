@@ -6,6 +6,7 @@ tags: [BI, SQL, Mode, Tableau, Data Pipeline]
 category: experience
 date: 2024-03-21
 excerpt: This post details the work I did involving the migration of marketing analytics reporting from Mode to Tableau
+company: Jobber
 ---
 
 ## Table of Contents
