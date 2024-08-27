@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Adapting and enhancing marketing attribution
-image: "/assets/img/project-images/mkt-attr.jpeg"
+image: "/assets/img/project-images/mkt-attr.jpg"
 tags: [SQL, Python, Markov-chain, multi-touch]
 category: experience
 date: 2023-12-01
