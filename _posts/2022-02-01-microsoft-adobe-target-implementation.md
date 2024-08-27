@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Implementing Adobe Target on Microsoft's AEM Platform: A Project Management Case Study
+title: Implementing Adobe Target on Microsoft's AEM Platform - A Project Management Case Study
 image: "/assets/img/project-images/adobe-target-implement.png"
 tags: [Pricing Recommendations, Customer Clustering, Machine Learning, Python]
 category: experience
