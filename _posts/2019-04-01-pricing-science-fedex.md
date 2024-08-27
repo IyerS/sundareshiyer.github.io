@@ -5,6 +5,7 @@ image: "/assets/img/project-images/FedEx-Logo.png"
 tags: [Pricing Recommendations, Customer Clustering, Machine Learning, Python]
 category: experience
 date: 2019-04-01
+company: FedEx
 excerpt: This document outlines the three pricing science problem statements that I worked on along with the Pricing Science department at FedEx Express.
 ---
 
