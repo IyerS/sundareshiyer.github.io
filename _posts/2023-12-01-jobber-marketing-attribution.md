@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Adapting and enhancing marketing attribution
+title: Maintaining and Enhancing the Conversion attribution for Jobber across Performance and Brand Marketing Channels
 image: "/assets/img/project-images/mkt-attr.jpg"
 tags: [SQL, Python, Markov-chain, multi-touch]
 category: experience
@@ -9,26 +9,26 @@ company: Jobber
 excerpt: This document outlines my role in maintaining the current marketing attribution logic and enhancing it to involve multi-touch attribution in marketing spend decision making.
 ---
 
-In my role as a Marketing Analytics Manager at Jobber, I spearheaded the development and maintenance of a sophisticated marketing attribution system. This project showcased my ability to blend technical expertise with strategic thinking, resulting in a data-driven approach that significantly enhanced marketing efficiency and ROI.
+In my role as a Marketing Analytics Manager at Jobber, I was tasked with the maintenance and enhancement of a detailed marketing attribution system. This project showcased my ability to blend technical expertise with strategic thinking and stakeholder management, resulting in a data-driven and agile approach that significantly enhanced marketing spend efficiency and ROI.
 
 ## The Challenge: Evolving Attribution in a Dynamic Marketing Landscape
 
-Jobber, a fast-growing SaaS company, needed a robust attribution system that could accurately capture the complex customer journey across multiple touchpoints and channels. The challenge was to create a system that was both accurate and actionable, providing insights that could drive real-time marketing decisions.
+Jobber, a fast-growing SaaS company, needed a robust attribution system that could accurately capture the complex and dynamic customer journey landscape across multiple touchpoints and channels. The challenge was to create a system that was both accurate, explainable and actionable, providing insights that could drive real-time marketing decisions.
 
 ## Key Responsibilities and Achievements
 
-### 1. Hybrid First-Touch Attribution Model Development
+### 1. Hybrid First-Touch Attribution Model Maintainance and Enhancements
 
 - Maintaining and updating a hybrid first-touch attribution model that went beyond simple first-click logic and involved weekly updates of new channels, redistributed channel hierarchy and stakeholder communications and education.
-- Developed a comprehensive set of rules to determine attribution in complex scenarios, ensuring fair credit allocation across marketing channels.
-- Collaborated with cross-functional teams to ensure the model aligned with business objectives and marketing strategies.
+- Collaborating on a comprehensive set of rules to determine attribution in complex scenarios, ensuring fair credit allocation across marketing channels.
+- Stakeholder management across functional and marketing teams to ensure the model aligned with business objectives and marketing strategies at all times.
 
 
 ### 2. SQL Code Maintenance and Optimization
 
-- Maintained and regularly updated SQL code responsible for tracking marketing spend across campaigns and channels.
+- Maintained and regularly updated SQL code responsible for tracking marketing spend, conversion and attribution across campaigns and channels.
 - Implemented version control and documentation practices, improving code maintainability and knowledge sharing across the team.
-- Enhanced control by involving and moving the ownership of code to the engineering team while logical control still remained with analytics
+- Pushed for modernization of data principles by moving the code into the github data codebase and handing the ownership of code to the engineering team while maintaining logical control and ability to create a pull request.
 
 
 ### 3. Markov Chain Multi-Channel Attribution Implementation
@@ -42,11 +42,11 @@ Identified $1.2 million in potential marketing spend reallocation opportunities 
 
 ### 4. Markov Chain Multi-Channel Attribution Implementation
 
-- Led the initiative to implement a Markov Chain multi-channel attribution model as a complementary analysis tool.
+- Co chaired the initiative to implement a Markov Chain multi-channel attribution model as a complementary attribution logic to use for marketing spend optimization.
 - Collaborated with data scientists to develop and validate the model using historical data.
 - Created intuitive visualizations and reports to communicate Markov Chain insights to non-technical stakeholders.
 
-Here's a simplified Python implementation of the Markov Chain attribution model (this is a sampled code with a simplified data source showing user_id and comma seperated channels until subscription)
+Here's a simplified Python implementation of the Markov Chain attribution model that does not show the initial data preperation and eventual productization of the data pipeline by data engineering to a modeling file
 
 ```python
 import pandas as pd
