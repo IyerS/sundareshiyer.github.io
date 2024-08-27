@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Pre - Post Analysis of Influencer Marketing on Jobber Summit Sign-ups
+title: Analysing the effect of Influencer Marketing on Jobber Summit Sign-ups
 image: "/assets/img/project-images/inf-mkt.png"
 tags: [Causal Impact, Python]
 category: experience
 date: 2024-01-18
 company: Jobber
-excerpt: This post details a case study involving analysing the impact of a influencer campaign on Sign-ups for Jobber Summit
+excerpt: Here I look at the impact of engaging influencers with a specific message on the Sign-ups for Jobber Summit
 ---
 
 
