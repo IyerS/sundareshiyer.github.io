@@ -160,7 +160,7 @@ nav a:active {
 .card-title {
     color: white;
     font-size: 1.5em;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-weight: bold;
 }
 
@@ -171,7 +171,17 @@ nav a:active {
 .card-excerpt {
     color: #cccccc;
     font-size: 0.9em;
+    margin-top: 10px;
     margin-bottom: 15px;
+}
+
+.card-company {
+    color: #cccccc;
+    font-size: 1.1em;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-weight: normal;
+    font-style: italic;
 }
 
 .read-more {
