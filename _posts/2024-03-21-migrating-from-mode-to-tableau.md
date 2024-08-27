@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Marketing Analytics Reporting
+title: Leading the Migration of Marketing Analytics Reporting from Mode to Tableau
 image: "/assets/img/project-images/mode-to-tableau.png"
 tags: [BI, SQL, Mode, Tableau, Data Pipeline]
 category: experience
