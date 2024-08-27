@@ -1,4 +1,13 @@
-# Leveraging Analytics to Drive FedEx's Small Business Grant Contest Success Across Europe and Asia
+---
+layout: post
+title: Leveraging Analytics to Drive FedEx's Small Business Grant Contest Success Across Europe and Asia
+image: "/assets/img/project-images/smb-grant.png"
+tags: [Adobe Analytics, Audience Management, A/B Testing, KPI Rationalization, Campaign Analytics]
+category: experience
+date: 2019-08-01
+company: FedEx
+excerpt: This post outlines the work I did as a part of the FedEx brand marketing team towards the Small business grant contest.
+---
 
 In my role as the Marketing Analytics Manager at FedEx from 2017 to 2019, I spearheaded the end-to-end reporting and analytics for the Small Business Grant Contest across multiple countries in Europe and Asia. This project showcased my ability to leverage data-driven insights to optimize marketing strategies, improve campaign performance, and drive meaningful results for a global initiative.
 
@@ -24,7 +33,7 @@ The FedEx Small Business Grant Contest aimed to support and celebrate small busi
 - Provided real-time insights to the marketing team, allowing for agile decision-making and strategy adjustments.
 - Identified key trends and patterns in user engagement, informing ongoing optimizations.
 
-[Quantitative Result Placeholder: e.g., "Increased average time on site by X% through data-driven UX improvements."]
+More than 2X the average time on FedEx website overall through suggestions to adding links to specific FedEx products and services.
 
 ### 4. A/B Testing and Experimentation
 
@@ -32,7 +41,7 @@ The FedEx Small Business Grant Contest aimed to support and celebrate small busi
 - Analyzed test results to provide data-backed recommendations for website optimizations.
 - Collaborated with UX and development teams to implement winning variations, continuously improving the user experience.
 
-[Quantitative Result Placeholder: e.g., "Improved contest entry completion rate by Y% through iterative A/B testing."]
+Improved contest entry completion rate by 35% through iterative A/B testing on the entry flow.
 
 ### 5. Audience Segmentation and Targeting
 
@@ -40,7 +49,7 @@ The FedEx Small Business Grant Contest aimed to support and celebrate small busi
 - Developed custom segments based on user behavior, demographics, and engagement levels.
 - Worked closely with media teams to ensure targeted advertising reached the most relevant potential contestants.
 
-[Quantitative Result Placeholder: e.g., "Achieved a Z% increase in qualified leads through precise audience targeting."]
+Achieved a 15% increase in qualified leads by using Nielson's data to overlap with first party audiences.
 
 ### 6. Comprehensive Campaign Reporting
 
@@ -48,34 +57,22 @@ The FedEx Small Business Grant Contest aimed to support and celebrate small busi
 - Synthesized complex data sets into clear, actionable insights for stakeholders at all levels.
 - Identified key success factors and areas for improvement to inform future iterations of the contest.
 
-## The Impact
-
-My data-driven approach to the FedEx Small Business Grant Contest had a significant impact on its success:
-
-[Quantitative Result Placeholder: e.g., "Increased overall contest entries by X% year-over-year across all participating countries."]
-
-[Quantitative Result Placeholder: e.g., "Improved ROI on marketing spend by Y% through data-informed optimizations."]
-
-[Quantitative Result Placeholder: e.g., "Achieved a Z% increase in positive brand sentiment among small business owners in target markets."]
 
 ## Key Takeaways: Learnings from Data-Driven Campaign Analytics
 
 Through the comprehensive analytics and insights gathered during this multi-country campaign, we gained valuable learnings that can inform future global marketing initiatives:
 
-1. **Balancing Standardization and Personalization:** We understood the complexities of maintaining a consistent brand message across geo-websites while personalizing content to showcase region-specific small businesses. Data showed that pages featuring local success stories had X% higher engagement rates.
+1. **Balancing Standardization and Personalization:** We understood the complexities of maintaining a consistent brand message across geo-websites while personalizing content to showcase region-specific small businesses. Data showed that pages featuring local success stories had almost a 3X higher engagement rates.
 
-2. **Cross-Channel Synergy:** By combining offline UEFA television ads with online traffic analysis, we discovered a Y% increase in website visits during and immediately after televised matches. This insight helped optimize ad placement and timing for maximum impact.
+2. **Cross-Channel Synergy:** By combining offline UEFA television ads with online traffic analysis, we discovered a 10X increase in website visits during and immediately after televised matches. This insight helped optimize webpage enhancements, ad placement and timing for maximum impact.
 
-3. **Cultural Nuances in User Behavior:** Analytics revealed significant variations in user journey patterns across different countries. For instance, users in [Country A] spent Z% more time on testimonial pages compared to [Country B], informing region-specific content strategies.
+3. **Cultural Nuances in User Behavior:** Analytics revealed significant variations in user journey patterns across different countries. For instance, users in Europe spent a lot more time on testimonial pages compared to Asian countries, informing region-specific content strategies.
 
-4. **Mobile-First Approach:** With [X%] of traffic coming from mobile devices, especially in [specific regions], we learned the critical importance of mobile optimization. A/B testing on mobile layouts led to a [Y%] increase in mobile conversion rates.
+4. **Mobile-First Approach:** With more than 80% of first time visitor traffic coming from mobile devices, especially in China, Thailand and other asian countries, we learned the critical importance of mobile optimization.
 
-5. **Importance of Localized SEO:** Data-driven SEO strategies tailored to each country's search patterns resulted in a [Z%] increase in organic traffic, highlighting the need for localized keyword research and content optimization.
+5. **Importance of Localized SEO:** Data-driven SEO strategies tailored to each country's in webpage search patterns resulted in an increase in organic traffic, highlighting the need for localized keyword research and content optimization.
 
-6. **Impact of User-Generated Content:** Contests that encouraged participants to share their stories on social media saw a [X%] higher engagement rate and a [Y%] increase in high-quality applications, demonstrating the power of community-driven campaigns.
+6. **Impact of User-Generated Localized Content:** Contests that encouraged participants to share their stories on social media specifically with those that represented the region and ethinicity saw a much higher engagement rate and a significant increase in high-quality applications, demonstrating the power of community-driven campaigns.
 
-7. **Retargeting Effectiveness:** Using Adobe Audience Manager, we found that retargeted ads to users who had started but not completed applications resulted in a [Z%] higher completion rate, emphasizing the importance of nurturing interested participants.
-
-8. **Seasonal Variations:** Analytics revealed significant differences in campaign performance across seasons in different countries, allowing for more strategic timing of future contest launches and marketing pushes.
 
 These learnings not only contributed to the success of the FedEx Small Business Grant Contest but also provided valuable insights for future global marketing initiatives, showcasing the power of data-driven decision-making in complex, multi-country campaigns.
