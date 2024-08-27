@@ -1,8 +1,17 @@
-# Leveraging Analytics for Voice of Customer Insights at FedEx
+---
+layout: post
+title: Leveraging Analytics for Voice of Customer Insights at FedEx
+image: "/assets/img/project-images/voc-fed.png"
+tags: [NLP, Requirement Gathering, Adobe Analytics, PowerBI, Stakeholder Management]
+category: experience
+date: 2020-06-01
+company: FedEx
+excerpt: Leading the voice of customer for Sales and Customer support to develop low touch solutions to customer problems.
+---
 
 ## Project Overview
 
-As a Web and Digital Analytics Specialist at FedEx, I led a crucial initiative to analyze customer call center data, aiming to identify recurring topics for FAQ development and guide creation. This project not only enhanced our customer support resources but also provided valuable insights for our marketing team to improve content strategy.
+As a Web and Digital Analytics Specialist at FedEx, I led a crucial initiative to analyze customer call center data along with web journies they took before clicking "call", aiming to identify recurring topics for FAQ development and guide creation. This project not only enhanced our customer support resources but also provided valuable insights for our marketing team to improve content strategy.
 
 ## My Role and Contributions
 
@@ -60,32 +69,65 @@ Leveraging my expertise in digital analytics and marketing, I:
 - Developed a prioritized list of recommendations for new FAQ topics and guide creation
 - Created a content strategy framework to address the identified customer pain points
 
+
 ## Key Findings
 
-Our analysis successfully identified the following top concerns and their contexts:
+Our analysis successfully identified the following top concerns and their contexts, with a particular focus on FedEx Express customers in Asia:
 
 1. Shipping Delays
    - Context: Weather-related issues, holiday season congestion
+   - Asia-specific: Customs clearance delays, especially in cross-border shipments within Southeast Asia
+
 2. Package Tracking
    - Context: Real-time updates, accuracy of estimated delivery times
+   - Asia-specific: Tracking visibility for shipments transiting through multiple countries in the region
+
 3. International Shipping Regulations
    - Context: Customs documentation, prohibited items
+   - Asia-specific: 
+     - Varying import/export regulations across Asian countries
+     - Documentation requirements for shipments to and from China
+     - Restrictions on electronic goods shipments in certain Southeast Asian countries
+
 4. Pricing Inquiries
    - Context: Bulk shipping discounts, dimensional weight pricing
+   - Asia-specific: 
+     - Fluctuating fuel surcharges impacting overall shipping costs
+     - Pricing disparities between different Asian countries
+     - Special economic zone shipping rates in China
+
+5. Last-Mile Delivery Issues
+   - Asia-specific: 
+     - Challenges in reaching remote areas in countries like Indonesia or the Philippines
+     - Delivery to high-density urban areas in cities like Tokyo, Hong Kong, or Singapore
+
+6. Packaging Guidelines
+   - Asia-specific: 
+     - Requirements for shipping sensitive electronics from manufacturing hubs in China, Taiwan, and South Korea
+     - Packaging standards for perishable goods in tropical climates
+
+7. Service Availability
+   - Asia-specific: 
+     - Availability of specific FedEx services (e.g., First Overnight, Priority Overnight) in different Asian markets
+     - Coverage areas for time-definite services in emerging Asian markets
+
+8. Language Support
+   - Asia-specific: 
+     - Availability of customer support in local languages
+     - Multilingual tracking and documentation services
 
 ## Impact and Results
 
 The insights gained from this analysis led to several significant improvements:
 
-- Developed [A] new FAQ articles addressing the top [B] customer concerns
-- Created [C] comprehensive guides on complex topics like international shipping
-- Improved website navigation, resulting in a [D]% decrease in related customer service calls
-- Enhanced marketing email campaigns with targeted content, increasing click-through rates by [E]%
-- Reduced average handling time for customer support calls by [F]%, translating to an estimated cost saving of $[G] annually
+- Customer support created more than 20 new FAQ articles addressing these top customer concerns, with linked articles realted to customs and regulations specifically tailored to Asian markets
+- Created comprehensive guides for each geo on topics like international shipping and adding consulting links to FedEx partners across those regions and links for our high value customers who have free support.
+- Improved website navigation and introduced region-specific landing pages, resulting in a 40% decrease in related customer service calls from Asian customers
+- Reduced average handling time for customer support calls, and an improvement specifically for calls from Asian customers
 
 ## Conclusion
 
-This project demonstrated the power of combining data-driven insights with deep business understanding to improve customer experience and marketing effectiveness. By leveraging my skills in digital analytics and marketing strategy, alongside technical NLP capabilities, we were able to turn unstructured call center data into actionable insights, directly impacting our customer support strategy and marketing initiatives.
+This project demonstrated the power of combining data-driven insights with deep business understanding to improve customer experience and marketing effectiveness. By leveraging my skills in digital analytics and marketing strategy, alongside my understanding of technical NLP capabilities, we were able to turn unstructured call center data into actionable insights, directly impacting our customer support strategy and marketing initiatives.
 
 ## Skills Demonstrated
 
@@ -98,9 +140,8 @@ This project demonstrated the power of combining data-driven insights with deep 
 
 ## Tools and Technologies Used
 
-- Google Analytics
 - Adobe Analytics
 - SQL for data querying
-- Tableau for data visualization
+- PowerBI for data visualization
 - Collaborated on implementation using Python, NLTK, and Scikit-learn
 
