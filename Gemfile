@@ -1,3 +1,6 @@
 source 'https://rubygems.org'
-gem 'jekyll'
-gem 'bundler'
+# Specify the Jekyll gem and its version
+gem 'jekyll', '~> 4.3.2'
+
+# Specify Bundler as a dependency
+gem 'bundler', '~> 2.2'
