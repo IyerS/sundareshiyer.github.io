@@ -42,7 +42,7 @@ h3 {
 
 .header-content {
     display: flex;
-    align-items: left;
+    align-items: center;
     margin-bottom: 15px;
 }
 
@@ -57,7 +57,7 @@ h3 {
 .title-description {
     margin-left: 20px;
     flex-grow: 1;
-    text-align: center;
+    text-align: left;
 }
 
 .title-description h1 {
