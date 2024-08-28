@@ -2,7 +2,7 @@
 layout: post
 title: Implementing Adobe Target on Microsoft's AEM Platform - A Project Management Case Study
 image: "/assets/img/project-images/adobe-target-implement.png"
-tags: [Project Management, Adobe Target, JIRA, Confluence]
+tags: [Project Management, Adobe Target, Azure DevOps]
 category: experience
 date: 2022-02-01
 company: Microsoft
