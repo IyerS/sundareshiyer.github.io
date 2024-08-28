@@ -2,9 +2,9 @@
 layout: post
 title: Implementing Adobe Target on Microsoft's AEM Platform - A Project Management Case Study
 image: "/assets/img/project-images/adobe-target-implement.png"
-tags: [Pricing Recommendations, Customer Clustering, Machine Learning, Python]
+tags: [Project Management, Adobe Target, JIRA, Confluence]
 category: experience
-date: 2019-04-01
+date: 2022-02-01
 company: Microsoft
 excerpt: This document outlines the step by step process that I was involved and spearheaded to implement Adobe Target in Microsoft's AEM website ecosystem
 ---
@@ -92,16 +92,13 @@ The project involved a hybrid implementation of Adobe Target, leveraging both se
 
 # Implementing Adobe Target on Microsoft's AEM Platform: A Project Management Case Study
 
-[Previous sections remain the same]
-
 ## Impact and Results
 
 The successful implementation of Adobe Target on Microsoft's AEM platform led to significant improvements and achievements:
 
-- Achieved 100% feature completion in 70% of the time while maintaining high standards for privacy, security, and service reliability with cross-functional teams
+- Achieved 100% feature completion ahead of alocated time while maintaining high standards for privacy, security, and service reliability with cross-functional teams
 - Increased A/B testing velocity by 40%, enabling the marketing team to run 15 more experiments per month
-- Improved website conversion rates by 5% through personalized experiences
-- Reduced page load time by 0.5 seconds on pages using server-side personalization
+- Reduced page load time by 400 milli-seconds on pages using server-side personalization
 - Enabled self-service testing for 20 marketing team members, reducing dependency on development resources
 - Achieved 75% adoption rate of the new personalization capabilities across Microsoft's digital properties
 
