@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Revolutionizing Dealer Relations - Implementing Salesforce Lightning for Nissan Canada's Dealer Portal
+title: Managing the Implementing Salesforce Lightning for Nissan Canada's Dealer Portal
 image: "/assets/img/project-images/nissan.jpg"
 tags: [Project Management, JIRA, Confluence, User Stories]
 category: experience
