@@ -90,8 +90,6 @@ The project involved a hybrid implementation of Adobe Target, leveraging both se
 3. **Challenge**: Performance concerns with client-side implementation
    **Solution**: Implemented a hybrid approach, using server-side testing for high-traffic pages to minimize performance impact
 
-# Implementing Adobe Target on Microsoft's AEM Platform: A Project Management Case Study
-
 ## Impact and Results
 
 The successful implementation of Adobe Target on Microsoft's AEM platform led to significant improvements and achievements:
