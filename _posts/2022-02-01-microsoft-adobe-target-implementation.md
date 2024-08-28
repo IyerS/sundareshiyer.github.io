@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Implementing Adobe Target on Microsoft's AEM Platform - A Project Management Case Study
+title: Managing the implmenetation of Adobe Target on Microsoft's migration from teamsite to AEM 
 image: "/assets/img/project-images/adobe-target-implement.png"
 tags: [Project Management, Adobe Target, Azure DevOps]
 category: experience
