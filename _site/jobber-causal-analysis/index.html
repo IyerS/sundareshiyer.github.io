@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundaresh Iyer - Analysing the effect of Influencer Marketing on Jobber Summit Sign-ups</title>
+    <link rel="stylesheet" href="/sundareshiyer.github.io/assets/css/main.css?v=1">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title-description">
+                <h1>Sundaresh Iyer</h1>
+                <h2>Portfolio of Work</h2>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <a href="/sundareshiyer.github.io/">Portfolio</a>
+        <a href="/sundareshiyer.github.io/assets/resume.pdf">Resume</a>
+        <a href="https://linkedin.com/in/sundaresh-iyer">LinkedIn</a>
+        <a href="https://github.com/IyerS">GitHub</a>
+    </nav>
+
+    <main>
+        <article class="post">
+    <header class="post-header">
+        <h1 class="post-title">Analysing the effect of Influencer Marketing on Jobber Summit Sign-ups</h1>
+        <p class="post-meta">January 18, 2024</p>
+        <div class="post-tags">
+            
+            <span class="tag">Causal Impact</span>
+            
+            <span class="tag">Python</span>
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+        <h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#objectives">Objectives</a></li>
+  <li><a href="#data-collection">Data Collection</a></li>
+  <li><a href="#handling-concurrent-campaigns">Handling Concurrent Campaigns</a></li>
+  <li><a href="#influencer-performance-analysis">Influencer Performance Analysis</a></li>
+  <li><a href="#results">Results</a></li>
+  <li><a href="#insights-and-recommendations">Insights and Recommendations</a></li>
+</ol>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>During my tenure at Jobber, I was responsible for assessing the effectiveness of an influencer campaign designed to boost signups for the Jobber Summit. This campaign ran on Facebook and Instagram, utilizing four different influencers to reach targeted audiences. However, the analysis was made more complex by the presence of other concurrent marketing efforts through different channels, which required careful consideration in isolating the impact of the influencer campaign.</p>
+
+<h2 id="objectives">Objectives</h2>
+
+<ol>
+  <li><strong>Measure the impact</strong> of the influencer campaign on Jobber Summit signups.</li>
+  <li><strong>Isolate the effects</strong> of this campaign from other concurrent campaigns.</li>
+  <li><strong>Analyze the individual performance</strong> of each influencer.</li>
+  <li><strong>Provide actionable insights</strong> to optimize future influencer campaigns.</li>
+</ol>
+
+<p>For target audience, we relied on our overall target audience growth target for the year which was the “Just me” segment of Jobber potential users and the free tier users.</p>
+
+<h2 id="data-collection">Data Collection</h2>
+
+<p>The data was sourced from:</p>
+<ul>
+  <li><strong>Facebook and Instagram Analytics</strong>: Tracking reach, engagement, and CTR for each influencer.</li>
+  <li><strong>Jobber’s CRM</strong>: Tracking daily signup data.</li>
+  <li><strong>Marketing Analytics Tools</strong>: Monitoring other concurrent campaigns, including email marketing, PPC, and SEO efforts, to adjust for any overlapping effects.</li>
+</ul>
+
+<p>The dataset included:</p>
+<ul>
+  <li><strong>Pre-Campaign Period</strong>: The week before the influencer campaign.</li>
+  <li><strong>Campaign Period</strong>: The middle two weeks of the month.</li>
+  <li><strong>Post-Campaign Period</strong>: The week following the campaign.</li>
+</ul>
+
+<h2 id="handling-concurrent-campaigns">Handling Concurrent Campaigns</h2>
+
+<p>To isolate the influencer campaign’s impact, I used a combination of methods:</p>
+<ul>
+  <li><strong>Control Groups</strong>: By comparing signup data from channels unaffected by the influencer campaign.</li>
+  <li><strong>Time-Series Analysis</strong>: To identify and adjust for trends or spikes related to other campaigns.</li>
+  <li>
+    <p><strong>Attribution Modeling</strong>: To determine the contribution of each channel, ensuring the influencer campaign’s effect was accurately measured.</p>
+
+    <h2 id="influencer-performance-analysis">Influencer Performance Analysis</h2>
+  </li>
+</ul>
+
+<p>Four influencers were chosen for this campaign, each with different audience demographics and engagement levels. I analyzed the performance of each influencer to understand their unique contributions to the campaign’s success.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="n">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">from</span> <span class="n">statsmodels.stats.weightstats</span> <span class="kn">import</span> <span class="n">ztest</span>
+
+<span class="c1"># Load the data
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="sh">'</span><span class="s">jobber_summit_signups.csv</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Filter out data from other campaigns
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">channel</span><span class="sh">'</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">influencer</span><span class="sh">'</span><span class="p">)</span> <span class="o">&amp;</span> 
+            <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">medium</span><span class="sh">'</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">facebook</span><span class="sh">'</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">medium</span><span class="sh">'</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">instagram</span><span class="sh">'</span><span class="p">))]</span>
+
+<span class="c1"># Analyze influencer-specific performance
+</span><span class="n">influencer_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">groupby</span><span class="p">(</span><span class="sh">'</span><span class="s">influencer</span><span class="sh">'</span><span class="p">).</span><span class="nf">agg</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">reach</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">sum</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">engagement</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">mean</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">signups</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">sum</span><span class="sh">'</span>
+<span class="p">}).</span><span class="nf">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Convert the 'date' column to datetime if it's not already
+</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">date</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">date</span><span class="sh">'</span><span class="p">])</span>
+
+<span class="c1"># Define the date ranges for each period
+</span><span class="n">pre_campaign_dates</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">date</span><span class="sh">'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="sh">'</span><span class="s">2023-11-01</span><span class="sh">'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">date</span><span class="sh">'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="sh">'</span><span class="s">2023-11-14</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">campaign_dates</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">date</span><span class="sh">'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="sh">'</span><span class="s">2023-11-15</span><span class="sh">'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">date</span><span class="sh">'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="sh">'</span><span class="s">2023-11-30</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">post_campaign_dates</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">date</span><span class="sh">'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="sh">'</span><span class="s">2023-12-01</span><span class="sh">'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">date</span><span class="sh">'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="sh">'</span><span class="s">2023-12-14</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Filter the data for each period
+</span><span class="n">pre_campaign</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">pre_campaign_dates</span><span class="p">]</span>
+<span class="n">during_campaign</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">campaign_dates</span><span class="p">]</span>
+<span class="n">post_campaign</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">post_campaign_dates</span><span class="p">]</span>
+
+<span class="n">avg_signups_pre</span> <span class="o">=</span> <span class="n">pre_campaign</span><span class="p">[</span><span class="sh">'</span><span class="s">signups</span><span class="sh">'</span><span class="p">].</span><span class="nf">mean</span><span class="p">()</span>
+<span class="n">avg_signups_during</span> <span class="o">=</span> <span class="n">during_campaign</span><span class="p">[</span><span class="sh">'</span><span class="s">signups</span><span class="sh">'</span><span class="p">].</span><span class="nf">mean</span><span class="p">()</span>
+<span class="n">avg_signups_post</span> <span class="o">=</span> <span class="n">post_campaign</span><span class="p">[</span><span class="sh">'</span><span class="s">signups</span><span class="sh">'</span><span class="p">].</span><span class="nf">mean</span><span class="p">()</span>
+
+<span class="c1"># Visualize influencer performance
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="nf">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="sh">'</span><span class="s">influencer</span><span class="sh">'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="sh">'</span><span class="s">signups</span><span class="sh">'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">influencer_data</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">Influencer Performance: Signups Generated</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Influencer</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Total Signups</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+<span class="c1"># Perform a z-test to compare pre-campaign and post-campaign signup rates
+</span><span class="n">z_stat</span><span class="p">,</span> <span class="n">p_val</span> <span class="o">=</span> <span class="nf">ztest</span><span class="p">(</span><span class="n">pre_campaign</span><span class="p">[</span><span class="sh">'</span><span class="s">signups</span><span class="sh">'</span><span class="p">],</span> <span class="n">post_campaign</span><span class="p">[</span><span class="sh">'</span><span class="s">signups</span><span class="sh">'</span><span class="p">])</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Average Signups (Pre-Campaign): </span><span class="si">{</span><span class="n">avg_signups_pre</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Average Signups (During Campaign): </span><span class="si">{</span><span class="n">avg_signups_during</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Average Signups (Post-Campaign): </span><span class="si">{</span><span class="n">avg_signups_post</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Z-Statistic: </span><span class="si">{</span><span class="n">z_stat</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">, P-Value: </span><span class="si">{</span><span class="n">p_val</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="results-only-for-illustration">Results (only for illustration)</h2>
+
+<ul>
+  <li><strong>Average Signups</strong>:
+    <ul>
+      <li><strong>Pre-Campaign</strong>: 50 signups/day</li>
+      <li><strong>During Campaign</strong>: 70 signups/day</li>
+      <li><strong>Post-Campaign</strong>: 55 signups/day</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The influencer campaign resulted in a increase in signups, with a 40% rise during the campaign period compared to pre-campaign levels. Even after the campaign ended, signups remained 10% higher.</p>
+
+<ul>
+  <li><strong>Influencer Performance</strong>:
+    <ul>
+      <li><strong>Influencer A</strong>: Generated the highest reach but moderate signups.</li>
+      <li><strong>Influencer B</strong>: Had the highest engagement rate and the second-highest signups.</li>
+      <li><strong>Influencer C</strong>: Contributed to a steady number of signups, mainly from niche audiences.</li>
+      <li><strong>Influencer D</strong>: Had the least reach but the highest conversion rate, driving a significant number of signups per engagement.</li>
+    </ul>
+  </li>
+  <li><strong>Statistical Significance</strong>:<br />
+The Z-test did not confirm that the difference in signup rates before and after the campaign was statistically significant.</li>
+</ul>
+
+<h2 id="insights-and-recommendations">Insights and Recommendations</h2>
+
+<ol>
+  <li>
+    <p><strong>Influencer Selection</strong>: The varied performance of the influencers highlighted the importance of selecting individuals whose audience closely aligns with the campaign goals. Influencer D, despite lower reach, delivered the best conversion rate, making them a valuable asset for future campaigns.</p>
+  </li>
+  <li>
+    <p><strong>Concurrent Campaigns</strong>: Adjusting for other campaigns revealed that the influencer campaign was a driver of signups, but the inference of the post campaign effect was not as straight forward as during the campaign</p>
+  </li>
+  <li>
+    <p><strong>Data-Driven Adjustments</strong>: Continuous monitoring and adjustments during the campaign could have optimized results further, especially by shifting focus to higher-performing influencers.</p>
+  </li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This case study demonstrated the effectiveness of a well-executed influencer campaign in driving signups for the Jobber Summit, even amid other concurrent marketing efforts. But it was far less obvious for any lingering effects of the campaign.</p>
+
+    </div>
+</article>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sundaresh Iyer. All rights reserved.</p>
+    </footer>
+</body>
+</html>

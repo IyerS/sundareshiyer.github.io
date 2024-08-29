@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundaresh Iyer - Compressing Feature Space For Classification Using PCA</title>
+    <link rel="stylesheet" href="/sundareshiyer.github.io/assets/css/main.css?v=1">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title-description">
+                <h1>Sundaresh Iyer</h1>
+                <h2>Portfolio of Work</h2>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <a href="/sundareshiyer.github.io/">Portfolio</a>
+        <a href="/sundareshiyer.github.io/assets/resume.pdf">Resume</a>
+        <a href="https://linkedin.com/in/sundaresh-iyer">LinkedIn</a>
+        <a href="https://github.com/IyerS">GitHub</a>
+    </nav>
+
+    <main>
+        <article class="post">
+    <header class="post-header">
+        <h1 class="post-title">Compressing Feature Space For Classification Using PCA</h1>
+        <p class="post-meta">January 21, 2022</p>
+        <div class="post-tags">
+            
+            <span class="tag">PCA</span>
+            
+            <span class="tag">Machine Learning</span>
+            
+            <span class="tag">Python</span>
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+        <p>In this project we use Principal Component Analysis (PCA) to compress 100 unlabelled, sparse features into a more manageable number for classiying buyers of Ed Sheeran’s latest album.</p>
+
+<h1 id="table-of-contents">Table of contents</h1>
+
+<ul>
+  <li><a href="#overview-main">00. Project Overview</a>
+    <ul>
+      <li><a href="#overview-context">Context</a></li>
+      <li><a href="#overview-actions">Actions</a></li>
+      <li><a href="#overview-results">Results</a></li>
+      <li><a href="#overview-growth">Growth/Next Steps</a></li>
+    </ul>
+  </li>
+  <li><a href="#data-overview">01. Data Overview</a></li>
+  <li><a href="#pca-overview">02. PCA Overview</a></li>
+  <li><a href="#pca-data-prep">03. Data Preparation</a></li>
+  <li><a href="#pca-fit">04. Fitting PCA</a></li>
+  <li><a href="#pca-variance">05. Analysis Of Explained Variance</a></li>
+  <li><a href="#pca-application">06. Applying our PCA solution</a></li>
+  <li><a href="#pca-classification">07. Classification Model</a></li>
+  <li><a href="#growth-next-steps">08. Growth &amp; Next Steps</a></li>
+</ul>
+
+<hr />
+
+<h1 id="project-overview--">Project Overview  <a name="overview-main"></a></h1>
+
+<h3 id="context-">Context <a name="overview-context"></a></h3>
+
+<p>Our client is looking to promote Ed Sheeran’s new album - and want to be both targeted with their customer communications, and as efficient as possible with their marketing budget.</p>
+
+<p>As a proof-of-concept they would like us to build a classification model for customers who purchased Ed’s <em>last</em> album based upon a small sample of listening data they have acquired for some of their customers at that time.</p>
+
+<p>If we can do this successfully, they will look to purchase up-to-date listening data, apply the model, and use the predicted probabilities to promote to customers who are most likely to purchase.</p>
+
+<p>The sample data is short but wide.  It contains only 356 customers, but for each, columns that represent the percentage of historical listening time allocated to each of 100 artists.  On top of these, the 100 columns do not contain the artist in question, instead being labelled <em>artist1, artist2</em> etc.</p>
+
+<p>We will need to compress this data into something more manageable for classification!</p>
+
+<p><br />
+<br /></p>
+<h3 id="actions-">Actions <a name="overview-actions"></a></h3>
+
+<p>We firstly needed to bring in the required data, both the historical listening sample, and the flag showing which customers purchased Ed Sheeran’s last album.  We ensure we  split our data a training set &amp; a test set, for classification purposes.  For PCA, we ensure that we scale the data so that all features exist on the same scale.</p>
+
+<p>We then apply PCA without any specified number of components - which allows us to examine &amp; plot the percentage of explained variance for every number of components.  Based upon this we make a call to limit our dataset to the number of components that make up 75% of the variance of the initial feature set (rather than limiting to a specific number of components).  We apply this rule to both our training set (using fit_transform) and our test set (using transform only)</p>
+
+<p>With this new, compressed dataset, we apply a Random Forest Classifier to predict the sales of the album, and we assess the predictive performance!</p>
+
+<p><br />
+<br /></p>
+
+<h3 id="results-">Results <a name="overview-results"></a></h3>
+
+<p>Based upon an analysis of variance vs. components - we made a call to keep 75% of the variance of the initial feature set, which meant we dropped the number of features from 100 down to 24.</p>
+
+<p>Using these 24 components, we trained a Random Forest Classifier which able to predict customers that would purchase Ed Sheeran’s last album with a Classification Accuracy of 93%</p>
+
+<p><br />
+<br /></p>
+<h3 id="growthnext-steps-">Growth/Next Steps <a name="overview-growth"></a></h3>
+
+<p>We only tested one type of classifier here (Random Forest) - it would be worthwhile testing others.  We also only used the default classifier hyperparameters - we would want to optimise these.</p>
+
+<p>Here, we selected 24 components based upon the fact this accounted for 75% of the variance of the initial feature set.  We would instead look to search for the optimal number of components to use based upon classification accuracy.</p>
+
+<p><br />
+<br /></p>
+
+<hr />
+
+<h1 id="data-overview--">Data Overview  <a name="data-overview"></a></h1>
+
+<p>Our dataset contains only 356 customers, but 102 columns.</p>
+
+<p>In the code below, we:</p>
+
+<ul>
+  <li>Import the required python packages &amp; libraries</li>
+  <li>Import the data from the database</li>
+  <li>Drop the ID column for each customer</li>
+  <li>Shuffle the dataset</li>
+  <li>Analyse the class balance between album buyers, and non album buyers</li>
+</ul>
+
+<p><br /></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># import required Python packages
+</span><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="n">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="n">sklearn.utils</span> <span class="kn">import</span> <span class="n">shuffle</span>
+<span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="n">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="n">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="c1"># import data
+</span><span class="n">data_for_model</span> <span class="o">=</span> <span class="bp">...</span>
+
+<span class="c1"># drop the id column
+</span><span class="n">data_for_model</span><span class="p">.</span><span class="nf">drop</span><span class="p">(</span><span class="sh">"</span><span class="s">user_id</span><span class="sh">"</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># shuffle the data
+</span><span class="n">data_for_model</span> <span class="o">=</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">data_for_model</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># analyse the class balance
+</span><span class="n">data_for_model</span><span class="p">[</span><span class="sh">"</span><span class="s">purchased_album</span><span class="sh">"</span><span class="p">].</span><span class="nf">value_counts</span><span class="p">(</span><span class="n">normalize</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br /></p>
+
+<p>From the last step in the above code, we see that 53% of customers in our sample did purchase Ed’s last album, and 47% did not. Since this is evenly balanced, we can most likely rely solely on <em>Classification Accuracy</em> when assessing the performance of the classification model later on.</p>
+
+<p>After these steps, we have a dataset that looks like the below sample (not all columns shown):
+<br />
+<br /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>purchased_album</strong></th>
+      <th><strong>artist1</strong></th>
+      <th><strong>artist2</strong></th>
+      <th><strong>artist3</strong></th>
+      <th><strong>artist4</strong></th>
+      <th><strong>artist5</strong></th>
+      <th><strong>artist6</strong></th>
+      <th><strong>artist7</strong></th>
+      <th><strong>…</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.0278</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0036</td>
+      <td>0.0002</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0367</td>
+      <td>0.0053</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0367</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.0184</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>0.0017</td>
+      <td>0.0226</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.0002</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.0042</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0002</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.1759</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.0001</td>
+      <td>0</td>
+      <td>0.0001</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0555</td>
+      <td>0</td>
+      <td>0.0003</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+The data is at customer level.  We have a binary column showing whether the customer purchased the prior album or not, and following that 100 columns containing the percentage of historical listening time allocated to each artist.  We do not know the names of these artists.</p>
+
+<p>From the above sample, we can also see the sparsity of the data, customers do not listen to all artists and therefore many of the values are 0.</p>
+
+<hr />
+<p><br /></p>
+<h1 id="pca-overview--">PCA Overview  <a name="pca-overview"></a></h1>
+
+<p>Principal Component Analysis (PCA) is often used as a <em>Dimensionality Reduction</em> technique that can reduce a large set of variables down to a smaller set, that still contains most of the original information.</p>
+
+<p>In other words, PCA takes a high number of dimensions, or variables and boils them down into a much smaller number of new variables - each of which is called a <em>principal component</em>.  These new <em>components</em> are somewhat abstract - they are a blend of some of the original features where the PCA algorithm found they were correlated.  By blending the original variables rather than just removing them, the hope is that we still keep much of the key information that was held in the original feature set.</p>
+
+<p>Dimensionality Reduction techniques like PCA are mainly used to simplify the space in which we’re operating.  Attempting to apply the k-means clustering algorithm (for example) across hundreds or thousands of features can be computationally expensive, PCA reduces this vastly while maintaining much of the key information contained in the data.  But PCA doesn’t have applications just within the realms of unsupervised learning, it could just as easily be applied to a set of input variables in a supervised learning approach - exactly like we will do here!</p>
+
+<p>In supervised learning, we often focus on <em>Feature Selection</em> where we look to remove variables that are not deemed to be important in predicting our output.  PCA is often used in a similar way, although in this case we aren’t explicitly <em>removing</em> variables - we are simply creating a smaller number of <em>new</em> ones that contain much of the information contained in the original set.</p>
+
+<p>Business consideration of PCA:  It is much more difficult to interpret the outputs of a predictive model (for example) that is based upon component values versys the original variables.</p>
+
+<hr />
+<p><br /></p>
+<h1 id="data-preparation--">Data Preparation  <a name="pca-data-prep"></a></h1>
+
+<p><br /></p>
+<h5 id="split-out-data-for-modelling">Split Out Data For Modelling</h5>
+
+<p>In the next code block we do two things, we firstly split our data into an X object which contains only the predictor variables, and a y object that contains only our dependent variable.</p>
+
+<p>Once we have done this, we split our data into training and test sets to ensure we can fairly validate the accuracy of the predictions on data that was not used in training. In this case, we have allocated 80% of the data for training, and the remaining 20% for validation. We make sure to add in the stratify parameter to ensure that both our training and test sets have the same proportion of customers who did, and did not, sign up for the delivery club - meaning we can be more confident in our assessment of predictive performance.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># split data into X and y objects for modelling
+</span><span class="n">X</span> <span class="o">=</span> <span class="n">data_for_model</span><span class="p">.</span><span class="nf">drop</span><span class="p">([</span><span class="sh">"</span><span class="s">purchased_album</span><span class="sh">"</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data_for_model</span><span class="p">[</span><span class="sh">"</span><span class="s">purchased_album</span><span class="sh">"</span><span class="p">]</span>
+
+<span class="c1"># split out training &amp; test sets
+</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="nf">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+<h5 id="feature-scaling">Feature Scaling</h5>
+
+<p>Feature Scaling is extremely important when applying PCA - it means that the algorithm can successfully “judge” the correlations between the variables and effectively create the principal compenents for us.  The general consensus is to apply Standardisation rather than Normalisation.</p>
+
+<p>The below code uses the in-built StandardScaler functionality from scikit-learn to apply Standardisation to all of our variables.</p>
+
+<p>In the code, we use <em>fit_transform</em> for the training set, but only <em>transform</em> to the test set. This means the standardisation logic will learn and apply the “rules” from the training data, but only apply them to the test data. This is important in order to avoid data leakage where the test set learns information about the training data, and means we can’t fully trust model performance metrics!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># create our scaler object
+</span><span class="n">scale_standard</span> <span class="o">=</span> <span class="nc">StandardScaler</span><span class="p">()</span>
+
+<span class="c1"># standardise the data
+</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">scale_standard</span><span class="p">.</span><span class="nf">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">scale_standard</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<hr />
+<p><br /></p>
+<h1 id="fitting-pca-">Fitting PCA <a name="pca-fit"></a></h1>
+
+<p>We firstly apply PCA to our training set without limiting the algorithm to any particular number of components, in other words we’re not explicitly reducing the feature space at this point.</p>
+
+<p>Allowing all components to be created here allows us to examine &amp; plot the percentage of explained variance for each, and assess which solution might work best for our task.</p>
+
+<p>In the code below we instantiate our PCA object, and then fit it to our training set.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># instantiate our PCA object (no limit on components)
+</span><span class="n">pca</span> <span class="o">=</span> <span class="nc">PCA</span><span class="p">(</span><span class="n">n_components</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>  <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># fit to our training data
+</span><span class="n">pca</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<hr />
+<p><br /></p>
+<h1 id="analysis-of-explained-variance-">Analysis Of Explained Variance <a name="pca-variance"></a></h1>
+
+<p>There is no right or wrong number of components to use - this is something that we need to decide based upon the scenario we’re working in.  We know we want to reduce the number of features, but we need to trade this off with the amount of information we lose.</p>
+
+<p>In the following code, we extract this information from the prior step where we fit the PCA object to our training data.  We extract the variance for each component, and we do the same again, but for the <em>cumulative</em> variance.  Will will assess &amp; plot both of these in the next step.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># explained variance across components
+</span><span class="n">explained_variance</span> <span class="o">=</span> <span class="n">pca</span><span class="p">.</span><span class="n">explained_variance_ratio_</span>
+
+<span class="c1"># explained variance across components (cumulative)
+</span><span class="n">explained_variance_cumulative</span> <span class="o">=</span> <span class="n">pca</span><span class="p">.</span><span class="n">explained_variance_ratio_</span><span class="p">.</span><span class="nf">cumsum</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><br />
+In the following code, we create two plots - one for the variance of each principal component, and one for the cumulative variance.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">num_vars_list</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">101</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+
+<span class="c1"># plot the variance explained by each component
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">bar</span><span class="p">(</span><span class="n">num_vars_list</span><span class="p">,</span><span class="n">explained_variance</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">"</span><span class="s">Variance across Principal Components</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">"</span><span class="s">Number of Components</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">"</span><span class="s">% Variance</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># plot the cumulative variance
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">num_vars_list</span><span class="p">,</span><span class="n">explained_variance_cumulative</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">"</span><span class="s">Cumulative Variance across Principal Components</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">"</span><span class="s">Number of Components</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">"</span><span class="s">Cumulative % Variance</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p><br />
+As we can see in the top plot, PCA works in a way where the first component holds the most variance, and each subsequent component holds less and less.</p>
+
+<p>The second plot shows this as a cumulative measure - and we can how many components we would need remain in order to keep any amount of variance from the original feature set.</p>
+
+<p><br />
+<img src="/assets/img/project-images/pca-variance-plots.png" alt="alt text" title="PCA Variance by Component" /></p>
+
+<p><br />
+Based upon the cumulative plot above, we can see that we could keep 75% of the variance from the original feature set with only around 25 components, in other words with only a quarter of the number of features we can still hold onto around three-quarters of the information.</p>
+
+<hr />
+<p><br /></p>
+<h1 id="applying-our-pca-solution-">Applying our PCA solution <a name="pca-application"></a></h1>
+
+<p>Now we’ve run our analysis of variance by component - we can apply our PCA solution.</p>
+
+<p>In the code below - we <em>re-instantiate</em> our PCA object, this time specifying that we want the number of components that will keep 75% of the initial variance.</p>
+
+<p>We then apply this solution to both our training set (using fit_transform) and our test set (using transform only).</p>
+
+<p>Finally - based on this 75% threshold, we confirm the number of components that this leaves us with.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># re-instantiate our PCA object (keeping 75% of variance)
+</span><span class="n">pca</span> <span class="o">=</span> <span class="nc">PCA</span><span class="p">(</span><span class="n">n_components</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span>  <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># fit to our data
+</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">pca</span><span class="p">.</span><span class="nf">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">pca</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># check the number of components
+</span><span class="nf">print</span><span class="p">(</span><span class="n">pca</span><span class="p">.</span><span class="n">n_components_</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br />
+Turns out we were almost correct from looking at our chart - we will retain 75% of the information from our initial feature set, with only 24 principal components.</p>
+
+<p>Our X_train and X_test objects now contain 24 columns, each representing one of the principal components - we can see a sample of X_train below:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>0</strong></th>
+      <th><strong>1</strong></th>
+      <th><strong>2</strong></th>
+      <th><strong>3</strong></th>
+      <th><strong>4</strong></th>
+      <th><strong>5</strong></th>
+      <th><strong>6</strong></th>
+      <th><strong>…</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-0.402194</td>
+      <td>-0.756999</td>
+      <td>0.219247</td>
+      <td>-0.0995449</td>
+      <td>0.0527621</td>
+      <td>0.0968236</td>
+      <td>-0.0500932</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>-0.360072</td>
+      <td>-1.13108</td>
+      <td>0.403249</td>
+      <td>-0.573797</td>
+      <td>-0.18079</td>
+      <td>-0.305604</td>
+      <td>-1.33653</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>10.6929</td>
+      <td>-0.866574</td>
+      <td>0.711987</td>
+      <td>0.168807</td>
+      <td>-0.333284</td>
+      <td>0.558677</td>
+      <td>0.861932</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>-0.47788</td>
+      <td>-0.688505</td>
+      <td>0.0876652</td>
+      <td>-0.0656084</td>
+      <td>-0.0842425</td>
+      <td>1.06402</td>
+      <td>0.309337</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>-0.258285</td>
+      <td>-0.738503</td>
+      <td>0.158456</td>
+      <td>-0.0864722</td>
+      <td>-0.0696632</td>
+      <td>1.79555</td>
+      <td>0.583046</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>-0.440366</td>
+      <td>-0.564226</td>
+      <td>0.0734247</td>
+      <td>-0.0372701</td>
+      <td>-0.0331369</td>
+      <td>0.204862</td>
+      <td>0.188869</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>-0.56328</td>
+      <td>-1.22408</td>
+      <td>1.05047</td>
+      <td>-0.931397</td>
+      <td>-0.353803</td>
+      <td>-0.565929</td>
+      <td>-2.4482</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>-0.282545</td>
+      <td>-0.379863</td>
+      <td>0.302378</td>
+      <td>-0.0382711</td>
+      <td>0.133327</td>
+      <td>0.135512</td>
+      <td>0.131</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>-0.460647</td>
+      <td>-0.610939</td>
+      <td>0.085221</td>
+      <td>-0.0560837</td>
+      <td>0.00254932</td>
+      <td>0.534791</td>
+      <td>0.251593</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+Here, column “0” represents the first component, column “1” represents the second component, and so on.  This are the input variables we will feed into our classification model to predict which customers purchased Ed Sheeran’s last album!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="classification-model-">Classification Model <a name="pca-classification"></a></h1>
+
+<h5 id="training-the-classifier">Training The Classifier</h5>
+
+<p>To start with, we will simply apply a Random Forest Classifier to see if it is possible to predict based upon our set of 24 components.</p>
+
+<p>In the code below we instantiate the Random Forest using the default parameters, and then we fit this to our data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># instantiate our model object
+</span><span class="n">clf</span> <span class="o">=</span> <span class="nc">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># fit our model using our training &amp; test sets
+</span><span class="n">clf</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br /></p>
+<h5 id="classification-performance">Classification Performance</h5>
+
+<p>In the code below we use the trained classifier to predict on the test set - and we run a simple analysis for the classification accuracy for the predictions vs. actuals.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># predict on the test set
+</span><span class="n">y_pred_class</span> <span class="o">=</span> <span class="n">clf</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># assess the classification accuracy
+</span><span class="nf">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_class</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+The result of this is a <strong>93%</strong> classification accuracy, in other words, using a classifier trained on 24 principal components we were able to accurately predict which test set customers purchased Ed Sheeran’s last album, with an accuracy of 93%.</p>
+
+<hr />
+<p><br /></p>
+<h1 id="application-">Application <a name="kmeans-application"></a></h1>
+
+<p>Based upon this proof-of-concept, we could go back to the client and recommend that they purchase some up to date listening data.  We would could apply PCA to this, create the components, and predict which customers are likely to buy Ed’s <em>next</em> album.</p>
+
+<hr />
+<p><br /></p>
+<h1 id="growth--next-steps-">Growth &amp; Next Steps <a name="growth-next-steps"></a></h1>
+
+<p>We only tested one type of classifier here (Random Forest) - it would be worthwhile testing others.  We also only used the default classifier hyperparameters - we would want to optimise these.</p>
+
+<p>Here, we selected 24 components based upon the fact this accounted for 75% of the variance of the initial feature set.  We would instead look to search for the optimal number of components to use based upon classification accuracy.</p>
+
+    </div>
+</article>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sundaresh Iyer. All rights reserved.</p>
+    </footer>
+</body>
+</html>

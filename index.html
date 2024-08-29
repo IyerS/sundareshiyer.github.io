@@ -6,29 +6,63 @@ custom_css_class: home-page
 
 <section class="work-experience">
   <h2>Work Experience</h2>
-  <div class="project-grid">
-    {% for post in site.categories.experience %}
-      <div class="project-card">
-        <img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}">
-        <div class="card-content">
-          <div class="tags">
-            {% for tag in post.tags %}
-              <span class="tag">{{ tag }}</span>
-            {% endfor %}
+
+  {% assign all_posts = site.categories.experience %}
+  {% assign all_subsections = all_posts | map: "subsection" | uniq %}
+
+  {% for subsection in all_subsections %}
+    <div class="subsection" id="{{ subsection | slugify }}">
+      <h3>{{ subsection }}</h3>
+      <div class="project-grid">
+        {% assign section_posts = all_posts | where: "subsection", subsection %}
+        {% for post in section_posts limit:3 %}
+          <div class="project-card">
+            <img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}">
+            <div class="card-content">
+              <div class="tags">
+                {% for tag in post.tags %}
+                  <span class="tag">{{ tag }}</span>
+                {% endfor %}
+              </div>
+              <h4 class="card-title">{{ post.title }}</h4>
+              <h5 class="card-company">{{ post.company }}</h5>
+              <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+            </div>
           </div>
-          <h3 class="card-title">{{ post.title }}</h3>
-          <h4 class="card-company">{{ post.company }}</h4>
-          <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-        </div>
+        {% endfor %}
       </div>
-    {% endfor %}
-  </div>
+      {% if section_posts.size > 3 %}
+        <div class="show-more-container">
+          <button class="show-more" data-subsection="{{ subsection | slugify }}">Show More</button>
+        </div>
+        <div class="hidden-posts" id="{{ subsection | slugify }}-hidden">
+          {% for post in section_posts offset:3 %}
+            <div class="project-card">
+              <img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}">
+              <div class="card-content">
+                <div class="tags">
+                  {% for tag in post.tags %}
+                    <span class="tag">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+                <h4 class="card-title">{{ post.title }}</h4>
+                <h5 class="card-company">{{ post.company }}</h5>
+                <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
 </section>
+
 
 <section class="skill-showcase">
   <h2>Skill Showcase</h2>
   <div class="project-grid">
-    {% for post in site.categories.skill %}
+    {% assign skill_posts = site.categories.skill %}
+    {% for post in skill_posts limit:3 %}
       <div class="project-card">
         <img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}">
         <div class="card-content">
@@ -44,4 +78,26 @@ custom_css_class: home-page
       </div>
     {% endfor %}
   </div>
+  {% if skill_posts.size > 3 %}
+    <div class="show-more-container">
+      <button class="show-more" data-subsection="skill-showcase">Show More</button>
+    </div>
+    <div class="hidden-posts" id="skill-showcase-hidden">
+      {% for post in skill_posts offset:3 %}
+        <div class="project-card">
+          <img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}">
+          <div class="card-content">
+            <div class="tags">
+              {% for tag in post.tags %}
+                <span class="tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            <h3 class="card-title">{{ post.title }}</h3>
+            <p class="card-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+            <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 </section>

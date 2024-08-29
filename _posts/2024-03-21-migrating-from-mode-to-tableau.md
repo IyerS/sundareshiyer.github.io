@@ -4,6 +4,7 @@ title: Leading the Migration of Marketing Analytics Reporting from Mode to Table
 image: "/assets/img/project-images/mode-to-tableau.png"
 tags: [BI, SQL, Mode, Tableau, Data Pipeline]
 category: experience
+subsection: "Analytics Management"
 date: 2024-03-21
 excerpt: This post details the work I did involving the migration of marketing analytics reporting from Mode to Tableau
 company: Jobber

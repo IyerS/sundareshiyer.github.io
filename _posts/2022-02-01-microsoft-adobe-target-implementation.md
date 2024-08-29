@@ -6,6 +6,7 @@ tags: [Project Management, Adobe Target, Azure DevOps]
 category: experience
 date: 2022-02-01
 company: Microsoft
+subsection: "Project Management"
 excerpt: This document outlines the step by step process that I was involved and spearheaded to implement Adobe Target in Microsoft's AEM website ecosystem
 ---
 

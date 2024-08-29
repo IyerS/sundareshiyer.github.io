@@ -1,8 +1,8 @@
 title: "Sundaresh Iyer"
 description: "Portfolio of Work"
 excerpt: "Hi, I'm a Business Analyst and a Data Scientist. My portfolio showcases different projects and responsibilities Ive held during my 10+ years of experience and some interesting data science projects I've done to improve my programming skills. Please visit LinkedIn page or download my Resume by using the links below!"
-url: "https://iyers.github.io/sundareshiyer.github.io"
-baseurl: "https://iyers.github.io/sundareshiyer.github.io"
+url: "https://iyers.github.io"
+baseurl: "/sundareshiyer.github.io"
 
 # Social links
 linkedin_username: sundaresh-iyer
@@ -13,10 +13,13 @@ markdown: kramdown
 permalink: /:title/
 
 # Include custom directories
-include: ['_pages']
+include: 
+  - _pages
+  - assets
 sass:
   sass_dir: _sass
   style: compressed
+
 
 # Exclude files from processing
 exclude:

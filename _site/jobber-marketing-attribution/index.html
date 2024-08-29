@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundaresh Iyer - Maintaining and Enhancing the Conversion attribution logic for Jobber across Performance and Brand Marketing Channels</title>
+    <link rel="stylesheet" href="/sundareshiyer.github.io/assets/css/main.css?v=1">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title-description">
+                <h1>Sundaresh Iyer</h1>
+                <h2>Portfolio of Work</h2>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <a href="/sundareshiyer.github.io/">Portfolio</a>
+        <a href="/sundareshiyer.github.io/assets/resume.pdf">Resume</a>
+        <a href="https://linkedin.com/in/sundaresh-iyer">LinkedIn</a>
+        <a href="https://github.com/IyerS">GitHub</a>
+    </nav>
+
+    <main>
+        <article class="post">
+    <header class="post-header">
+        <h1 class="post-title">Maintaining and Enhancing the Conversion attribution logic for Jobber across Performance and Brand Marketing Channels</h1>
+        <p class="post-meta">December 01, 2023</p>
+        <div class="post-tags">
+            
+            <span class="tag">SQL</span>
+            
+            <span class="tag">Python</span>
+            
+            <span class="tag">Markov-chain</span>
+            
+            <span class="tag">multi-touch</span>
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+        <p>In my role as a Marketing Analytics Manager at Jobber, I was tasked with the maintenance and enhancement of a detailed marketing attribution system. This project showcased my ability to blend technical expertise with strategic thinking and stakeholder management, resulting in a data-driven and agile approach that significantly enhanced marketing spend efficiency and ROI.</p>
+
+<h2 id="the-challenge-evolving-attribution-in-a-dynamic-marketing-landscape">The Challenge: Evolving Attribution in a Dynamic Marketing Landscape</h2>
+
+<p>Jobber, a fast-growing SaaS company, needed a robust attribution system that could accurately capture the complex and dynamic customer journey landscape across multiple touchpoints and channels. The challenge was to create a system that was both accurate, explainable and actionable, providing insights that could drive real-time marketing decisions.</p>
+
+<h2 id="key-responsibilities-and-achievements">Key Responsibilities and Achievements</h2>
+
+<h3 id="1-hybrid-first-touch-attribution-model-maintainance-and-enhancements">1. Hybrid First-Touch Attribution Model Maintainance and Enhancements</h3>
+
+<ul>
+  <li>Maintaining and updating a hybrid first-touch attribution model that went beyond simple first-click logic and involved weekly updates of new channels, redistributed channel hierarchy and stakeholder communications and education.</li>
+  <li>Collaborating on a comprehensive set of rules to determine attribution in complex scenarios, ensuring fair credit allocation across marketing channels.</li>
+  <li>Stakeholder management across functional and marketing teams to ensure the model aligned with business objectives and marketing strategies at all times.</li>
+</ul>
+
+<h3 id="2-sql-code-maintenance-and-optimization">2. SQL Code Maintenance and Optimization</h3>
+
+<ul>
+  <li>Maintained and regularly updated SQL code responsible for tracking marketing spend, conversion and attribution across campaigns and channels.</li>
+  <li>Implemented version control and documentation practices, improving code maintainability and knowledge sharing across the team.</li>
+  <li>Pushed for modernization of data principles by moving the code into the github data codebase and handing the ownership of code to the engineering team while maintaining logical control and ability to create a pull request.</li>
+</ul>
+
+<h3 id="3-markov-chain-multi-channel-attribution-implementation">3. Markov Chain Multi-Channel Attribution Implementation</h3>
+
+<ul>
+  <li>Led the initiative to implement a Markov Chain multi-channel attribution model as a complementary analysis tool.</li>
+  <li>Collaborated with data scientists to develop and validate the model using historical data.</li>
+  <li>Created intuitive visualizations and reports to communicate Markov Chain insights to non-technical stakeholders.</li>
+</ul>
+
+<p>Identified $1.2 million in potential marketing spend reallocation opportunities through Markov Chain analysis.</p>
+
+<h3 id="4-markov-chain-multi-channel-attribution-implementation">4. Markov Chain Multi-Channel Attribution Implementation</h3>
+
+<ul>
+  <li>Co chaired the initiative to implement a Markov Chain multi-channel attribution model as a complementary attribution logic to use for marketing spend optimization.</li>
+  <li>Collaborated with data scientists to develop and validate the model using historical data.</li>
+  <li>Created intuitive visualizations and reports to communicate Markov Chain insights to non-technical stakeholders.</li>
+</ul>
+
+<p>Here’s a simplified Python implementation of the Markov Chain attribution model that does not show the initial data preperation and eventual productization of the data pipeline by data engineering to a modeling file</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="k">def</span> <span class="nf">markov_chain_attribution</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="c1"># Step 1: Create transition matrix
+</span>    <span class="n">transitions</span> <span class="o">=</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">.</span><span class="nf">iterrows</span><span class="p">():</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span><span class="p">.</span><span class="nf">dropna</span><span class="p">()</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="sh">'</span><span class="s">Conversion</span><span class="sh">'</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">transitions</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">transitions</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]][</span><span class="sh">'</span><span class="s">Conversion</span><span class="sh">'</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Step 2: Calculate transition probabilities
+</span>    <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">transitions</span><span class="p">[</span><span class="n">state</span><span class="p">].</span><span class="nf">values</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">next_state</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">[</span><span class="n">state</span><span class="p">]:</span>
+            <span class="n">transitions</span><span class="p">[</span><span class="n">state</span><span class="p">][</span><span class="n">next_state</span><span class="p">]</span> <span class="o">/=</span> <span class="n">total</span>
+
+    <span class="c1"># Step 3: Calculate removal effect
+</span>    <span class="n">channels</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">-</span> <span class="p">{</span><span class="sh">'</span><span class="s">user_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Conversion</span><span class="sh">'</span><span class="p">}</span>
+    <span class="n">removal_effects</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">{</span><span class="n">state</span><span class="p">:</span> <span class="p">{</span><span class="n">next_state</span><span class="p">:</span> <span class="n">prob</span> <span class="k">for</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">[</span><span class="n">state</span><span class="p">].</span><span class="nf">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">next_state</span> <span class="o">!=</span> <span class="n">channel</span><span class="p">}</span>
+             <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">transitions</span> <span class="k">if</span> <span class="n">state</span> <span class="o">!=</span> <span class="n">channel</span><span class="p">}</span>
+        
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nf">sum</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">state</span><span class="p">].</span><span class="nf">values</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">state</span><span class="p">].</span><span class="nf">values</span><span class="p">())</span>
+                <span class="n">q</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">next_state</span><span class="p">:</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">factor</span> <span class="k">for</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">q</span><span class="p">[</span><span class="n">state</span><span class="p">].</span><span class="nf">items</span><span class="p">()}</span>
+
+        <span class="c1"># Calculate conversion probability
+</span>        <span class="n">conv_prob</span> <span class="o">=</span> <span class="nf">calculate_conversion_probability</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">removal_effects</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">conv_prob</span>
+
+    <span class="c1"># Step 4: Calculate attribution
+</span>    <span class="n">total_conv_prob</span> <span class="o">=</span> <span class="nf">calculate_conversion_probability</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span>
+    <span class="n">attribution</span> <span class="o">=</span> <span class="p">{</span><span class="n">channel</span><span class="p">:</span> <span class="p">(</span><span class="n">total_conv_prob</span> <span class="o">-</span> <span class="n">effect</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_conv_prob</span> 
+                   <span class="k">for</span> <span class="n">channel</span><span class="p">,</span> <span class="n">effect</span> <span class="ow">in</span> <span class="n">removal_effects</span><span class="p">.</span><span class="nf">items</span><span class="p">()}</span>
+    
+    <span class="k">return</span> <span class="n">attribution</span>
+
+<span class="k">def</span> <span class="nf">calculate_conversion_probability</span><span class="p">(</span><span class="n">transitions</span><span class="p">):</span>
+    <span class="c1"># Use matrix operations to calculate conversion probability
+</span>    <span class="n">states</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">transitions</span><span class="p">.</span><span class="nf">keys</span><span class="p">())</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="n">transitions</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">states</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">states</span><span class="p">])</span>
+    <span class="n">initial</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">states</span><span class="p">])</span>
+    <span class="n">conv_index</span> <span class="o">=</span> <span class="n">states</span><span class="p">.</span><span class="nf">index</span><span class="p">(</span><span class="sh">'</span><span class="s">Conversion</span><span class="sh">'</span><span class="p">)</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="n">initial</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="nf">inv</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">eye</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">states</span><span class="p">))</span> <span class="o">-</span> <span class="n">matrix</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="n">conv_index</span><span class="p">]</span>
+
+<span class="c1"># Example usage
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">user_id</span><span class="sh">'</span><span class="p">:</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">channel_1</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="sh">'</span><span class="s">Search</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Display</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Social</span><span class="sh">'</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">channel_2</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="sh">'</span><span class="s">Search</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Display</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Social</span><span class="sh">'</span><span class="p">,</span> <span class="bp">None</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">channel_3</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="sh">'</span><span class="s">Search</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Display</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">Social</span><span class="sh">'</span><span class="p">,</span> <span class="bp">None</span><span class="p">],</span> <span class="mi">1000</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">Conversion</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="p">})</span>
+
+<span class="n">attribution_results</span> <span class="o">=</span> <span class="nf">markov_chain_attribution</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Channel Attribution:</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">channel</span><span class="p">,</span> <span class="n">attribution</span> <span class="ow">in</span> <span class="n">attribution_results</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">channel</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">attribution</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="o">%</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This implementation:</p>
+<ol>
+  <li>Creates a transition matrix from the user journey data.</li>
+  <li>Calculates transition probabilities between channels.</li>
+  <li>Computes the removal effect for each channel.</li>
+  <li>Calculates the final attribution based on the removal effect.</li>
+</ol>
+
+<h3 id="5-cross-functional-collaboration-and-stakeholder-management">5. Cross-Functional Collaboration and Stakeholder Management</h3>
+
+<ul>
+  <li>Worked closely with marketing, product, and finance teams to ensure the attribution system met diverse needs.</li>
+  <li>Conducted regular training sessions and created documentation to empower marketers to use attribution data effectively.</li>
+  <li>Presented attribution insights to C-level executives, influencing high-level marketing strategy decisions.</li>
+</ul>
+
+<h2 id="key-takeaways-insights-from-advanced-marketing-attribution">Key Takeaways: Insights from Advanced Marketing Attribution</h2>
+
+<p>Through the development and maintenance of this sophisticated attribution system, we gained valuable insights that can inform future marketing analytics initiatives:</p>
+
+<ol>
+  <li>
+    <p><strong>Balancing Complexity and Actionability:</strong> While the hybrid model and Markov Chain analysis provided deep insights, we learned the importance of translating complex data into actionable recommendations.</p>
+  </li>
+  <li>
+    <p><strong>Cross-Channel Synergies:</strong> The Markov Chain model revealed unexpected synergies between channels, leading to a 40% improvement in multi-channel campaign performance when these insights were applied.</p>
+  </li>
+  <li>
+    <p><strong>Importance of Data Quality:</strong> We found that investing in data cleansing and validation improved attribution accuracy by more than 20%, highlighting the critical role of data quality in marketing analytics.</p>
+  </li>
+  <li>
+    <p><strong>Adaptability in Attribution:</strong> By designing a flexible system, we were able to quickly adapt to new marketing channels and campaign types.</p>
+  </li>
+  <li>
+    <p><strong>Bridging Technical and Business Perspectives:</strong> Regular stakeholder engagement and clear visualization of complex data led to a multi-fold increase in marketing leaderships confidence in marketing spend decisions based on both the hybrid first touch and multi-touch attributions</p>
+  </li>
+</ol>
+
+<p>These learnings not only contributed to the success of Jobber’s marketing efforts but also showcase the strategic impact that advanced marketing attribution can have on a growing SaaS business. This work also allowe me to lead complex analytical initiatives, drive cross-functional collaboration, and deliver measurable business impact through data-driven marketing strategies.</p>
+
+    </div>
+</article>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sundaresh Iyer. All rights reserved.</p>
+    </footer>
+</body>
+</html>

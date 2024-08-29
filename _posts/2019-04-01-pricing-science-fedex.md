@@ -4,6 +4,7 @@ title: Clustering Customers based their known Price Sensitivity
 image: "/assets/img/project-images/price-clustering.png"
 tags: [Customer Clustering, Machine Learning, Python]
 category: experience
+subsection: "Data Analytics"
 date: 2019-04-01
 company: FedEx
 excerpt: This document outlines the cluster of customers work that I supported on along with the Pricing Science department at FedEx Express.

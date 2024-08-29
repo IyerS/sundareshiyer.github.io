@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundaresh Iyer - Creating An Image Search Engine Using Deep Learning</title>
+    <link rel="stylesheet" href="/sundareshiyer.github.io/assets/css/main.css?v=1">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title-description">
+                <h1>Sundaresh Iyer</h1>
+                <h2>Portfolio of Work</h2>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <a href="/sundareshiyer.github.io/">Portfolio</a>
+        <a href="/sundareshiyer.github.io/assets/resume.pdf">Resume</a>
+        <a href="https://linkedin.com/in/sundaresh-iyer">LinkedIn</a>
+        <a href="https://github.com/IyerS">GitHub</a>
+    </nav>
+
+    <main>
+        <article class="post">
+    <header class="post-header">
+        <h1 class="post-title">Creating An Image Search Engine Using Deep Learning</h1>
+        <p class="post-meta"></p>
+        <div class="post-tags">
+            
+            <span class="tag">Deep Learning</span>
+            
+            <span class="tag">CNN</span>
+            
+            <span class="tag">Data Science</span>
+            
+            <span class="tag">Computer Vision</span>
+            
+            <span class="tag">Python</span>
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+        <p>In this project we build a Deep Learning based Image Search Engine that will help customers find similar products to ones they want!</p>
+
+<h1 id="table-of-contents">Table of contents</h1>
+
+<ul>
+  <li><a href="#overview-main">00. Project Overview</a>
+    <ul>
+      <li><a href="#overview-context">Context</a></li>
+      <li><a href="#overview-actions">Actions</a></li>
+      <li><a href="#overview-results">Results</a></li>
+      <li><a href="#overview-growth">Growth/Next Steps</a></li>
+    </ul>
+  </li>
+  <li><a href="#sample-data-overview">01. Sample Data Overview</a></li>
+  <li><a href="#transfer-learning-overview">02. Transfer Learning Overview</a></li>
+  <li><a href="#vgg16-setup">03. Setting Up VGG16</a></li>
+  <li><a href="#image-preprocessing">04. Image Preprocessing &amp; Featurisation</a></li>
+  <li><a href="#execute-search">05. Execute Search</a></li>
+  <li><a href="#growth-next-steps">06. Discussion, Growth &amp; Next Steps</a></li>
+</ul>
+
+<hr />
+
+<h1 id="project-overview--">Project Overview  <a name="overview-main"></a></h1>
+
+<h3 id="context-">Context <a name="overview-context"></a></h3>
+
+<p>Our client had been analysing their customer feedback, and one thing in particular came up a number of times.</p>
+
+<p>Their customers are aware that they have a great range of competitively priced products in the clothing section - but have said they are struggling to find the products they are looking for on the website.</p>
+
+<p>They are often buying much more expensive products, and then later finding out that we actually stocked a very similar, but lower-priced alternative.</p>
+
+<p>Based upon our work for them using a Convolutional Neural Network, they want to know if we can build out something that could be applied here.
+<br />
+<br /></p>
+<h3 id="actions-">Actions <a name="overview-actions"></a></h3>
+
+<p>Here we implement the pre-trained VGG16 network. Instead of the final MaxPooling layer, we we add in a <strong>Global Average Pooling Layer</strong> at the end of the VGG16 architecture meaning the output of the network will be a single vector of numeric information rather than many arrays.  We use “feature vector” to compare image similarity.</p>
+
+<p>We pre-process our 300 base-set images, and then pass them through the VGG16 network to extract their feature vectors.  We store these in an object for use when a search image is fed in.</p>
+
+<p>We pass in a search image, apply the same preprocessing steps and again extract the feature vector.</p>
+
+<p>We use Cosine Similarity to compare the search feature vector with all base-set feature vectors, returned the N smallest values.  These represent our “most similar” images - the ones that would be returned to the customer.</p>
+
+<p><br />
+<br /></p>
+
+<h3 id="results-">Results <a name="overview-results"></a></h3>
+
+<p>We test two different images, and plot the search results along with the cosine similarity scores.  You can see these in the dedicated section below.</p>
+
+<p><br />
+<br /></p>
+<h3 id="discussion-growth--next-steps-">Discussion, Growth &amp; Next Steps <a name="overview-growth"></a></h3>
+
+<p>The way we have coded this up is very much for the “proof of concept”.  In practice we would definitely have the last section of the code (where we submit a search) isolated, and running from all of the saved objects that we need - we wouldn’t include it in a single script like we have here.</p>
+
+<p>Also, rather than having to fit the Nearest Neighbours to our <em>feature_vector_store</em> each time a search is submitted, we could store that object as well.</p>
+
+<p>When applying this in production, we also may want to code up a script that easily adds or removes images from the feature store.  The products that are available in the clients store would be changing all the time, so we’d want a nice easy way to add new feature vectors to the feature_vector_store object - and also potentially a way to remove search results coming back if that product was out of stock, or no longer part of the suite of products that were sold.</p>
+
+<p>Most likely, in production, this would just return a list of filepaths that the client’s website could then pull forward as required - the matplotlib code is just for us to see it in action manually!</p>
+
+<p>This was tested only in one category, we would want to test on a broader array of categories - most likely having a saved network for each to avoid irrelevant predictions.</p>
+
+<p>We only looked at Cosine Similarity here, it would be interesting to investigate other distance metrics.</p>
+
+<p>It would be beneficial to come up with a way to quantify the quality of the search results.  This could come from customer feedback, or from click-through rates on the site.</p>
+
+<p>Here we utilised VGG16. It would be worthwhile testing other available pre-trained networks such as ResNet, Inception, and the DenseNet networks.</p>
+
+<p><br />
+<br /></p>
+
+<hr />
+
+<h1 id="sample-data-overview--">Sample Data Overview  <a name="sample-data-overview"></a></h1>
+
+<p>For our proof on concept we are working in only one section of the client’s product base, women’s shoes.</p>
+
+<p>We have been provided with images of the 300 shoes that are currently available to purchase.  A random selection of 18 of these can be seen in the image below.</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/search-engine-image-examples.png" alt="alt text" title="Deep Learning Search Engine - Image Examples" /></p>
+
+<p><br />
+We will need to extract &amp; capture the “features” of this base image set, and compare them to the “features” found in any given search image.  The images with the closest match will be returned to the customer!</p>
+
+<hr />
+<p><br /></p>
+
+<h1 id="transfer-learning-overview--">Transfer Learning Overview  <a name="transfer-learning-overview"></a></h1>
+
+<p><br /></p>
+<h4 id="overview">Overview</h4>
+
+<p>Transfer Learning is an extremely powerful way for us to utilise pre-built, and pre-trained networks, and apply these in a clever way to solve <em>our</em> specific Deep Learning based tasks.  It consists of taking features learned on one problem, and leveraging them on a new, similar problem!</p>
+
+<p>For image based tasks this often means using all the the <em>pre-learned</em> features from a large network, so all of the convolutional filter values and feature maps, and instead of using it to predict what the network was originally designed for, piggybacking it, and training just the last part for some other task.</p>
+
+<p>The hope is, that the features which have already been learned will be good enough to differentiate between our new classes, and we’ll save a whole lot of training time (and be able to utilise a network architecture that has potentially already been optimised).</p>
+
+<p>For our Fruit Classification task we will be utilising a famous network known as <strong>VGG16</strong>.  This was designed back in 2014, but even by todays standards is a fairly heft network.  It was trained on the famous <em>ImageNet</em> dataset, with over a million images across one thousand different image classes. Everything from goldfish to cauliflowers to bottles of wine, to scuba divers!</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/vgg16-architecture.png" alt="alt text" title="VGG16 Architecture" /></p>
+
+<p><br />
+The VGG16 network won the 2014 ImageNet competition, meaning that it predicted more accurately than any other model on that set of images (although this has now been surpassed).</p>
+
+<p>If we can get our hands on the fully trained VGG16 model object, built to differentiate between all of those one thousand different image classes, the features that are contained in the layer prior to flattening will be very rich, and could be very useful for predicting all sorts of other images too without having to (a) re-train this entire architecture, which would be computationally, very expensive or (b) having to come up with our very own complex architecture, which we know can take a lot of trial and error to get right!</p>
+
+<p>All the hard work has been done, we just want to “transfer” those “learnings” to our own problem space.</p>
+
+<p><br /></p>
+<h4 id="nuanced-application">Nuanced Application</h4>
+
+<p>When using Transfer Learning for image classification tasks, we often import the architecture up to final Max Pooling layer, prior to flattening &amp; the Dense Layers &amp; Output Layer.  We use the frozen parameter values from the bottom of the network, and then get instead of the final Max Pooling layer</p>
+
+<p>With this approach, the final MaxPooling layer will be in the form of a number of pooled feature maps.  For our task here however, we don’t want that. We instead want a <em>single set</em> of numbers to represent these features and thus we add in a <strong>Global Average Pooling Layer</strong> at the end of the VGG16 architecture meaning the output of the network will be a single array of numeric information rather than many arrays.</p>
+
+<hr />
+<p><br /></p>
+
+<h1 id="setting-up-vgg16--">Setting Up VGG16  <a name="vgg16-setup"></a></h1>
+
+<p>Keras makes the use of VGG16 very easy. We download the bottom of the VGG16 network (everything up to the Dense Layers) and then add a parameter to ensure that the final layer is not a Max Pooling Layer but instead a <em>Global Max Pooling Layer</em></p>
+
+<p>In the code below, we:</p>
+
+<ul>
+  <li>Import the required packaages</li>
+  <li>Set up the image parameters required for VGG16</li>
+  <li>Load in VGG16 with Global Average Pooling</li>
+  <li>Save the network architecture &amp; weights for use in search engine</li>
+</ul>
+
+<p><br /></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># import the required python libraries
+</span><span class="kn">from</span> <span class="n">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">load_model</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.applications.vgg16</span> <span class="kn">import</span> <span class="n">VGG16</span><span class="p">,</span> <span class="n">preprocess_input</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">load_img</span><span class="p">,</span> <span class="n">img_to_array</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="n">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestNeighbors</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="n">pickle</span>
+
+<span class="c1"># VGG16 image parameters
+</span><span class="n">img_width</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">img_height</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">num_channels</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># load in &amp; structure VGG16 network architecture (global pooling)
+</span><span class="n">vgg</span> <span class="o">=</span> <span class="nc">VGG16</span><span class="p">(</span><span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">),</span> <span class="n">include_top</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">pooling</span> <span class="o">=</span> <span class="sh">'</span><span class="s">avg</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="nc">Model</span><span class="p">(</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">vgg</span><span class="p">.</span><span class="nb">input</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">vgg</span><span class="p">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">output</span><span class="p">)</span>
+
+<span class="c1"># save model file
+</span><span class="n">model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="sh">'</span><span class="s">models/vgg16_search_engine.h5</span><span class="sh">'</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+The architecture can be seen below:
+<br /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_2 (InputLayer)         [(None, 224, 224, 3)]     0         
+_________________________________________________________________
+block1_conv1 (Conv2D)        (None, 224, 224, 64)      1792      
+_________________________________________________________________
+block1_conv2 (Conv2D)        (None, 224, 224, 64)      36928     
+_________________________________________________________________
+block1_pool (MaxPooling2D)   (None, 112, 112, 64)      0         
+_________________________________________________________________
+block2_conv1 (Conv2D)        (None, 112, 112, 128)     73856     
+_________________________________________________________________
+block2_conv2 (Conv2D)        (None, 112, 112, 128)     147584    
+_________________________________________________________________
+block2_pool (MaxPooling2D)   (None, 56, 56, 128)       0         
+_________________________________________________________________
+block3_conv1 (Conv2D)        (None, 56, 56, 256)       295168    
+_________________________________________________________________
+block3_conv2 (Conv2D)        (None, 56, 56, 256)       590080    
+_________________________________________________________________
+block3_conv3 (Conv2D)        (None, 56, 56, 256)       590080    
+_________________________________________________________________
+block3_pool (MaxPooling2D)   (None, 28, 28, 256)       0         
+_________________________________________________________________
+block4_conv1 (Conv2D)        (None, 28, 28, 512)       1180160   
+_________________________________________________________________
+block4_conv2 (Conv2D)        (None, 28, 28, 512)       2359808   
+_________________________________________________________________
+block4_conv3 (Conv2D)        (None, 28, 28, 512)       2359808   
+_________________________________________________________________
+block4_pool (MaxPooling2D)   (None, 14, 14, 512)       0         
+_________________________________________________________________
+block5_conv1 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_conv2 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_conv3 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_pool (MaxPooling2D)   (None, 7, 7, 512)         0         
+_________________________________________________________________
+global_average_pooling2d (Gl (None, 512)               0         
+=================================================================
+Total params: 14,714,688
+Trainable params: 14,714,688
+Non-trainable params: 0
+_________________________________________________________________
+
+</code></pre></div></div>
+<p><br />
+If we hadn’t added that last parameter of “pooling = avg” then the final layer would have been that MaxPoolingLayer of shape 7 by 7 by 512. Instead however, the Global Average Pooling logic was added, and this means we get that single array that is of size 512.  In other words, all of the feature maps from that final Max Pooling layer are summarised down into one vector of 512 numbers, and for each image these numbers will represent it’s features. This feature vector is what we will be using to compare our base set of images, to any given search image to assess the similarity!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="image-preprocessing--featurisation-">Image Preprocessing &amp; Featurisation <a name="image-preprocessing"></a></h1>
+
+<p><br /></p>
+<h4 id="helper-functions">Helper Functions</h4>
+
+<p>Here we create two useful functions, one for pre-processing images prior to entering the network, and the second for featurising the image, in other words passing the image through the VGG16 network and receiving the output, a single vector of 512 numeric values.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># image pre-processing function
+</span><span class="k">def</span> <span class="nf">preprocess_image</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    
+    <span class="n">image</span> <span class="o">=</span> <span class="nf">load_img</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">))</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="nf">img_to_array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="nf">preprocess_input</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">image</span>
+
+<span class="c1"># image featurisation function
+</span><span class="k">def</span> <span class="nf">featurise_image</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    
+    <span class="n">feature_vector</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">feature_vector</span>
+
+</code></pre></div></div>
+<p><br />
+The <em>preprocess_image</em> function does the following:</p>
+
+<ul>
+  <li>Receives the filepath of an image</li>
+  <li>Loads the image in</li>
+  <li>Turns the image into an array</li>
+  <li>Adds in the “batch” dimension for the array that Keras is expecting</li>
+  <li>Applies the custom pre-processing logic for VGG16 that we imported from Keras</li>
+  <li>Returns the image as an array</li>
+</ul>
+
+<p>The <em>featurise_image</em> function does the following:</p>
+
+<ul>
+  <li>Receives the image as an array</li>
+  <li>Passes the array through the VGG16 architecture</li>
+  <li>Returns the feature vector</li>
+</ul>
+
+<p><br /></p>
+<h4 id="setup">Setup</h4>
+
+<p>In the code below, we:</p>
+
+<ul>
+  <li>Specify the directory of the base-set of images</li>
+  <li>Set up empty list to append our image filenames (for future lookup)</li>
+  <li>Set up empty array to append our base-set feature vectors</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># source directory for base images
+</span><span class="n">source_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">data/</span><span class="sh">'</span>
+
+<span class="c1"># empty objects to append to
+</span><span class="n">filename_store</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">feature_vector_store</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">512</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+<h4 id="preprocess--featurise-base-set-images">Preprocess &amp; Featurise Base-Set Images</h4>
+
+<p>We now want to preprocess &amp; feature all 300 images in our base-set.  To do this we execute a loop and apply the two functions we created earlier.  For each image, we append the filename, and the feature vector to stores.  We then save these stores, for future use when a search is executed.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># pass in &amp; featurise base image set
+</span><span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="nf">listdir</span><span class="p">(</span><span class="n">source_dir</span><span class="p">):</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    
+    <span class="c1"># append image filename for future lookup
+</span>    <span class="n">filename_store</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">source_dir</span> <span class="o">+</span> <span class="n">image</span><span class="p">)</span>
+    
+    <span class="c1"># preprocess the image
+</span>    <span class="n">preprocessed_image</span> <span class="o">=</span> <span class="nf">preprocess_image</span><span class="p">(</span><span class="n">source_dir</span> <span class="o">+</span> <span class="n">image</span><span class="p">)</span>
+    
+    <span class="c1"># extract the feature vector
+</span>    <span class="n">feature_vector</span> <span class="o">=</span> <span class="nf">featurise_image</span><span class="p">(</span><span class="n">preprocessed_image</span><span class="p">)</span>
+    
+    <span class="c1"># append feature vector for similarity calculations
+</span>    <span class="n">feature_vector_store</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">feature_vector_store</span><span class="p">,</span> <span class="n">feature_vector</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># save key objects for future use
+</span><span class="n">pickle</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">filename_store</span><span class="p">,</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">models/filename_store.p</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">wb</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">pickle</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">feature_vector_store</span><span class="p">,</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">models/feature_vector_store.p</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">wb</span><span class="sh">'</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<hr />
+<p><br /></p>
+<h1 id="execute-search-">Execute Search <a name="execute-search"></a></h1>
+
+<p>With the base-set featurised, we can now run a search on a new image from a customer!</p>
+
+<p><br /></p>
+<h4 id="setup-1">Setup</h4>
+
+<p>In the code below, we:</p>
+
+<ul>
+  <li>Load in our VGG16 model</li>
+  <li>Load in our filename store &amp; feature vector store</li>
+  <li>Specify the search image file</li>
+  <li>Specify the number of search results we want</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># load in required objects
+</span><span class="n">model</span> <span class="o">=</span> <span class="nf">load_model</span><span class="p">(</span><span class="sh">'</span><span class="s">models/vgg16_search_engine.h5</span><span class="sh">'</span><span class="p">,</span> <span class="nb">compile</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="n">filename_store</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">models/filename_store.p</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">rb</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">feature_vector_store</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">models/feature_vector_store.p</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">rb</span><span class="sh">'</span><span class="p">))</span>
+
+<span class="c1"># search parameters
+</span><span class="n">search_results_n</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">search_image</span> <span class="o">=</span> <span class="sh">'</span><span class="s">search_image_02.jpg</span><span class="sh">'</span>
+
+</code></pre></div></div>
+<p><br />
+The search image we are going to use for illustration here is below:</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/search-engine-search1.jpg" alt="alt text" title="VGG16 Architecture" /></p>
+
+<p><br /></p>
+<h4 id="preprocess--featurise-search-image">Preprocess &amp; Featurise Search Image</h4>
+
+<p>Using the same helper functions, we apply the preprocessing &amp; featurising logic to the search image - the output again being a vector containing 512 numeric values.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># preprocess &amp; featurise search image
+</span><span class="n">preprocessed_image</span> <span class="o">=</span> <span class="nf">preprocess_image</span><span class="p">(</span><span class="n">search_image</span><span class="p">)</span>
+<span class="n">search_feature_vector</span> <span class="o">=</span> <span class="nf">featurise_image</span><span class="p">(</span><span class="n">preprocessed_image</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+<h4 id="locate-most-similar-images-using-cosine-similarity">Locate Most Similar Images Using Cosine Similarity</h4>
+
+<p>At this point, we have our search image existing as a 512 length feature vector, and we need to compare that feature vector to the feature vectors of all our base images.</p>
+
+<p>When that is done, we need to understand which of those base image feature vectors are most like the feature vector of our search image, and more specifically, we need to return the eight most closely matched, as that is what we specified above.</p>
+
+<p>To do this, we use the <em>NearestNeighbors</em> class from <em>scikit-learn</em> and we will apply the <em>Cosine Distance</em> metric to calculate the angle of difference between the feature vectors.</p>
+
+<p><strong>Cosine Distance</strong> essentially measures the angle between any two vectors, and it looks to see whether the two vectors are pointing in a similar direction or not.  The more similar the direction the vectors are pointing, the smaller the angle between them in space and the more different the direction the LARGER the angle between them in space. This angle gives us our cosine distance score.</p>
+
+<p>By calculating this score between our search image vector and each of our base image vectors, we can be returned the images with the eight lowest cosine scores - and these will be our eight most similar images, at least in terms of the feature vector representation that comes from our VGG16 network!</p>
+
+<p>In the code below, we:</p>
+
+<ul>
+  <li>Instantiate the Nearest Neighbours logic and specify our metric as Cosine Similarity</li>
+  <li>Apply this to our <em>feature_vector_store</em> object (that contains a 512 length feature vector for each of our 300 base-set images)</li>
+  <li>Pass in our <em>search_feature_vector</em> object into the fitted Nearest Neighbors object.  This will find the eight nearest base feature vectors, and for each it will return (a) the cosine distance, and (b) the index of that feature vector from our <em>feature_vector_store</em> object.</li>
+  <li>Convert the outputs from arrays to lists (for ease when plotting the results)</li>
+  <li>Create a list of filenames for the eight most similar base-set images</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># instantiate nearest neighbours logic
+</span><span class="n">image_neighbours</span> <span class="o">=</span> <span class="nc">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">search_results_n</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="sh">'</span><span class="s">cosine</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># apply to our feature vector store
+</span><span class="n">image_neighbours</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">feature_vector_store</span><span class="p">)</span>
+
+<span class="c1"># return search results for search image (distances &amp; indices)
+</span><span class="n">image_distances</span><span class="p">,</span> <span class="n">image_indices</span> <span class="o">=</span> <span class="n">image_neighbours</span><span class="p">.</span><span class="nf">kneighbors</span><span class="p">(</span><span class="n">search_feature_vector</span><span class="p">)</span>
+
+<span class="c1"># convert closest image indices &amp; distances to lists
+</span><span class="n">image_indices</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">image_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">image_distances</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">image_distances</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># get list of filenames for search results
+</span><span class="n">search_result_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">filename_store</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">image_indices</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+<h4 id="plot-search-results">Plot Search Results</h4>
+
+<p>We now have all of the information about the eight most similar images to our search image - let’s see how well it worked by plotting those images!</p>
+
+<p>We plot them in order from most similar to least similar, and include the cosine distance score for reference (smaller is closer, or more similar)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># plot search results
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">counter</span><span class="p">,</span> <span class="n">result_file</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">search_result_files</span><span class="p">):</span>    
+    <span class="n">image</span> <span class="o">=</span> <span class="nf">load_img</span><span class="p">(</span><span class="n">result_file</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">counter</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="nf">round</span><span class="p">(</span><span class="n">image_distances</span><span class="p">[</span><span class="n">counter</span><span class="p">],</span><span class="mi">3</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">28</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="nf">get_xaxis</span><span class="p">().</span><span class="nf">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="nf">get_yaxis</span><span class="p">().</span><span class="nf">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p><br />
+The search image, and search results are below:</p>
+
+<p><strong>Search Image</strong>
+<br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/search-engine-search1.jpg" alt="alt text" title="Search 1: Search Image" />
+<br />
+<br />
+<strong>Search Results</strong>
+<img src="/sundareshiyer.github.io/assets/img/project-images/search-engine-search1-results.png" alt="alt text" title="Search 1: Search Results" /></p>
+
+<p><br />
+Very impressive results!  From the 300 base-set images, these are the eight that have been deemed to be <em>most similar</em>!</p>
+
+<p><br />
+Let’s take a look at a second search image…</p>
+
+<p><strong>Search Image</strong>
+<br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/search-engine-search2.jpg" alt="alt text" title="Search 2: Search Image" />
+<br />
+<br />
+<strong>Search Results</strong>
+<img src="/sundareshiyer.github.io/assets/img/project-images/search-engine-search2-results.png" alt="alt text" title="Search 2: Search Results" /></p>
+
+<p><br />
+Again, these have come out really well - the features from VGG16 combined with Cosine Similarity have done a great job!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="discussion-growth--next-steps--1">Discussion, Growth &amp; Next Steps <a name="growth-next-steps"></a></h1>
+
+<p>The way we have coded this up is very much for the “proof of concept”.  In practice we would definitely have the last section of the code (where we submit a search) isolated, and running from all of the saved objects that we need - we wouldn’t include it in a single script like we have here.</p>
+
+<p>Also, rather than having to fit the Nearest Neighbours to our <em>feature_vector_store</em> each time a search is submitted, we could store that object as well.</p>
+
+<p>When applying this in production, we also may want to code up a script that easily adds or removes images from the feature store.  The products that are available in the clients store would be changing all the time, so we’d want a nice easy way to add new feature vectors to the feature_vector_store object - and also potentially a way to remove search results coming back if that product was out of stock, or no longer part of the suite of products that were sold.</p>
+
+<p>Most likely, in production, this would just return a list of filepaths that the client’s website could then pull forward as required - the matplotlib code is just for us to see it in action manually!</p>
+
+<p>This was tested only in one category, we would want to test on a broader array of categories - most likely having a saved network for each to avoid irrelevant predictions.</p>
+
+<p>We only looked at Cosine Similarity here, it would be interesting to investigate other distance metrics.</p>
+
+<p>It would be beneficial to come up with a way to quantify the quality of the search results.  This could come from customer feedback, or from click-through rates on the site.</p>
+
+<p>Here we utilised VGG16. It would be worthwhile testing other available pre-trained networks such as ResNet, Inception, and the DenseNet networks.</p>
+
+    </div>
+</article>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sundaresh Iyer. All rights reserved.</p>
+    </footer>
+</body>
+</html>

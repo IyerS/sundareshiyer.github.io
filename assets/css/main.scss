@@ -21,23 +21,23 @@ header {
 h2 {
     position: relative;
     padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-style: italic;
-    colour: #83ff00;
+    margin-top: 40px;
+    margin-bottom: 5px;
+    color: #83ff00;
+    font-size: 24px;
 }
 
-h2::after {
+h2::before {
     content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    display: block;
     width: 100%;
-    height: 2px;
-    background-color: #3498db; /* You can change this color */
+    height: 3px;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, rgba(131, 255, 0, 0.5), #132b50);
 }
 
 h3 {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .header-content {
@@ -48,9 +48,9 @@ h3 {
 
 .profile-image img {
     width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    border: 3px solid #3498db;
+    height: 220px;
+    border-radius: 10%;
+    border: 3px solid #132b50;
     object-fit: cover;
 }
 
@@ -133,12 +133,12 @@ nav a:active {
 }
 
 
-.project-grid {
+.project-grid, .hidden-posts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    padding: 20px;
-}
+    margin-bottom: 20px;
+  }
 
 .project-card {
     position: relative; /* Ensure positioning context for child elements */
@@ -148,6 +148,8 @@ nav a:active {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px; /* Adjust padding if needed */
     color: #fff; /* Ensure text color is visible */
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card img {
@@ -173,11 +175,15 @@ nav a:active {
 .card-title {
     color: white;
     font-size: 1.5em;
+    margin-top: auto;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
 .card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
 }
 
@@ -197,6 +203,64 @@ nav a:active {
     font-style: italic;
 }
 
+.subsection {
+    margin-bottom: 40px;
+  
+    h3 {
+      font-size: 1.8em; // Increased from 1.8em to make it bigger
+      margin-bottom: 25px; // Slightly increased margin for better spacing
+      color: #e45c01; // Changed to a more vibrant orange color
+      font-style: italic;
+      text-align: right; // Right justified
+      font-weight: 600; // Make it slightly bolder
+      //text-transform: uppercase; // Optional: makes it all capitals for more emphasis
+      letter-spacing: 1px; // Adds a bit of spacing between letters
+      border-bottom: 1px solid #e8bfa4bf; // Adds an underline semi-transparent effect
+      padding-bottom: 8px; // Adds some space between text and underline
+    }
+  }
+  
+  .show-more-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .show-more {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+
+  .hidden-posts {
+    display: none;
+  }
+
+  .hidden-posts .show-more-container {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .project-grid, .hidden-posts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .project-grid, .hidden-posts {
+      grid-template-columns: 1fr;
+    }
+  }
 
 .post-content img {
     max-width: 100%;
@@ -225,11 +289,6 @@ nav a:active {
     font-size: 0.8em;
 }
 
-@media (max-width: 768px) {
-    .project-grid {
-        grid-template-columns: 1fr;
-    }
-}
 
 /* Post Styles */
 .post {
@@ -354,14 +413,31 @@ nav a:active {
     background-color: #f6f8fa;
 }
 
-.skill-showcase, .work-experience {
-  margin-bottom: 40px;
-}
+
 
 .skill-showcase h2, .work-experience h2 {
-  font-size: 2em;
-  margin-bottom: 20px;
-  color: #132b50;
+    position: relative;
+    padding: 20px 20px; // Added horizontal padding
+    margin-bottom: 30px;
+    font-size: xx-large;
+    color: #04084b; // Light color for the text
+    background-color: #99bef1; // Dark background color
+    text-align: center;
+    width: 97%; // Full width of its container
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+}
+
+.skill-showcase h2::before, .work-experience h2::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, 
+        #99bef1,   /* Light at the start */
+        #04084b 50%,              /* Dark in the center */
+        #99bef1    /* Light at the end */
+    );
 }
 
 /* Images */

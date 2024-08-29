@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundaresh Iyer - Fruit Classification Using A Convolutional Neural Network</title>
+    <link rel="stylesheet" href="/sundareshiyer.github.io/assets/css/main.css?v=1">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="title-description">
+                <h1>Sundaresh Iyer</h1>
+                <h2>Portfolio of Work</h2>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <a href="/sundareshiyer.github.io/">Portfolio</a>
+        <a href="/sundareshiyer.github.io/assets/resume.pdf">Resume</a>
+        <a href="https://linkedin.com/in/sundaresh-iyer">LinkedIn</a>
+        <a href="https://github.com/IyerS">GitHub</a>
+    </nav>
+
+    <main>
+        <article class="post">
+    <header class="post-header">
+        <h1 class="post-title">Fruit Classification Using A Convolutional Neural Network</h1>
+        <p class="post-meta"></p>
+        <div class="post-tags">
+            
+            <span class="tag">Deep Learning</span>
+            
+            <span class="tag">CNN</span>
+            
+            <span class="tag">Data Science</span>
+            
+            <span class="tag">Computer Vision</span>
+            
+            <span class="tag">Python</span>
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+        <p>In this project we build &amp; optimise a Convolutional Neural Network to classify images of fruits, with the goal of helping a grocery retailer enhance &amp; scale their sorting &amp; delivery processes.</p>
+
+<h1 id="table-of-contents">Table of contents</h1>
+
+<ul>
+  <li><a href="#overview-main">00. Project Overview</a>
+    <ul>
+      <li><a href="#overview-context">Context</a></li>
+      <li><a href="#overview-actions">Actions</a></li>
+      <li><a href="#overview-results">Results</a></li>
+      <li><a href="#overview-growth">Growth/Next Steps</a></li>
+    </ul>
+  </li>
+  <li><a href="#data-overview">01. Data Overview</a></li>
+  <li><a href="#data-pipeline">02. Data Pipeline</a></li>
+  <li><a href="#cnn-overview">03. CNN Overview</a></li>
+  <li><a href="#cnn-baseline">04. Baseline Network</a></li>
+  <li><a href="#cnn-dropout">05. Tackling Overfitting With Dropout</a></li>
+  <li><a href="#cnn-augmentation">06. Image Augmentation</a></li>
+  <li><a href="#cnn-tuning">07. Hyper-Parameter Tuning</a></li>
+  <li><a href="#cnn-transfer-learning">08. Transfer Learning</a></li>
+  <li><a href="#cnn-results">09. Overall Results Discussion</a></li>
+  <li><a href="#growth-next-steps">10. Next Steps &amp; Growth</a></li>
+</ul>
+
+<hr />
+
+<h1 id="project-overview--">Project Overview  <a name="overview-main"></a></h1>
+
+<h3 id="context-">Context <a name="overview-context"></a></h3>
+
+<p>Our client had an interesting proposal put forward to them, and requested our help to assess whether it was viable.</p>
+
+<p>At a recent tech conference, they spoke to a contact from a robotics company that creates robotic solutions that help other businesses scale and optimise their operations.</p>
+
+<p>Their representative mentioned that they had built a prototype for a robotic sorting arm that could be used to pick up and move products off a platform.  It would use a camera to “see” the product, and could be programmed to move that particular product into a designated bin, for further processing.</p>
+
+<p>The only thing they hadn’t figured out was how to actually identify each product using the camera, so that the robotic arm could move it to the right place.</p>
+
+<p>We were asked to put forward a proof of concept on this - and were given some sample images of fruits from their processing platform.</p>
+
+<p>If this was successful and put into place on a larger scale, the client would be able to enhance their sorting &amp; delivery processes.</p>
+
+<p><br />
+<br /></p>
+<h3 id="actions-">Actions <a name="overview-actions"></a></h3>
+
+<p>We utilise the <em>Keras</em> Deep Learning library for this task.</p>
+
+<p>We start by creating our pipeline for feeding training &amp; validation images in batches, from our local directory, into the network.  We investigate &amp; quantify predictive performance epoch by epoch on the validation set, and then also on a held-back test set.</p>
+
+<p>Our baseline network is simple, but gives us a starting point to refine from.  This network contains <strong>2 Convolutional Layers</strong>, each with <strong>32 filters</strong> and subsequent <strong>Max Pooling</strong> Layers.  We have a <strong>single Dense (Fully Connected) layer</strong> following flattening with <strong>32 neurons</strong> followed by our output layer.  We apply the <strong>relu</strong> activation function on all layers, and use the <strong>adam</strong> optimizer.</p>
+
+<p>Our first refinement is to add <strong>Dropout</strong> to tackle the issue of overfitting which is prevalent in the baseline network performance.  We use a <strong>dropout rate of 0.5</strong>.</p>
+
+<p>We then add in <strong>Image Augmentation</strong> to our data pipeline to increase the variation of input images for the network to learn from, resulting in a more robust results as well as also address overfitting.</p>
+
+<p>With these additions in place, we utlise <em>keras-tuner</em> to optimise our network architecture &amp; tune the hyperparameters.  The best network from this testing contains <strong>3 Convolutional Layers</strong>, each followed by <strong>Max Pooling</strong> Layers.  The first Convolutional Layer has <strong>96 filters</strong>, the second &amp; third have <strong>64 filters</strong>.  The output of this third layer is flattened and passed to a <strong>single Dense (Fully Connected) layer</strong> with <strong>160 neurons</strong>.  The Dense Layer has <strong>Dropout</strong> applied with a <strong>dropout rate of 0.5</strong>.  The output from this is passed to the output layer.  Again, we apply the <strong>relu</strong> activation function on all layers, and use the <strong>adam</strong> optimizer.</p>
+
+<p>Finally, we utilise <strong>Transfer Learning</strong> to compare our network’s results against that of the pre-trained <strong>VGG16</strong> network.</p>
+
+<p><br />
+<br /></p>
+
+<h3 id="results-">Results <a name="overview-results"></a></h3>
+
+<p>We have made some huge strides in terms of making our network’s predictions more accurate, and more reliable on new data.</p>
+
+<p>Our baseline network suffered badly from overfitting - the addition of both Dropout &amp; Image Augmentation elimited this almost entirely.</p>
+
+<p>In terms of Classification Accuracy on the Test Set, we saw:</p>
+
+<ul>
+  <li>Baseline Network: <strong>75%</strong></li>
+  <li>Baseline + Dropout: <strong>85%</strong></li>
+  <li>Baseline + Image Augmentation: <strong>93%</strong></li>
+  <li>Optimised Architecture + Dropout + Image Augmentation: <strong>95%</strong></li>
+  <li>Transfer Learning Using VGG16: <strong>98%</strong></li>
+</ul>
+
+<p>Tuning the networks architecture with Keras-Tuner gave us a great boost, but was also very time intensive - however if this time investment results in improved accuracy then it is time well spent.</p>
+
+<p>The use of Transfer Learning with the VGG16 architecture was also a great success, in only 10 epochs we were able to beat the performance of our smaller, custom networks which were training over 50 epochs.  From a business point of view we also need to consider the overheads of (a) storing the much larger VGG16 network file, and (b) any increased latency on inference.</p>
+
+<p><br />
+<br /></p>
+<h3 id="growthnext-steps-">Growth/Next Steps <a name="overview-growth"></a></h3>
+
+<p>The proof of concept was successful, we have shown that we can get very accurate predictions albeit on a small number of classes.  We need to showcase this to the client, discuss what it is that makes the network more robust, and then look to test our best networks on a larger array of classes.</p>
+
+<p>Transfer Learning has been a big success, and was the best performing network in terms of classification accuracy on the Test Set - however we still only trained for a small number of epochs so we can push this even further.  It would be worthwhile testing other available pre-trained networks such as ResNet, Inception, and the DenseNet networks.</p>
+
+<p><br />
+<br /></p>
+
+<hr />
+
+<h1 id="data-overview--">Data Overview  <a name="data-overview"></a></h1>
+
+<p>To build out this proof of concept, the client have provided us some sample data. This is made up of images of six different types of fruit, sitting on the landing platform in the warehouse.</p>
+
+<p>We randomly split the images for each fruit into training (60%), validation (30%) and test (10%) sets.</p>
+
+<p>Examples of four images of each fruit class can be seen in the image below:</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/cnn-image-examples.png" alt="alt text" title="CNN Fruit Classification Samples" /></p>
+
+<p><br />
+For ease of use in Keras, our folder structure first splits into training, validation, and test directories, and within each of those is split again into directories based upon the six fruit classes.</p>
+
+<p>All images are of size 300 x 200 pixels.</p>
+
+<hr />
+<p><br /></p>
+<h1 id="data-pipeline--">Data Pipeline  <a name="data-pipeline"></a></h1>
+
+<p>Before we get to building the network architecture, &amp; subsequently training &amp; testing it - we need to set up a pipeline for our images to flow through, from our local hard-drive where they are located, to, and through our network.</p>
+
+<p>In the code below, we:</p>
+
+<ul>
+  <li>Import the required packages</li>
+  <li>Set up the parameters for our pipeline</li>
+  <li>Set up our image generators to process the images as they come in</li>
+  <li>Set up our generator flow - specifying what we want to pass in for each iteration of training</li>
+</ul>
+
+<p><br /></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># import the required python libraries
+</span><span class="kn">from</span> <span class="n">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Dense</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
+
+<span class="c1"># data flow parameters
+</span><span class="n">training_data_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">data/training</span><span class="sh">'</span>
+<span class="n">validation_data_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">data/validation</span><span class="sh">'</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">img_width</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">img_height</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">num_channels</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="c1"># image generators
+</span><span class="n">training_generator</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">validation_generator</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># image flows
+</span><span class="n">training_set</span> <span class="o">=</span> <span class="n">training_generator</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span><span class="n">directory</span> <span class="o">=</span> <span class="n">training_data_dir</span><span class="p">,</span>
+                                                      <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">),</span>
+                                                      <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                                                      <span class="n">class_mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">validation_set</span> <span class="o">=</span> <span class="n">validation_generator</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span><span class="n">directory</span> <span class="o">=</span> <span class="n">validation_data_dir</span><span class="p">,</span>
+                                                                      <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">),</span>
+                                                                      <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                                                                      <span class="n">class_mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical</span><span class="sh">'</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+We specify that we will resize the images down to 128 x 128 pixels, and that we will pass in 32 images at a time (known as the batch size) for training.</p>
+
+<p>To start with, we simply use the generators to rescale the raw pixel values (ranging between 0 and 255) to float values that exist between 0 and 1.  The reason we do this is mainly to help Gradient Descent find an optimal, or near optional solution each time much more efficiently - in other words, it means that the features that are learned in the depths of the network are of a similar magnitude, and the learning rate that is applied to descend down the loss or cost function across many dimensions, is somewhat proportionally similar across all dimensions - and long story short, means training time is faster as Gradient Descent can converge faster each time!</p>
+
+<p>We will add more logic to the training set generator to apply Image Augmentation.</p>
+
+<p>With this pipeline in place, our images will be extracted, in batches of 32, from our hard-drive, where they’re being stored and sent into our model for training!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="convolutional-neural-network-overview-">Convolutional Neural Network Overview <a name="cnn-overview"></a></h1>
+
+<p>Convolutional Neural Networks (CNN) are an adaptation of Artificial Neural Networks and are primarily used for image based tasks.</p>
+
+<p>To a computer, an image is simply made up of numbers, those being the colour intensity values for each pixel.  Colour images have values ranging between 0 and 255 for each pixel, but have three of these values, for each - one for Red, one for Green, and one for Blue, or in other words the RGB values that mix together to make up the specific colour of each pixel.</p>
+
+<p>These pixel values are the <em>input</em> for a Convolutional Neural Network.  It needs to make sense of these values to make predictions about the image, for example, in our task here, to predict what the image is of, one of the six possible fruit classes.</p>
+
+<p>The pixel values themselves don’t hold much useful information on their own - so the network needs to turn them into <em>features</em> much like we do as humans.</p>
+
+<p>A big part of this process is called <strong>Convolution</strong> where each input image is scanned over, and compared to many different, and smaller filters, to compress the image down into something more generalised.  This process not only helps reduce the problem space, it also helps reduce the network’s sensitivy to minor changes, in other words to know that two images are of the same object, even though the images are not <em>exactly</em> the same.</p>
+
+<p>A somewhat similar process called <strong>Pooling</strong> is also applied to faciliate this <em>generalisation</em> even further.  A CNN can contain many of these Convolution &amp; Pooling layers - with deeper layers finding more abstract features.</p>
+
+<p>Similar to Artificial Neural Networks, Activation Functions are applied to the data as it moves forward through the network, helping the network decide which neurons will fire, or in other words, helping the network understand which neurons are more or less important for different features, and ultimately which neurons are more or less important for the different output classes.</p>
+
+<p>Over time - as a Convolutional Neural Network trains, it iteratively calculates how well it is predicting on the known classes we pass it (known as the <strong>loss</strong> or <strong>cost</strong>, then heads back through in a process known as <strong>Back Propagation</strong> to update the paramaters within the network, in a way that reduces the error, or in other words, improves the match between predicted outputs and actual outputs.  Over time, it learns to find a good mapping between the input data, and the output classes.</p>
+
+<p>There are many parameters that can be changed within the architecture of a Convolutional Neural Network, as well as clever logic that can be included, all which can affect the predictive accuracy.  We will discuss and put in place many of these below!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="baseline-network-">Baseline Network <a name="cnn-baseline"></a></h1>
+
+<p><br /></p>
+<h4 id="network-architecture">Network Architecture</h4>
+
+<p>Our baseline network is simple, but gives us a starting point to refine from.  This network contains <strong>2 Convolutional Layers</strong>, each with <strong>32 filters</strong> and subsequent <strong>Max Pooling</strong> Layers.  We have a <strong>single Dense (Fully Connected) layer</strong> following flattening with <strong>32 neurons</strong> followed by our output layer.  We apply the <strong>relu</strong> activation function on all layers, and use the <strong>adam</strong> optimizer.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># network architecture
+</span><span class="n">model</span> <span class="o">=</span> <span class="nc">Sequential</span><span class="p">()</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">)))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Flatten</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">softmax</span><span class="sh">'</span><span class="p">))</span>
+
+<span class="c1"># compile network
+</span><span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">loss</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical_crossentropy</span><span class="sh">'</span><span class="p">,</span>
+              <span class="n">optimizer</span> <span class="o">=</span> <span class="sh">'</span><span class="s">adam</span><span class="sh">'</span><span class="p">,</span>
+              <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">accuracy</span><span class="sh">'</span><span class="p">])</span>
+
+<span class="c1"># view network architecture
+</span><span class="n">model</span><span class="p">.</span><span class="nf">summary</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p><br />
+The below shows us more clearly our baseline architecture:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 128, 128, 32)      896       
+_________________________________________________________________
+activation (Activation)      (None, 128, 128, 32)      0         
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 64, 64, 32)        0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 64, 64, 32)        9248      
+_________________________________________________________________
+activation_1 (Activation)    (None, 64, 64, 32)        0         
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 32, 32, 32)        0         
+_________________________________________________________________
+flatten (Flatten)            (None, 32768)             0         
+_________________________________________________________________
+dense (Dense)                (None, 32)                1048608   
+_________________________________________________________________
+activation_2 (Activation)    (None, 32)                0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 6)                 198       
+_________________________________________________________________
+activation_3 (Activation)    (None, 6)                 0         
+=================================================================
+Total params: 1,058,950
+Trainable params: 1,058,950
+Non-trainable params: 0
+_________________________________________________________________
+
+</code></pre></div></div>
+
+<p><br /></p>
+<h4 id="training-the-network">Training The Network</h4>
+
+<p>With the pipeline, and architecture in place - we are now ready to train the baseline network!</p>
+
+<p>In the below code we:</p>
+
+<ul>
+  <li>Specify the number of epochs for training</li>
+  <li>Set a location for the trained network to be saved (architecture &amp; parameters)</li>
+  <li>Set a <em>ModelCheckPoint</em> callback to save the best network at any point during training (based upon validation accuracy)</li>
+  <li>Train the network and save the results to an object called <em>history</em></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># training parameters
+</span><span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">model_filename</span> <span class="o">=</span> <span class="sh">'</span><span class="s">models/fruits_cnn_v01.h5</span><span class="sh">'</span>
+
+<span class="c1"># callbacks
+</span><span class="n">save_best_model</span> <span class="o">=</span> <span class="nc">ModelCheckpoint</span><span class="p">(</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">model_filename</span><span class="p">,</span>
+                                  <span class="n">monitor</span> <span class="o">=</span> <span class="sh">'</span><span class="s">val_accuracy</span><span class="sh">'</span><span class="p">,</span>
+                                  <span class="n">mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">max</span><span class="sh">'</span><span class="p">,</span>
+                                  <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                                  <span class="n">save_best_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># train the network
+</span><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">training_set</span><span class="p">,</span>
+                    <span class="n">validation_data</span> <span class="o">=</span> <span class="n">validation_set</span><span class="p">,</span>
+                    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                    <span class="n">epochs</span> <span class="o">=</span> <span class="n">num_epochs</span><span class="p">,</span>
+                    <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">save_best_model</span><span class="p">])</span>
+
+</code></pre></div></div>
+<p><br />
+The ModelCheckpoint callback that has been put in place means that we do not just save the <em>final</em> network at epoch 50, but instead we save the <em>best</em> network, in terms of validation set performance - from <em>any point</em> during training.  In other words, at the end of each of the 50 epochs, Keras will assess the performance on the validation set and if is has not seen any improvement in performance it will do nothing.  If it does see an improvement however, it will update the network file that is saved on our hard-drive.</p>
+
+<p><br /></p>
+<h4 id="analysis-of-training-results">Analysis Of Training Results</h4>
+
+<p>As we saved our training process to the <em>history</em> object, we can now analyse the performance (Classification Accuracy, and Loss) of the network epoch by epoch.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># plot validation results
+</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">"</span><span class="s">loss</span><span class="sh">"</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">"</span><span class="s">Training Loss</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">"</span><span class="s">val_loss</span><span class="sh">"</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">"</span><span class="s">Validation Loss</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">Accuracy</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">"</span><span class="s">accuracy</span><span class="sh">"</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">"</span><span class="s">Training Accuracy</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">"</span><span class="s">val_accuracy</span><span class="sh">"</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sh">"</span><span class="s">Validation Accuracy</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+<span class="c1"># get best epoch performance for validation accuracy
+</span><span class="nf">max</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="sh">'</span><span class="s">val_accuracy</span><span class="sh">'</span><span class="p">])</span>
+
+</code></pre></div></div>
+<p><br />
+The below image contains two plots, the first showing the epoch by epoch <strong>Loss</strong> for both the training set (blue) and the validation set (orange) &amp; the second show the epoch by epoch <strong>Classification Accuracy</strong> again, for both the training set (blue) and the validation set (orange).</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/cnn-baseline-accuracy-plot.png" alt="alt text" title="CNN Baseline Accuracy Plot" /></p>
+
+<p><br />
+There are two key learnings from above plots. The first is that, with this baseline architecture &amp; the parameters we set for training, we are reaching our best performance in around 10-20 epochs - after that, not much improvement is seen.  This isn’t to say that 50 epochs is wrong, especially if we change our network - but is interesting to note at this point.</p>
+
+<p>The second thing to notice is <em>very important</em> and that is the significant gap between orange and blue lines on the plot, in other words between our validation performance and our training performance.</p>
+
+<p>This gap is over-fitting.</p>
+
+<p>Focusing on the lower plot above (Classification Accuracy) - it appears that our network is learning the features of the training data <em>so well</em> that after about 20 or so epochs it is <em>perfectly</em> predicting those images - but on the validation set, it never passes approximately <strong>83% Classification Accuracy</strong>.</p>
+
+<p>We do not want over-fitting! It means that we’re risking our predictive performance on new data.  The network is not learning to generalise, meaning that if something slightly 
+different comes along then it’s going to really, really struggle to predict well, or at least predict reliably!</p>
+
+<p>We will look to address this with some clever concepts, and you will see those in the next sections.</p>
+
+<p><br /></p>
+<h4 id="performance-on-the-test-set">Performance On The Test Set</h4>
+
+<p>Above, we assessed our models performance on both the training set and the validation set - both of which were being passed in during training.</p>
+
+<p>Here, we will get a view of how well our network performs when predict on data that was <em>no part</em> of the training process whatsoever - our test set.</p>
+
+<p>A test set can be extremely useful when looking to assess many different iterations of a network we build.  Where the validation set might be sent through the model in slightly different orders during training in order to assess the epoch by epoch performance, our test set is a <em>static set</em> of images.  Because of this, it makes for a really good baseline for testing the first iteration of our network versus any subsequent versions that we create, perhaps after we refine the architecture, or add any other clever bits of
+logic that we think might help the network perform better in the real world.</p>
+
+<p>In the below code we run this in isolation from training.  We:</p>
+
+<ul>
+  <li>Import the required packages for importing &amp; manipulating our test set images</li>
+  <li>Set up the parameters for the predictions</li>
+  <li>Load in the saved network file from training</li>
+  <li>Create a function for preprocessing our test set images in the same way that training &amp; validation images were</li>
+  <li>Create a function for making predictions, returning both predicted class label, and predicted class probability</li>
+  <li>Iterate through our test set images, preprocessing each and passing to the network for prediction</li>
+  <li>Create a Pandas DataFrame to hold all prediction data</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># import required packages
+</span><span class="kn">from</span> <span class="n">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">load_img</span><span class="p">,</span> <span class="n">img_to_array</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="n">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+
+<span class="c1"># parameters for prediction
+</span><span class="n">model_filename</span> <span class="o">=</span> <span class="sh">'</span><span class="s">models/fruits_cnn_v01.h5</span><span class="sh">'</span>
+<span class="n">img_width</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">img_height</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">labels_list</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">apple</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">avocado</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">banana</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">kiwi</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">lemon</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">]</span>
+
+<span class="c1"># load model
+</span><span class="n">model</span> <span class="o">=</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">model_filename</span><span class="p">)</span>
+
+<span class="c1"># image pre-processing function
+</span><span class="k">def</span> <span class="nf">preprocess_image</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    
+    <span class="n">image</span> <span class="o">=</span> <span class="nf">load_img</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">))</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="nf">img_to_array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">image</span>
+
+<span class="c1"># image prediction function
+</span><span class="k">def</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    
+    <span class="n">class_probs</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">predicted_class</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">class_probs</span><span class="p">)</span>
+    <span class="n">predicted_label</span> <span class="o">=</span> <span class="n">labels_list</span><span class="p">[</span><span class="n">predicted_class</span><span class="p">]</span>
+    <span class="n">predicted_prob</span> <span class="o">=</span> <span class="n">class_probs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">predicted_class</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">predicted_label</span><span class="p">,</span> <span class="n">predicted_prob</span>
+
+<span class="c1"># loop through test data
+</span><span class="n">source_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">data/test/</span><span class="sh">'</span>
+<span class="n">folder_names</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">apple</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">avocado</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">banana</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">kiwi</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">lemon</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">orange</span><span class="sh">'</span><span class="p">]</span>
+<span class="n">actual_labels</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">predicted_labels</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">predicted_probabilities</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">folder_names</span><span class="p">:</span>
+    
+    <span class="n">images</span> <span class="o">=</span> <span class="nf">listdir</span><span class="p">(</span><span class="n">source_dir</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/</span><span class="sh">'</span> <span class="o">+</span> <span class="n">folder</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+        
+        <span class="n">processed_image</span> <span class="o">=</span> <span class="nf">preprocess_image</span><span class="p">(</span><span class="n">source_dir</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/</span><span class="sh">'</span> <span class="o">+</span> <span class="n">folder</span> <span class="o">+</span> <span class="sh">'</span><span class="s">/</span><span class="sh">'</span> <span class="o">+</span> <span class="n">image</span><span class="p">)</span>
+        <span class="n">predicted_label</span><span class="p">,</span> <span class="n">predicted_probability</span> <span class="o">=</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="n">processed_image</span><span class="p">)</span>
+        
+        <span class="n">actual_labels</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+        <span class="n">predicted_labels</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">predicted_label</span><span class="p">)</span>
+        <span class="n">predicted_probabilities</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">predicted_probability</span><span class="p">)</span>
+        <span class="n">filenames</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        
+<span class="c1"># create dataframe to analyse
+</span><span class="n">predictions_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">({</span><span class="sh">"</span><span class="s">actual_label</span><span class="sh">"</span> <span class="p">:</span> <span class="n">actual_labels</span><span class="p">,</span>
+                               <span class="sh">"</span><span class="s">predicted_label</span><span class="sh">"</span> <span class="p">:</span> <span class="n">predicted_labels</span><span class="p">,</span>
+                               <span class="sh">"</span><span class="s">predicted_probability</span><span class="sh">"</span> <span class="p">:</span> <span class="n">predicted_probabilities</span><span class="p">,</span>
+                               <span class="sh">"</span><span class="s">filename</span><span class="sh">"</span> <span class="p">:</span> <span class="n">filenames</span><span class="p">})</span>
+
+<span class="n">predictions_df</span><span class="p">[</span><span class="sh">'</span><span class="s">correct</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">predictions_df</span><span class="p">[</span><span class="sh">'</span><span class="s">actual_label</span><span class="sh">'</span><span class="p">]</span> <span class="o">==</span> <span class="n">predictions_df</span><span class="p">[</span><span class="sh">'</span><span class="s">predicted_label</span><span class="sh">'</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+After running the code above, we end up with a Pandas DataFrame containing prediction data for each test set image. A random sample of this can be seen in the table below:</p>
+
+<p><br /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>actual_label</strong></th>
+      <th><strong>predicted_label</strong></th>
+      <th><strong>predicted_probability</strong></th>
+      <th><strong>filename</strong></th>
+      <th><strong>correct</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>apple</td>
+      <td>lemon</td>
+      <td>0.700764</td>
+      <td>apple_0034.jpg</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>avocado</td>
+      <td>avocado</td>
+      <td>0.99292046</td>
+      <td>avocado_0074.jpg</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>orange</td>
+      <td>orange</td>
+      <td>0.94840413</td>
+      <td>orange_0004.jpg</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>banana</td>
+      <td>lemon</td>
+      <td>0.87131584</td>
+      <td>banana_0024.jpg</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>kiwi</td>
+      <td>kiwi</td>
+      <td>0.66800004</td>
+      <td>kiwi_0094.jpg</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>lemon</td>
+      <td>lemon</td>
+      <td>0.8490372</td>
+      <td>lemon_0084.jpg</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+In our data we have:</p>
+
+<ul>
+  <li>Actual Label: The true label for that image</li>
+  <li>Prediction Label: The predicted label for the image (from the network)</li>
+  <li>Predicted Probability: The network’s perceived probability for the predicted label</li>
+  <li>Filename: The test set image on our local drive (for reference)</li>
+  <li>Correct: A flag showing whether the predicted label is the same as the actual label</li>
+</ul>
+
+<p>This dataset is extremely useful as we can not only calculate our classification accuracy, but we can also deep-dive into images where the network was struggling to predict and try to assess why - leading to us improving our network, and potentially our input data!</p>
+
+<p><br /></p>
+<h4 id="test-set-classification-accuracy">Test Set Classification Accuracy</h4>
+
+<p>Using our DataFrame, we can calculate our overall Test Set classification accuracy using the below code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># overall test set accuracy
+</span><span class="n">test_set_accuracy</span> <span class="o">=</span> <span class="n">predictions_df</span><span class="p">[</span><span class="sh">'</span><span class="s">correct</span><span class="sh">'</span><span class="p">].</span><span class="nf">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nf">len</span><span class="p">(</span><span class="n">predictions_df</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">test_set_accuracy</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+Our baseline network achieves a <strong>75% Classification Accuracy</strong> on the Test Set.  It will be interesting to see how much improvement we can this with additions &amp; refinements to our network.</p>
+
+<p><br /></p>
+<h4 id="test-set-confusion-matrix">Test Set Confusion Matrix</h4>
+
+<p>Overall Classification Accuracy is very useful, but it can hide what is really going on with the network’s predictions!</p>
+
+<p>As we saw above, our Classification Accuracy for the whole test set was 75%, but it might be that our network is predicting extremely well on apples, but struggling with Lemons as for some reason it is regularly confusing them with Oranges.  A Confusion Matrix can help us uncover insights like this!</p>
+
+<p>We can create a Confusion Matrix with the below code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># confusion matrix (percentages)
+</span><span class="n">confusion_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">crosstab</span><span class="p">(</span><span class="n">predictions_df</span><span class="p">[</span><span class="sh">'</span><span class="s">predicted_label</span><span class="sh">'</span><span class="p">],</span> <span class="n">predictions_df</span><span class="p">[</span><span class="sh">'</span><span class="s">actual_label</span><span class="sh">'</span><span class="p">],</span> <span class="n">normalize</span> <span class="o">=</span> <span class="sh">'</span><span class="s">columns</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+This results in the following output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+actual_label     apple  avocado  banana  kiwi  lemon  orange
+predicted_label                                             
+apple              0.8      0.0     0.0   0.1    0.0     0.1
+avocado            0.0      1.0     0.0   0.0    0.0     0.0
+banana             0.0      0.0     0.2   0.1    0.0     0.0
+kiwi               0.0      0.0     0.1   0.7    0.0     0.0
+lemon              0.2      0.0     0.7   0.0    1.0     0.1
+orange             0.0      0.0     0.0   0.1    0.0     0.8
+
+</code></pre></div></div>
+<p><br />
+Along the top are our <em>actual</em> classes and down the side are our <em>predicted</em> classes - so counting <em>down</em> the columns we can get the Classification Accuracy (%) for each class, and we can see where it is getting confused.</p>
+
+<p>So, while overall our test set accuracy was 75% - for each individual class we see:</p>
+
+<ul>
+  <li>Apple: 80%</li>
+  <li>Avocado: 100%</li>
+  <li>Banana: 20%</li>
+  <li>Kiwi: 70%</li>
+  <li>Lemon: 100%</li>
+  <li>Orange: 80%</li>
+</ul>
+
+<p>This is very powerful - we now can see what exactly is driving our <em>overall</em> Classification Accuracy.</p>
+
+<p>The standout insight here is for Bananas - with a 20% Classification Accuracy, and even more interestingly we can see where it is getting confused. The network predicted 70% of Banana images to be of the class Lemon!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="tackling-overfitting-with-dropout-">Tackling Overfitting With Dropout <a name="cnn-dropout"></a></h1>
+
+<p><br /></p>
+<h4 id="dropout-overview">Dropout Overview</h4>
+
+<p>Dropout is a technique used in Deep Learning primarily to reduce the effects of over-fitting. Over-fitting is where the network learns the patterns of the training data so specifically, that it runs the risk of not generalising well, and being very unreliable when used to predict on new, unseen data.</p>
+
+<p>Dropout works in a way where, for each batch of observations that is sent forwards through the network, a pre-specified proportion of the neurons in a hidden layer are essentially ignored or deactivated.  This can be applied to any number of the hidden layers.</p>
+
+<p>When we apply Dropout, the deactivated neurons are completely taken out of the picture - they take no part in the passing of information through the network.</p>
+
+<p>All the math is the same, the network will process everything as it always would (so taking the sum of the inputs multiplied by the weights, and adding a bias term, applying activation functions, and updating the network’s parameters using Back Propagation) - it’s just that in this scenario where we are disregarding some of the neurons, we’re essentially pretending that they’re not there.</p>
+
+<p>In a full network (i.e. where Dropout is not being applied) each of the combinations of neurons becomes quite specific at what it represents, at least in terms of predicting the output.  At a high level, if we were classifying pictures of cats and dogs, there might be some linked combination of neurons that fires when it sees pointy ears and a long tongue.  This combination of neurons becomes very tuned into its role in prediction, and it becomes very good at what it does - but as is the definition of overfitting, it becomes too good - it becomes too rigidly aligned with the training data.</p>
+
+<p>If we <em>drop out</em> neurons during training, <em>other</em> neurons need to jump in fill in for this particular role of detecting those features.  They essentially have to come in at late notice and cover the ignored neurons job, dealing with that particular representation that is so useful for prediction.</p>
+
+<p>Over time, with different combinations of neurons being ignored for each mini-batch of data - the network becomes more adept at generalising and thus is less likely to overfit to the training data.  Since no particular neuron can rely on the presence of other neurons, and the features with which they represent - the network learns more robust features, and are less susceptible to noise.</p>
+
+<p>In a Convolutional Neural Network, such as in our task here - it is generally best practice to only apply Dropout to the Dense (Fully Connected) layer or layers, rather than to the Convolutional Layers.</p>
+
+<p><br /></p>
+<h4 id="updated-network-architecture">Updated Network Architecture</h4>
+
+<p>In our task here, we only have one Dense Layer, so we apply Dropout to that layer only.  A common proportion to apply (i.e. the proportion of neurons in the layer to be deactivated randomly each pass) is 0.5 or 50%.  We will apply this here.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">model</span> <span class="o">=</span> <span class="nc">Sequential</span><span class="p">()</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">)))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Flatten</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">softmax</span><span class="sh">'</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+<h4 id="training-the-updated-network">Training The Updated Network</h4>
+
+<p>We run the exact same code to train this updated network as we did for the baseline network (50 epochs) - the only change is that we modify the filename for the saved network to ensure we have all network files for comparison.</p>
+
+<p><br /></p>
+<h4 id="analysis-of-training-results-1">Analysis Of Training Results</h4>
+
+<p>As we again saved our training process to the <em>history</em> object, we can now analyse &amp; plot the performance (Classification Accuracy, and Loss) of the updated network epoch by epoch.</p>
+
+<p>With the baseline network we saw very strong overfitting in action - it will be interesting to see if the addition of Dropout has helped!</p>
+
+<p>The below image shows the same two plots we analysed for the updated network, the first showing the epoch by epoch <strong>Loss</strong> for both the training set (blue) and the validation set (orange) &amp; the second show the epoch by epoch <strong>Classification Accuracy</strong> again, for both the training set (blue) and the validation set (orange).</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/cnn-dropout-accuracy-plot.png" alt="alt text" title="CNN Dropout Accuracy Plot" /></p>
+
+<p><br />
+Firstly, we can see a peak Classification Accuracy on the validation set of around <strong>89%</strong> which is higher than the <strong>83%</strong> we saw for the baseline network.</p>
+
+<p>Secondly, and what we were really looking to see, is that gap between the Classification Accuracy on the training set, and the validation set has been mostly eliminated. The two lines are trending up at more or less the same rate across all epochs of training - and the accuracy on the training set also never reach 100% as it did before meaning that we are indeed seeing this <em>generalisation</em> that we want!</p>
+
+<p>The addition of Dropout does appear to have remedied the overfitting that we saw in the baseline network.  This is because, while some neurons are turned off during each mini-batch iteration of training - all will have their turn, many times, to be updated - just in a way where no neuron, or combination of neurons will become so hard-wired to certain features found in the training data!</p>
+
+<p><br /></p>
+<h4 id="performance-on-the-test-set-1">Performance On The Test Set</h4>
+
+<p>During training, we assessed our updated networks performance on both the training set and the validation set.  Here, like we did for the baseline network, we will get a view of how well our network performs when predict on data that was <em>no part</em> of the training process whatsoever - our test set.</p>
+
+<p>We run the exact same code as we did for the baseline network, with the only change being to ensure we are loading in network file for the updated network</p>
+
+<p><br /></p>
+<h4 id="test-set-classification-accuracy-1">Test Set Classification Accuracy</h4>
+
+<p>Our baseline network achieved a <strong>75% Classification Accuracy</strong> on the test set.  With the addition of Dropout we saw both a reduction in overfitting, and an increased <em>validation set</em> accuracy.  On the test set, we again see an increase vs. the baseline, with an <strong>85% Classification Accuracy</strong>.</p>
+
+<p><br /></p>
+<h4 id="test-set-confusion-matrix-1">Test Set Confusion Matrix</h4>
+
+<p>As mentioned above, while overall Classification Accuracy is very useful, but it can hide what is really going on with the network’s predictions!</p>
+
+<p>The standout insight for the baseline network was that Bananas has only a 20% Classification Accuracy, very frequently being confused with Lemons.  It will be interesting to see if the extra <em>generalisation</em> forced upon the network with the application of Dropout helps this.</p>
+
+<p>Running the same code from the baseline section on results for our updated network, we get the following output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+actual_label     apple  avocado  banana  kiwi  lemon  orange
+predicted_label                                             
+apple              0.8      0.0     0.0   0.0    0.0     0.0
+avocado            0.0      1.0     0.1   0.2    0.0     0.0
+banana             0.0      0.0     0.7   0.0    0.0     0.0
+kiwi               0.2      0.0     0.0   0.7    0.0     0.1
+lemon              0.0      0.0     0.2   0.0    1.0     0.0
+orange             0.0      0.0     0.0   0.1    0.0     0.9
+
+</code></pre></div></div>
+<p><br />
+Along the top are our <em>actual</em> classes and down the side are our <em>predicted</em> classes - so counting <em>down</em> the columns we can get the Classification Accuracy (%) for each class, and we can see where it is getting confused.</p>
+
+<p>So, while overall our test set accuracy was 85% - for each individual class we see:</p>
+
+<ul>
+  <li>Apple: 80%</li>
+  <li>Avocado: 100%</li>
+  <li>Banana: 70%</li>
+  <li>Kiwi: 70%</li>
+  <li>Lemon: 100%</li>
+  <li>Orange: 90%</li>
+</ul>
+
+<p>All classes here are being predicted <em>at least</em> as good as with the baseline network - and Bananas which had only a 20% Classification Accuracy last time, are now being classified correctly 70% of the time.  Still the lowest of all classes, but a significant improvement over the baseline network!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="image-augmentation-">Image Augmentation <a name="cnn-augmentation"></a></h1>
+
+<p><br /></p>
+<h4 id="image-augmentation-overview">Image Augmentation Overview</h4>
+
+<p>Image Augmentation is a concept in Deep Learning that aims to not only increase predictive performance, but also to increase the robustness of the network through regularisation.</p>
+
+<p>Instead of passing in each of the training set images as it stands, with Image Augmentation we pass in many transformed <em>versions</em> of each image.  This results in increased variation within our training data (without having to explicitly collect more images) meaning the network has a greater chance to understand and learn the objects we’re looking to classify, in a variety of scenarios.</p>
+
+<p>Common transformation techniques are:</p>
+
+<ul>
+  <li>Rotation</li>
+  <li>Horizontal/Vertical Shift</li>
+  <li>Shearing</li>
+  <li>Zoom</li>
+  <li>Horizontal/Vertical Flipping</li>
+  <li>Brightness Alteration</li>
+</ul>
+
+<p>When applying Image Augmentation using Keras’ ImageDataGenerator class, we do this “on-the-fly” meaning the network does not actually train on the <em>original</em> training set image, but instead on the generated/transformed <em>versions</em> of the image - and this version changes each epoch.  In other words - for each epoch that the network is trained, each image will be called upon, and then randomly transformed based upon the specified parameters - and because of this variation, the network learns to generalise a lot better for many different scenarios.</p>
+
+<p><br /></p>
+<h4 id="implementing-image-augmentation">Implementing Image Augmentation</h4>
+
+<p>We apply the Image Augmentation logic into the ImageDataGenerator class that exists within our Data Pipeline.</p>
+
+<p>It is important to note is that we only ever do this for our training data, we don’t apply any transformation on our validation or test sets.  The reason for this is that we want our validation &amp; test data be static, and serve us better for measuring our performance over time.  If the images in these set kept changing because of transformations it would be really hard to understand if our network was actually improving, or if it was just a lucky set of validation set transformations that made it appear that is was performing better!</p>
+
+<p>When setting up and training the baseline &amp; Dropout networks - we used the ImageGenerator class for only one thing, to rescale the pixel values. Now we will add in the Image Augmentation parameters as well, meaning that as images flow into our network for training the transformations will be applied.</p>
+
+<p>In the code below, we add these transformations in and specify the magnitudes that we want each applied:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># image generators
+</span><span class="n">training_generator</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span>
+                                        <span class="n">rotation_range</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+                                        <span class="n">width_shift_range</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+                                        <span class="n">height_shift_range</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+                                        <span class="n">zoom_range</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                                        <span class="n">horizontal_flip</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                        <span class="n">brightness_range</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">),</span>
+                                        <span class="n">fill_mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">nearest</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">validation_generator</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+We apply a <strong>rotation_range</strong> of 20.  This is the <em>degrees</em> of rotation, and it dictates the <em>maximum</em> amount of rotation that we want.  In other words, a rotation value will be randomly selected for each image, each epoch, between negative and positive 20 degrees, and whatever is selected, is what will be applied.</p>
+
+<p>We apply a <strong>width_shift_range</strong> and a <strong>height_shift_range</strong> of 0.2.  These represent the fraction of the total width and height that we are happy to shift - in other words we’re allowing Keras to shift our image <em>up to</em> 20% both vertically and horizonally.</p>
+
+<p>We apply a <strong>zoom_range</strong> of 0.1, meaning a maximum of 10% inward or outward zoom.</p>
+
+<p>We specify <strong>horizontal_flip</strong> to be True, meaning that each time an image flows in, there is a 50/50 chance of it being flipped.</p>
+
+<p>We specify a <strong>brightness_range</strong> between 0.5 and 1.5 meaning our images can become brighter or darker.</p>
+
+<p>Finally, we have <strong>fill_mode</strong> set to “nearest” which will mean that when images are shifted and/or rotated, we’ll just use the <em>nearest pixel</em> to fill in any new pixels that are required - and it means our images still resemble the scene, generally speaking!</p>
+
+<p>Again, it is important to note that these transformations are applied <em>only</em> to the training set, and not the validation set.</p>
+
+<p><br /></p>
+<h4 id="updated-network-architecture-1">Updated Network Architecture</h4>
+
+<p>Our network will be the same as the baseline network.  We will not apply Dropout here to ensure we can understand the true impact of Image Augmentation for our task.</p>
+
+<p><br /></p>
+<h4 id="training-the-updated-network-1">Training The Updated Network</h4>
+
+<p>We run the exact same code to train this updated network as we did for the baseline network (50 epochs) - the only change is that we modify the filename for the saved network to ensure we have all network files for comparison.</p>
+
+<p><br /></p>
+<h4 id="analysis-of-training-results-2">Analysis Of Training Results</h4>
+
+<p>As we again saved our training process to the <em>history</em> object, we can now analyse &amp; plot the performance (Classification Accuracy, and Loss) of the updated network epoch by epoch.</p>
+
+<p>With the baseline network we saw very strong overfitting in action - it will be interesting to see if the addition of Image Augmentation helps in the same way that Dropout did!</p>
+
+<p>The below image shows the same two plots we analysed for the updated network, the first showing the epoch by epoch <strong>Loss</strong> for both the training set (blue) and the validation set (orange) &amp; the second show the epoch by epoch <strong>Classification Accuracy</strong> again, for both the training set (blue) and the validation set (orange).</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/cnn-augmentation-accuracy-plot.png" alt="alt text" title="CNN Dropout Accuracy Plot" /></p>
+
+<p><br />
+Firstly, we can see a peak Classification Accuracy on the validation set of around <strong>97%</strong> which is higher than the <strong>83%</strong> we saw for the baseline network, and higher than the <strong>89%</strong> we saw for the network with Dropout added.</p>
+
+<p>Secondly, and what we were again really looking to see, is that gap between the Classification Accuracy on the training set, and the validation set has been mostly eliminated. The two lines are trending up at more or less the same rate across all epochs of training - and the accuracy on the training set also never reach 100% as it did before meaning that Image Augmentation is also giving the network this <em>generalisation</em> that we want!</p>
+
+<p>The reason for this is that the network is getting a slightly different version of each image each epoch during training, meaning that while it’s learning features, it can’t cling to a <em>single version</em> of those features!</p>
+
+<p><br /></p>
+<h4 id="performance-on-the-test-set-2">Performance On The Test Set</h4>
+
+<p>During training, we assessed our updated networks performance on both the training set and the validation set.  Here, like we did for the baseline &amp; Dropout networks, we will get a view of how well our network performs when predict on data that was <em>no part</em> of the training process whatsoever - our test set.</p>
+
+<p>We run the exact same code as we did for the earlier networks, with the only change being to ensure we are loading in network file for the updated network</p>
+
+<p><br /></p>
+<h4 id="test-set-classification-accuracy-2">Test Set Classification Accuracy</h4>
+
+<p>Our baseline network achieved a <strong>75% Classification Accuracy</strong> on the test set, and our network with Dropout applied achieved <strong>85%</strong>.  With the addition of Image Augmentation we saw both a reduction in overfitting, and an increased <em>validation set</em> accuracy.  On the test set, we again see an increase vs. the baseline &amp; Dropout, with a <strong>93% Classification Accuracy</strong>.</p>
+
+<p><br /></p>
+<h4 id="test-set-confusion-matrix-2">Test Set Confusion Matrix</h4>
+
+<p>As mentioned above, while overall Classification Accuracy is very useful, but it can hide what is really going on with the network’s predictions!</p>
+
+<p>The standout insight for the baseline network was that Bananas has only a 20% Classification Accuracy, very frequently being confused with Lemons.  Dropout, through the additional <em>generalisation</em> forced upon the network, helped a lot - let’s see how our network with Image Augmentation fares!</p>
+
+<p>Running the same code from the baseline section on results for our updated network, we get the following output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+actual_label     apple  avocado  banana  kiwi  lemon  orange
+predicted_label                                             
+apple              0.9      0.0     0.0   0.0    0.0     0.0
+avocado            0.0      1.0     0.0   0.0    0.0     0.0
+banana             0.1      0.0     0.8   0.0    0.0     0.0
+kiwi               0.0      0.0     0.0   0.9    0.0     0.0
+lemon              0.0      0.0     0.2   0.0    1.0     0.0
+orange             0.0      0.0     0.0   0.1    0.0     1.0
+
+</code></pre></div></div>
+<p><br />
+Along the top are our <em>actual</em> classes and down the side are our <em>predicted</em> classes - so counting <em>down</em> the columns we can get the Classification Accuracy (%) for each class, and we can see where it is getting confused.</p>
+
+<p>So, while overall our test set accuracy was 93% - for each individual class we see:</p>
+
+<ul>
+  <li>Apple: 90%</li>
+  <li>Avocado: 100%</li>
+  <li>Banana: 80%</li>
+  <li>Kiwi: 90%</li>
+  <li>Lemon: 100%</li>
+  <li>Orange: 100%</li>
+</ul>
+
+<p>All classes here are being predicted <em>more accurately</em> when compared to the baseline network, and <em>at least as accurate or better</em> when compared to the network with Dropout added.</p>
+
+<p>Utilising Image Augmentation <em>and</em> applying Dropout will be a powerful combination!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="hyper-parameter-tuning-">Hyper-Parameter Tuning <a name="cnn-tuning"></a></h1>
+
+<p><br /></p>
+<h4 id="keras-tuner-overview">Keras Tuner Overview</h4>
+
+<p>So far, with our Fruit Classification task, we have:</p>
+
+<ul>
+  <li>Started with a baseline model</li>
+  <li>Added Dropout to help with overfitting</li>
+  <li>Utilised Image Augmentation</li>
+</ul>
+
+<p>The addition of Dropout, and Image Augmentation boosted both performance and robustness - but there is one thing we’ve not tinkered with yet, and something that <em>could</em> have a big impact on how well the network learns to find and utilise important features for classifying our fruits - and that is the network <em>architecture</em>!</p>
+
+<p>So far, we’ve just used 2 convolutional layers, each with 32 filters, and we’ve used a single Dense layer, also, just by coincidence, with 32 neurons - and we admitted that this was just a place to start, our baseline.</p>
+
+<p>One way for us to figure out if there are <em>better</em> architectures, would be to just try different things. Maybe we just double our number of filters to 64, or maybe we keep the first convolutional layer at 32, but we increase the second to 64.Perhaps we put a whole lot of neurons in our hidden layer, and then, what about things like our use of Adam as an optimizer, is this the best one for our particular problem, or should we use something else?</p>
+
+<p>As you can imagine, we could start testing all of these things, and noting down performances, but that would be quite messy.</p>
+
+<p>Here we will instead utlise <em>Keras Tuner</em> which will make this a whole lot easier for us!</p>
+
+<p>At a high level, with Keras Tuner, we will ask it to test, a whole host of different architecture and parameter options, based upon some specifications that we put in place.  It will go off and run some tests, and return us all sorts of interesting summary statistics, and of course information about what worked best.</p>
+
+<p>Once we have this, we can then create that particular architecture, train the network just as we’ve always done - and analyse the performance against our original networks.</p>
+
+<p>Our data pipeline will remain the same as it was when applying Image Augmentation.  The code below shows this, as well as the extra packages we need to load for Keras-Tuner.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># import the required python libraries
+</span><span class="kn">from</span> <span class="n">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
+<span class="kn">from</span> <span class="n">keras_tuner.tuners</span> <span class="kn">import</span> <span class="n">RandomSearch</span>
+<span class="kn">from</span> <span class="n">keras_tuner.engine.hyperparameters</span> <span class="kn">import</span> <span class="n">HyperParameters</span>
+<span class="kn">import</span> <span class="n">os</span>
+
+<span class="c1"># data flow parameters
+</span><span class="n">training_data_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">data/training</span><span class="sh">'</span>
+<span class="n">validation_data_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">data/validation</span><span class="sh">'</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">img_width</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">img_height</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">num_channels</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="c1"># image generators
+</span><span class="n">training_generator</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">validation_generator</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># image flows
+</span><span class="n">training_set</span> <span class="o">=</span> <span class="n">training_generator</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span><span class="n">directory</span> <span class="o">=</span> <span class="n">training_data_dir</span><span class="p">,</span>
+                                                      <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">),</span>
+                                                      <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                                                      <span class="n">class_mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">validation_set</span> <span class="o">=</span> <span class="n">validation_generator</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span><span class="n">directory</span> <span class="o">=</span> <span class="n">validation_data_dir</span><span class="p">,</span>
+                                                                      <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">),</span>
+                                                                      <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                                                                      <span class="n">class_mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical</span><span class="sh">'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+<h4 id="application-of-keras-tuner">Application Of Keras Tuner</h4>
+
+<p>Here we specify what we want Keras Tuner to test, and how we want it to test it!</p>
+
+<p>We put our network architecture into a <em>function</em> with a single parameter called <em>hp</em> (hyperparameter)</p>
+
+<p>We then make use of several in-build bits of logic to specify what we want to test.  In the code below we test for:</p>
+
+<ul>
+  <li>Convolutional Layer Count - Between 1 &amp; 4</li>
+  <li>Convolutional Layer Filter Count - Between 32 &amp; 256 (Step Size 32)</li>
+  <li>Dense Layer Count - Between 1 &amp; 4</li>
+  <li>Dense Layer Neuron Count - Between 32 &amp; 256 (Step Size 32)</li>
+  <li>Application Of Dropout - Yes or No</li>
+  <li>Optimizer - Adam or RMSProp</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># network architecture
+</span><span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">hp</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="nc">Sequential</span><span class="p">()</span>
+    
+    <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="n">hp</span><span class="p">.</span><span class="nc">Int</span><span class="p">(</span><span class="sh">"</span><span class="s">Input_Conv_Filters</span><span class="sh">"</span><span class="p">,</span> <span class="n">min_value</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">32</span><span class="p">),</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">)))</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">hp</span><span class="p">.</span><span class="nc">Int</span><span class="p">(</span><span class="sh">"</span><span class="s">n_Conv_Layers</span><span class="sh">"</span><span class="p">,</span> <span class="n">min_value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)):</span>
+    
+        <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="n">hp</span><span class="p">.</span><span class="nc">Int</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Conv_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">_Filters</span><span class="sh">"</span><span class="p">,</span> <span class="n">min_value</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">32</span><span class="p">),</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">))</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+    
+    <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Flatten</span><span class="p">())</span>
+    
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">hp</span><span class="p">.</span><span class="nc">Int</span><span class="p">(</span><span class="sh">"</span><span class="s">n_Dense_Layers</span><span class="sh">"</span><span class="p">,</span> <span class="n">min_value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)):</span>
+    
+        <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dense</span><span class="p">(</span><span class="n">hp</span><span class="p">.</span><span class="nc">Int</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Dense_</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s">_Neurons</span><span class="sh">"</span><span class="p">,</span> <span class="n">min_value</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">32</span><span class="p">)))</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+        
+        <span class="k">if</span> <span class="n">hp</span><span class="p">.</span><span class="nc">Boolean</span><span class="p">(</span><span class="sh">"</span><span class="s">Dropout</span><span class="sh">"</span><span class="p">):</span>
+            <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+    
+    <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">))</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">softmax</span><span class="sh">'</span><span class="p">))</span>
+    
+    <span class="c1"># compile network
+</span>    
+    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">loss</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical_crossentropy</span><span class="sh">'</span><span class="p">,</span>
+                  <span class="n">optimizer</span> <span class="o">=</span> <span class="n">hp</span><span class="p">.</span><span class="nc">Choice</span><span class="p">(</span><span class="sh">"</span><span class="s">Optimizer</span><span class="sh">"</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">adam</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">RMSProp</span><span class="sh">'</span><span class="p">]),</span>
+                  <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">accuracy</span><span class="sh">'</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">model</span>
+
+</code></pre></div></div>
+<p><br />
+Once we have the testing logic in place - we use want to put in place the specifications for the search!</p>
+
+<p>In the code below, we set parameters to:</p>
+
+<ul>
+  <li>Point to the network <em>function</em> with the testing logic (hypermodel)</li>
+  <li>Set the metric to optimise for (objective)</li>
+  <li>Set the number of random network configurations to test (max_trials)</li>
+  <li>Set the number of times to try each tested configuration (executions_per_trial)</li>
+  <li>Set the details for the output of logging &amp; results</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># search parameters
+</span><span class="n">tuner</span> <span class="o">=</span> <span class="nc">RandomSearch</span><span class="p">(</span><span class="n">hypermodel</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">,</span>
+                     <span class="n">objective</span> <span class="o">=</span> <span class="sh">'</span><span class="s">val_accuracy</span><span class="sh">'</span><span class="p">,</span>
+                     <span class="n">max_trials</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+                     <span class="n">executions_per_trial</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+                     <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">normpath</span><span class="p">(</span><span class="sh">'</span><span class="s">C:/</span><span class="sh">'</span><span class="p">),</span>
+                     <span class="n">project_name</span> <span class="o">=</span> <span class="sh">'</span><span class="s">fruit-cnn</span><span class="sh">'</span><span class="p">,</span>
+                     <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+With the search parameters in place, we now want to put this into action.</p>
+
+<p>In the below code, we:</p>
+
+<ul>
+  <li>Specify the training &amp; validation flows</li>
+  <li>Specify the number of epochs for each tested configuration</li>
+  <li>Specify the batch size for training</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># execute search
+</span><span class="n">tuner</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">training_set</span><span class="p">,</span>
+             <span class="n">validation_data</span> <span class="o">=</span> <span class="n">validation_set</span><span class="p">,</span>
+             <span class="n">epochs</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+             <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p><br />
+Depending on how many configurations are to be tested, how many epochs are required for each, and the speed of processing - this can take a long time, but the results will most definitely guide us towards a more optimal architecture!</p>
+
+<p><br /></p>
+<h4 id="updated-network-architecture-2">Updated Network Architecture</h4>
+
+<p>Based upon the tested network architectures, the best in terms of validation accuracy was one that contains <strong>3 Convolutional Layers</strong>. The first has <strong>96 filters</strong> and the subsequent two each <strong>64 filters</strong>.  Each of these layers have an accompanying MaxPooling Layer (this wasn’t tested). The network then has <strong>1 Dense (Fully Connected) Layer</strong> following flattening with <strong>160 neurons</strong> with <strong>Dropout applied</strong> - followed by our output layer. The chosen optimizer was <strong>Adam</strong>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># network architecture
+</span><span class="n">model</span> <span class="o">=</span> <span class="nc">Sequential</span><span class="p">()</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">96</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">)))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">same</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">MaxPooling2D</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Flatten</span><span class="p">())</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dense</span><span class="p">(</span><span class="mi">160</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nc">Activation</span><span class="p">(</span><span class="sh">'</span><span class="s">softmax</span><span class="sh">'</span><span class="p">))</span>
+
+<span class="c1"># compile network
+</span><span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">loss</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical_crossentropy</span><span class="sh">'</span><span class="p">,</span>
+              <span class="n">optimizer</span> <span class="o">=</span> <span class="sh">'</span><span class="s">adam</span><span class="sh">'</span><span class="p">,</span>
+              <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">accuracy</span><span class="sh">'</span><span class="p">])</span>
+
+</code></pre></div></div>
+<p><br />
+The below shows us more clearly our optimised architecture:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_10 (Conv2D)           (None, 128, 128, 96)      2688      
+_________________________________________________________________
+activation_20 (Activation)   (None, 128, 128, 96)      0         
+_________________________________________________________________
+max_pooling2d_10 (MaxPooling (None, 64, 64, 96)        0         
+_________________________________________________________________
+conv2d_11 (Conv2D)           (None, 64, 64, 64)        55360     
+_________________________________________________________________
+activation_21 (Activation)   (None, 64, 64, 64)        0         
+_________________________________________________________________
+max_pooling2d_11 (MaxPooling (None, 32, 32, 64)        0         
+_________________________________________________________________
+conv2d_12 (Conv2D)           (None, 32, 32, 64)        36928     
+_________________________________________________________________
+activation_22 (Activation)   (None, 32, 32, 64)        0         
+_________________________________________________________________
+max_pooling2d_12 (MaxPooling (None, 16, 16, 64)        0         
+_________________________________________________________________
+flatten_5 (Flatten)          (None, 16384)             0         
+_________________________________________________________________
+dense_10 (Dense)             (None, 160)               2621600   
+_________________________________________________________________
+activation_23 (Activation)   (None, 160)               0         
+_________________________________________________________________
+dropout_3 (Dropout)          (None, 160)               0         
+_________________________________________________________________
+dense_11 (Dense)             (None, 6)                 966       
+_________________________________________________________________
+activation_24 (Activation)   (None, 6)                 0         
+=================================================================
+Total params: 2,717,542
+Trainable params: 2,717,542
+Non-trainable params: 0
+_________________________________________________________________
+
+</code></pre></div></div>
+
+<p><br />
+Our optimised architecture has a total of 2.7 million parameters, a step up from 1.1 million in the baseline architecture.</p>
+
+<p><br /></p>
+<h4 id="training-the-updated-network-2">Training The Updated Network</h4>
+
+<p>We run the exact same code to train this updated network as we did for the baseline network (50 epochs) - the only change is that we modify the filename for the saved network to ensure we have all network files for comparison.</p>
+
+<p><br /></p>
+<h4 id="analysis-of-training-results-3">Analysis Of Training Results</h4>
+
+<p>As we again saved our training process to the <em>history</em> object, we can now analyse &amp; plot the performance (Classification Accuracy, and Loss) of the updated network epoch by epoch.</p>
+
+<p>The below image shows the same two plots we analysed for the tuned network, the first showing the epoch by epoch <strong>Loss</strong> for both the training set (blue) and the validation set (orange) &amp; the second show the epoch by epoch <strong>Classification Accuracy</strong> again, for both the training set (blue) and the validation set (orange).</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/cnn-tuned-accuracy-plot.png" alt="alt text" title="CNN Tuned Accuracy Plot" /></p>
+
+<p><br />
+Firstly, we can see a peak Classification Accuracy on the validation set of around <strong>98%</strong> which is the highest we have seen from all networks so far, just higher than the 97% we saw for the addition of Image Augmentation to our baseline network.</p>
+
+<p>As Dropout &amp; Image Augmentation are in place here, we again see the elimination of overfitting.</p>
+
+<p><br /></p>
+<h4 id="performance-on-the-test-set-3">Performance On The Test Set</h4>
+
+<p>During training, we assessed our updated networks performance on both the training set and the validation set.  Here, like we did for the baseline &amp; Dropout networks, we will get a view of how well our network performs when predict on data that was <em>no part</em> of the training process whatsoever - our test set.</p>
+
+<p>We run the exact same code as we did for the earlier networks, with the only change being to ensure we are loading in network file for the updated network</p>
+
+<p><br /></p>
+<h4 id="test-set-classification-accuracy-3">Test Set Classification Accuracy</h4>
+
+<p>Our optimised network, with both Dropout &amp; Image Augmentation in place, scored <strong>95%</strong> on the Test Set, again marginally higher than what we had seen from the other networks so far.</p>
+
+<p><br /></p>
+<h4 id="test-set-confusion-matrix-3">Test Set Confusion Matrix</h4>
+
+<p>As mentioned each time, while overall Classification Accuracy is very useful, but it can hide what is really going on with the network’s predictions!</p>
+
+<p>Our 95% Test Set accuracy at an <em>overall</em> level tells us that we don’t have too much to worry about here, but let’s take a look anyway and see if anything interesting pops up.</p>
+
+<p>Running the same code from the baseline section on results for our updated network, we get the following output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+actual_label     apple  avocado  banana  kiwi  lemon  orange
+predicted_label                                             
+apple              0.9      0.0     0.0   0.0    0.0     0.0
+avocado            0.0      1.0     0.0   0.0    0.0     0.0
+banana             0.0      0.0     0.9   0.0    0.0     0.0
+kiwi               0.0      0.0     0.0   0.9    0.0     0.0
+lemon              0.0      0.0     0.0   0.0    1.0     0.0
+orange             0.0      0.0     0.0   0.1    0.0     1.0
+
+</code></pre></div></div>
+<p><br />
+Along the top are our <em>actual</em> classes and down the side are our <em>predicted</em> classes - so counting <em>down</em> the columns we can get the Classification Accuracy (%) for each class, and we can see where it is getting confused.</p>
+
+<p>So, while overall our test set accuracy was 95% - for each individual class we see:</p>
+
+<ul>
+  <li>Apple: 90%</li>
+  <li>Avocado: 100%</li>
+  <li>Banana: 90%</li>
+  <li>Kiwi: 90%</li>
+  <li>Lemon: 100%</li>
+  <li>Orange: 100%</li>
+</ul>
+
+<p>All classes here are being predicted <em>at least as accurate or better</em> when compared to the best network so far - so our optimised architecture does appear to have helped!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="transfer-learning-with-vgg16-">Transfer Learning With VGG16 <a name="cnn-transfer-learning"></a></h1>
+
+<p><br /></p>
+<h4 id="transfer-learning-overview">Transfer Learning Overview</h4>
+
+<p>Transfer Learning is an extremely powerful way for us to utilise pre-built, and pre-trained networks, and apply these in a clever way to solve <em>our</em> specific Deep Learning based tasks.  It consists of taking features learned on one problem, and leveraging them on a new, similar problem!</p>
+
+<p>For image based tasks this often means using all the the <em>pre-learned</em> features from a large network, so all of the convolutional filter values and feature maps, and instead of using it to predict what the network was originally designed for, piggybacking it, and training just the last part for some other task.</p>
+
+<p>The hope is, that the features which have already been learned will be good enough to differentiate between our new classes, and we’ll save a whole lot of training time (and be able to utilise a network architecture that has potentially already been optimised).</p>
+
+<p>For our Fruit Classification task we will be utilising a famous network known as <strong>VGG16</strong>.  This was designed back in 2014, but even by todays standards is a fairly heft network.  It was trained on the famous <em>ImageNet</em> dataset, with over a million images across one thousand different image classes. Everything from goldfish to cauliflowers to bottles of wine, to scuba divers!</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/vgg16-architecture.png" alt="alt text" title="VGG16 Architecture" /></p>
+
+<p><br />
+The VGG16 network won the 2014 ImageNet competition, meaning that it predicted more accurately than any other model on that set of images (although this has now been surpassed).</p>
+
+<p>If we can get our hands on the fully trained VGG16 model object, built to differentiate between all of those one thousand different image classes, the features that are contained in the layer prior to flattening will be very rich, and could be very useful for predicting all sorts of other images too without having to (a) re-train this entire architecture, which would be computationally, very expensive or (b) having to come up with our very own complex architecture, which we know can take a lot of trial and error to get right!</p>
+
+<p>All the hard work has been done, we just want to “transfer” those “learnings” to our own problem space.</p>
+
+<p><br /></p>
+<h4 id="updated-data-pipeline">Updated Data Pipeline</h4>
+
+<p>Our data pipeline will remain <em>mostly</em> the same as it was when applying our own custom built networks - but there are some subtle changes.  In the code below we need to import VGG16 and the custom preprocessing logic that it uses.  We also need to send our images in with the size 224 x 224 pixels as this is what VGG16 expects.  Otherwise, the logic stays as is.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># import the required python libraries
+</span><span class="kn">from</span> <span class="n">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
+<span class="kn">from</span> <span class="n">tensorflow.keras.applications.vgg16</span> <span class="kn">import</span> <span class="n">VGG16</span><span class="p">,</span> <span class="n">preprocess_input</span>
+
+<span class="c1"># data flow parameters
+</span><span class="n">training_data_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">data/training</span><span class="sh">'</span>
+<span class="n">validation_data_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">data/validation</span><span class="sh">'</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">img_width</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">img_height</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">num_channels</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="c1"># image generators
+</span><span class="n">training_generator</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">preprocessing_function</span> <span class="o">=</span> <span class="n">preprocess_input</span><span class="p">,</span>
+                                        <span class="n">rotation_range</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+                                        <span class="n">width_shift_range</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+                                        <span class="n">height_shift_range</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+                                        <span class="n">zoom_range</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                                        <span class="n">horizontal_flip</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                        <span class="n">brightness_range</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">),</span>
+                                        <span class="n">fill_mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">nearest</span><span class="sh">'</span><span class="p">)</span>
+                                        
+<span class="n">validation_generator</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># image flows
+</span><span class="n">training_set</span> <span class="o">=</span> <span class="n">training_generator</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span><span class="n">directory</span> <span class="o">=</span> <span class="n">training_data_dir</span><span class="p">,</span>
+                                                      <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">),</span>
+                                                      <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                                                      <span class="n">class_mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">validation_set</span> <span class="o">=</span> <span class="n">validation_generator</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span><span class="n">directory</span> <span class="o">=</span> <span class="n">validation_data_dir</span><span class="p">,</span>
+                                                                      <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">),</span>
+                                                                      <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                                                                      <span class="n">class_mode</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical</span><span class="sh">'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+<h4 id="network-architecture-1">Network Architecture</h4>
+
+<p>Keras makes the use of VGG16 very easy. We will download the <em>bottom</em> of the VGG16 network (everything up to the Dense Layers) and add in what we need to apply the <em>top</em> of the model to our fruit classes.</p>
+
+<p>We then need to specify that we <em>do not</em> want the imported layers to be re-trained, we want their parameters values to be frozen.</p>
+
+<p>The original VGG16 network architecture contains two massive Dense Layers near the end, each with 4096 neurons.  Since our task of classiying 6 types of fruit is more simplistic than the original 1000 ImageNet classes, we reduce this down and instead implement two Dense Layers with 128 neurons each, followed by our output layer.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># network architecture
+</span><span class="n">vgg</span> <span class="o">=</span> <span class="nc">VGG16</span><span class="p">(</span><span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">),</span> <span class="n">include_top</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># freeze all layers (they won't be updated during training)
+</span><span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">vgg</span><span class="p">.</span><span class="n">layers</span><span class="p">:</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="n">flatten</span> <span class="o">=</span> <span class="nc">Flatten</span><span class="p">()(</span><span class="n">vgg</span><span class="p">.</span><span class="n">output</span><span class="p">)</span>
+
+<span class="n">dense1</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">)(</span><span class="n">flatten</span><span class="p">)</span>
+<span class="n">dense2</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">)(</span><span class="n">dense1</span><span class="p">)</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="nc">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="sh">'</span><span class="s">softmax</span><span class="sh">'</span><span class="p">)(</span><span class="n">dense2</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="nc">Model</span><span class="p">(</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">vgg</span><span class="p">.</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">output</span><span class="p">)</span>
+
+<span class="c1"># compile network
+</span><span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">loss</span> <span class="o">=</span> <span class="sh">'</span><span class="s">categorical_crossentropy</span><span class="sh">'</span><span class="p">,</span>
+              <span class="n">optimizer</span> <span class="o">=</span> <span class="sh">'</span><span class="s">adam</span><span class="sh">'</span><span class="p">,</span>
+              <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">accuracy</span><span class="sh">'</span><span class="p">])</span>
+
+<span class="c1"># view network architecture
+</span><span class="n">model</span><span class="p">.</span><span class="nf">summary</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p><br />
+The below shows us our final architecture:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 224, 224, 3)]     0         
+_________________________________________________________________
+block1_conv1 (Conv2D)        (None, 224, 224, 64)      1792      
+_________________________________________________________________
+block1_conv2 (Conv2D)        (None, 224, 224, 64)      36928     
+_________________________________________________________________
+block1_pool (MaxPooling2D)   (None, 112, 112, 64)      0         
+_________________________________________________________________
+block2_conv1 (Conv2D)        (None, 112, 112, 128)     73856     
+_________________________________________________________________
+block2_conv2 (Conv2D)        (None, 112, 112, 128)     147584    
+_________________________________________________________________
+block2_pool (MaxPooling2D)   (None, 56, 56, 128)       0         
+_________________________________________________________________
+block3_conv1 (Conv2D)        (None, 56, 56, 256)       295168    
+_________________________________________________________________
+block3_conv2 (Conv2D)        (None, 56, 56, 256)       590080    
+_________________________________________________________________
+block3_conv3 (Conv2D)        (None, 56, 56, 256)       590080    
+_________________________________________________________________
+block3_pool (MaxPooling2D)   (None, 28, 28, 256)       0         
+_________________________________________________________________
+block4_conv1 (Conv2D)        (None, 28, 28, 512)       1180160   
+_________________________________________________________________
+block4_conv2 (Conv2D)        (None, 28, 28, 512)       2359808   
+_________________________________________________________________
+block4_conv3 (Conv2D)        (None, 28, 28, 512)       2359808   
+_________________________________________________________________
+block4_pool (MaxPooling2D)   (None, 14, 14, 512)       0         
+_________________________________________________________________
+block5_conv1 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_conv2 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_conv3 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_pool (MaxPooling2D)   (None, 7, 7, 512)         0         
+_________________________________________________________________
+flatten_7 (Flatten)          (None, 25088)             0         
+_________________________________________________________________
+dense_14 (Dense)             (None, 128)               3211392   
+_________________________________________________________________
+dense_15 (Dense)             (None, 128)               16512     
+_________________________________________________________________
+dense_16 (Dense)             (None, 6)                 774       
+=================================================================
+Total params: 17,943,366
+Trainable params: 3,228,678
+Non-trainable params: 14,714,688
+_________________________________________________________________
+
+</code></pre></div></div>
+
+<p><br />
+Our VGG16 architecture has a total of 17.9 million parameters, much bigger than what we have built so far.  Of this, 14.7 million parameters are frozen, and 3.2 million parameters will be updated during each iteration of back-propagation, and these are going to be figuring out exactly how to use those frozen parameters that were learned from the ImageNet dataset, to predict our classes of fruit!</p>
+
+<p><br /></p>
+<h4 id="training-the-network-1">Training The Network</h4>
+
+<p>We run the exact same code to train this updated network as we did for the baseline network, although to start with for only 10 epochs as it is a much more computationally expensive training process.</p>
+
+<p><br /></p>
+<h4 id="analysis-of-training-results-4">Analysis Of Training Results</h4>
+
+<p>As we again saved our training process to the <em>history</em> object, we can now analyse &amp; plot the performance (Classification Accuracy, and Loss) of the updated network epoch by epoch.</p>
+
+<p>The below image shows the same two plots we analysed for the tuned network, the first showing the epoch by epoch <strong>Loss</strong> for both the training set (blue) and the validation set (orange) &amp; the second show the epoch by epoch <strong>Classification Accuracy</strong> again, for both the training set (blue) and the validation set (orange).</p>
+
+<p><br />
+<img src="/sundareshiyer.github.io/assets/img/project-images/cnn-vgg16-accuracy-plot.png" alt="alt text" title="VGG16 Accuracy Plot" /></p>
+
+<p><br />
+Firstly, we can see a peak Classification Accuracy on the validation set of around <strong>98%</strong> which is equal to the highest we have seen from all networks so far, but what is impressive is that it achieved this in only 10 epochs!</p>
+
+<p><br /></p>
+<h4 id="performance-on-the-test-set-4">Performance On The Test Set</h4>
+
+<p>During training, we assessed our updated networks performance on both the training set and the validation set.  Here, like we did for all other networks, we will get a view of how well our network performs when predict on data that was <em>no part</em> of the training process whatsoever - our test set.</p>
+
+<p>We run the exact same code as we did for the earlier networks, with the only change being to ensure we are loading in network file for the updated network</p>
+
+<p><br /></p>
+<h4 id="test-set-classification-accuracy-4">Test Set Classification Accuracy</h4>
+
+<p>Our VGG16 network scored <strong>98%</strong> on the Test Set, higher than that of our best custom network.</p>
+
+<p><br /></p>
+<h4 id="test-set-confusion-matrix-4">Test Set Confusion Matrix</h4>
+
+<p>As mentioned each time, while overall Classification Accuracy is very useful, but it can hide what is really going on with the network’s predictions!</p>
+
+<p>Our 98% Test Set accuracy at an <em>overall</em> level tells us that we don’t have too much to worry about here, but for comparisons sake let’s take a look!</p>
+
+<p>Running the same code from the baseline section on results for our updated network, we get the following output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+actual_label     apple  avocado  banana  kiwi  lemon  orange
+predicted_label                                             
+apple              1.0      0.0     0.0   0.0    0.0     0.0
+avocado            0.0      1.0     0.0   0.0    0.0     0.0
+banana             0.0      0.0     1.0   0.0    0.0     0.0
+kiwi               0.0      0.0     0.0   1.0    0.0     0.0
+lemon              0.0      0.0     0.0   0.0    0.9     0.0
+orange             0.0      0.0     0.0   0.0    0.1     1.0
+
+</code></pre></div></div>
+<p><br />
+Along the top are our <em>actual</em> classes and down the side are our <em>predicted</em> classes - so counting <em>down</em> the columns we can get the Classification Accuracy (%) for each class, and we can see where it is getting confused.</p>
+
+<p>So, while overall our test set accuracy was 98% - for each individual class we see:</p>
+
+<ul>
+  <li>Apple: 100%</li>
+  <li>Avocado: 100%</li>
+  <li>Banana: 100%</li>
+  <li>Kiwi: 100%</li>
+  <li>Lemon: 90%</li>
+  <li>Orange: 100%</li>
+</ul>
+
+<p>All classes here are being predicted <em>at least as accurate or better</em> when compared to the best custom network!</p>
+
+<hr />
+<p><br /></p>
+<h1 id="overall-results-discussion-">Overall Results Discussion <a name="cnn-results"></a></h1>
+
+<p>We have made some huge strides in terms of making our network’s predictions more accurate, and more reliable on new data.</p>
+
+<p>Our baseline network suffered badly from overfitting - the addition of both Dropout &amp; Image Augmentation elimited this almost entirely.</p>
+
+<p>In terms of Classification Accuracy on the Test Set, we saw:</p>
+
+<ul>
+  <li>Baseline Network: <strong>75%</strong></li>
+  <li>Baseline + Dropout: <strong>85%</strong></li>
+  <li>Baseline + Image Augmentation: <strong>93%</strong></li>
+  <li>Optimised Architecture + Dropout + Image Augmentation: <strong>95%</strong></li>
+  <li>Transfer Learning Using VGG16: <strong>98%</strong></li>
+</ul>
+
+<p>Tuning the networks architecture with Keras-Tuner gave us a great boost, but was also very time intensive - however if this time investment results in improved accuracy then it is time well spent.</p>
+
+<p>The use of Transfer Learning with the VGG16 architecture was also a great success, in only 10 epochs we were able to beat the performance of our smaller, custom networks which were training over 50 epochs.  From a business point of view we also need to consider the overheads of (a) storing the much larger VGG16 network file, and (b) any increased latency on inference.</p>
+
+<hr />
+<p><br /></p>
+<h1 id="growth--next-steps-">Growth &amp; Next Steps <a name="growth-next-steps"></a></h1>
+
+<p>The proof of concept was successful, we have shown that we can get very accurate predictions albeit on a small number of classes.  We need to showcase this to the client, discuss what it is that makes the network more robust, and then look to test our best networks on a larger array of classes.</p>
+
+<p>Transfer Learning has been a big success, and was the best performing network in terms of classification accuracy on the Test Set - however we still only trained for a small number of epochs so we can push this even further.  It would be worthwhile testing other available pre-trained networks such as ResNet, Inception, and the DenseNet networks.</p>
+
+    </div>
+</article>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sundaresh Iyer. All rights reserved.</p>
+    </footer>
+</body>
+</html>

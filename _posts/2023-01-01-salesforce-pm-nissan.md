@@ -6,6 +6,7 @@ tags: [Project Management, JIRA, Confluence, User Stories]
 category: experience
 date: 2023-01-01
 company: Nissan
+subsection: "Project Management"
 excerpt: This document outlines the my experience as a project manager for the technical implementation of salesforce lightning for a dealer management portal for Nissan Canada.
 ---
 

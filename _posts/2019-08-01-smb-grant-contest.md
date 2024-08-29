@@ -4,6 +4,7 @@ title: Leveraging Analytics to Drive FedEx's Small Business Grant Contest Succes
 image: "/assets/img/project-images/smb-grant.png"
 tags: [Adobe Analytics, Audience Management, A/B Testing, KPI Rationalization, Campaign Analytics]
 category: experience
+subsection: "Data Analytics"
 date: 2019-08-01
 company: FedEx
 excerpt: This post outlines the work I did as a part of the FedEx brand marketing team towards the Small business grant contest.

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.title }} - {{ page.title }}</title>
-    <link rel="stylesheet" href="{{ site.url }}/assets/css/main.css?v=1">
+    <link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}/assets/css/main.css?v=1">
 </head>
 <body>
     <header>
         <div class="header-content">
             <div class="profile-image">
-                <img src="{{ site.url }}/assets/img/profile-photo.jpg" alt="Sundaresh Iyer" height="180px">
+                <img src="{{ site.url }}{{ site.baseurl }}/assets/img/profile-photo.jpg" alt="Sundaresh Iyer" height="180px">
             </div>
             <div class="title-description">
                 <h1>{{ site.title }}</h1>
@@ -33,5 +33,6 @@
     <footer>
         <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
     </footer>
+    <script src="{{ site.baseurl }}/assets/js/main.js"></script>
 </body>
 </html>

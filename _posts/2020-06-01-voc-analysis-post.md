@@ -4,6 +4,7 @@ title: Leveraging Analytics for Voice of Customer Insights at FedEx
 image: "/assets/img/project-images/voc-fed.png"
 tags: [NLP, Requirement Gathering, Adobe Analytics, PowerBI, Stakeholder Management]
 category: experience
+subsection: "Data Analytics"
 date: 2020-06-01
 company: FedEx
 excerpt: Leading the voice of customer for Sales and Customer support to develop low touch solutions to customer problems.

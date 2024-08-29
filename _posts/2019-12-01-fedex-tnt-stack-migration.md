@@ -4,6 +4,7 @@ title: Analytics and Tag Management tool Migration during FedEx-TNT Merger
 image: "/assets/img/project-images/Merger-Approved.jpg"
 tags: [Adobe Analytics, Relay42, Tool Migration, Project Planning]
 category: experience
+subsection: "Project Management"
 date: 2019-12-01
 company: FedEx
 excerpt: As a part of the Tech stack migration team, I was charged with understanding and planning the migration of the Analytics, Data Management and Tag management solution from Relay42 to Adobe 

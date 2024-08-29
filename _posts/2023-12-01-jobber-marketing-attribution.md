@@ -4,6 +4,7 @@ title: Maintaining and Enhancing the Conversion attribution logic for Jobber acr
 image: "/assets/img/project-images/mkt-attr.jpg"
 tags: [SQL, Python, Markov-chain, multi-touch]
 category: experience
+subsection: "Analytics Management"
 date: 2023-12-01
 company: Jobber
 excerpt: This document outlines my role in maintaining the current marketing attribution logic and enhancing it to involve multi-touch attribution in marketing spend decision making.
