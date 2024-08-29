@@ -1,12 +1,11 @@
 ---
 layout: post
-title: Relay42 vs Adobe Analytics & DTM: A Detailed Comparison
+title: Relay42 vs Adobe :  A Detailed Comparison note from the Analysis
 image: "/assets/img/project-images/relay-vs-adobe.png"
 tags: [Customer Clustering, Machine Learning, Python]
 category: experience
 date: 2019-04-01
 company: FedEx
-excerpt: This document outlines the cluster of customers work that I supported on along with the Pricing Science department at FedEx Express.
 ---
 
 ## Background
