@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Adobe Analytics Migration: FedEx-TNT Merger Case Study
+title: Analytics and Tag Management tool Migration during FedEx-TNT Merger
 image: "/assets/img/project-images/Merger-Approved.jpg"
 tags: [Adobe Analytics, Relay42, Tool Migration, Project Planning]
 category: experience
