@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Clustering Customers based their known Price Sensitivity
-image: "/assets/img/project-images/FedEx-Logo.png"
+image: "/assets/img/project-images/price-clustering.png"
 tags: [Customer Clustering, Machine Learning, Python]
 category: experience
 date: 2019-04-01
