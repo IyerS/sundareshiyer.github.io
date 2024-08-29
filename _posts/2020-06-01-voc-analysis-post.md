@@ -41,9 +41,9 @@ I initiated the project by:
 - Mapping customer journey touchpoints to identify potential gaps in our support content
 
 Key outcomes:
-- Compiled a list of [X] assumed pain points
-- Identified [Y] potential areas for improvement in our existing FAQs and guides
-- Created a comprehensive customer journey map highlighting [Z] key touchpoints for content optimization
+- Compiled a list of assumed pain points
+- Identified potential areas for improvement in our existing FAQs and guides
+- Created a comprehensive customer journey map highlighting key touchpoints for content optimization
 
 ### 2. Data Collection and Requirements Gathering
 
