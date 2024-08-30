@@ -1,18 +1,30 @@
 ---
 ---
 
+$primary-color: #3498db;
+$secondary-color: #2c3e50;
+$accent-color: #e67e22;
+$background-color: #f8f9fa;
+$text-color: #333333;
+
 body {
-    font-family: Arial, sans-serif;
+    background-color: $background-color;
+    color: $text-color;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    color: #333;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+
 /* Header Styles */
 header {
-    background-color: #132b50;
+    background-color: $secondary-color;
     color: #ffffff;
     padding: 20px;
 }
@@ -23,7 +35,7 @@ h2 {
     padding-bottom: 10px;
     margin-top: 40px;
     margin-bottom: 5px;
-    color: #83ff00;
+    color: $primary-color;
     font-size: 24px;
 }
 
@@ -33,16 +45,36 @@ h2::before {
     width: 100%;
     height: 3px;
     margin-bottom: 10px;
-    background: linear-gradient(to right, rgba(131, 255, 0, 0.5), #132b50);
+    background: linear-gradient(to right, rgba($primary-color, 0.5), $secondary-color);
 }
 
 h3 {
     margin-top: 10px;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+.title-description h1 {
+    font-size: 2.8rem;
+}
+
+.title-description h2 {
+    font-size: 2rem;
+}
+
 .header-content {
     display: flex;
-    align-items: left;
+    align-items: center;
     margin-bottom: 15px;
 }
 
@@ -90,38 +122,38 @@ h3 {
 /* Navigation Styles */
 
 nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 20px 0;
+    background-color: $secondary-color;
+    padding: 15px 0;
+    margin-bottom: 40px;
+    text-align: center; // Center-justify the navigation
+
+    a {
+        display: inline-block;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.1);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9em;
+        
+        &:hover {
+            background-color: $accent-color;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    }
 }
 
-nav a {
-    display: inline-block;
-    margin: 5px;
-    padding: 10px 20px;
-    color: #ffffff;
-    background-color: #3498db;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-nav a:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-nav a:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
-}
 
 .home-page {
     background-color: #ececec;
@@ -132,12 +164,20 @@ nav a:active {
     margin-bottom: 40px;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
 
 .project-grid, .hidden-posts {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
   }
 
 .project-card {
@@ -158,18 +198,32 @@ nav a:active {
     object-fit: cover;
 }
 
+.project-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
 /* Style for the Read More button */
 .read-more {
-    position: absolute;
-    bottom: 10px; /* Distance from the bottom edge of the card */
-    right: 10px; /* Distance from the right edge of the card */
-    background-color: #333;
-    color: #fff;
-    padding: 10px 15px;
+    margin-top: auto;
+    align-self: flex-start;
+    background-color: $primary-color;
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 20px;
     text-decoration: none;
-    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
     /* Optional: add z-index if needed to ensure it appears above other content */
     z-index: 1; /* Ensure button is clickable */
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
 }
 
 .card-title {
@@ -195,7 +249,7 @@ nav a:active {
 }
 
 .card-company {
-    color: #c4e4a2;
+    color: $accent-color;
     font-size: 1.1em;
     margin-top: 5px;
     margin-bottom: 10px;
@@ -204,19 +258,19 @@ nav a:active {
 }
 
 .subsection {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
   
     h3 {
-      font-size: 1.8em; // Increased from 1.8em to make it bigger
+      font-size: 1.5em; // Increased from 1.8em to make it bigger
       margin-bottom: 25px; // Slightly increased margin for better spacing
-      color: #e45c01; // Changed to a more vibrant orange color
+      color: $secondary-color; 
       font-style: italic;
-      text-align: right; // Right justified
+      text-align: left;
       font-weight: 600; // Make it slightly bolder
       //text-transform: uppercase; // Optional: makes it all capitals for more emphasis
       letter-spacing: 1px; // Adds a bit of spacing between letters
-      border-bottom: 1px solid #e8bfa4bf; // Adds an underline semi-transparent effect
-      padding-bottom: 8px; // Adds some space between text and underline
+      border-bottom: 2px solid $accent-color;// Adds an underline semi-transparent effect
+      padding-bottom: 10px; // Adds some space between text and underline
     }
   }
   
@@ -481,6 +535,19 @@ nav a:active {
     }
 }
 
+@media (max-width: 768px) {
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        a {
+            flex: 1 1 40%; // Allow two buttons per row on smaller screens
+            margin: 5px;
+        }
+    }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .header-content {
@@ -511,3 +578,12 @@ nav a:active {
         margin: 5px;
     }
 }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .fade-in {
+    animation: fadeIn 1s ease-in;
+  }
