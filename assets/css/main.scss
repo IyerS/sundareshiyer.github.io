@@ -55,12 +55,6 @@ h3 {
 }
 
 
-body {
-    font-family: 'Roboto', Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-}
-
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
 }
@@ -217,7 +211,7 @@ nav {
     padding: 8px 15px;
     border-radius: 20px;
     text-decoration: none;
-    font-size: 0.9em;
+    font-size: 1.0em;
     transition: background-color 0.3s ease;
     /* Optional: add z-index if needed to ensure it appears above other content */
     z-index: 1; /* Ensure button is clickable */
