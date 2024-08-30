@@ -2,7 +2,7 @@
 layout: post
 title: Maintaining and Enhancing the Conversion attribution logic for Jobber across Performance and Brand Marketing Channels
 image: "/assets/img/project-images/mkt-attr.jpg"
-tags: [SQL, Python, Markov-chain, multi-touch]
+tags: [SQL, Python, Markov-chain, Attribution]
 category: experience
 subsection: "Analytics Management"
 date: 2023-12-01
