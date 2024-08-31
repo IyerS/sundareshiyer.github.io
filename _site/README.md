@@ -1,6 +1,6 @@
 # Sundaresh Iyer - Data Science Portfolio
 
-This repository contains the source code for my data science portfolio website, hosted on GitHub Pages using Jekyll.
+This repository contains the source code for my  portfolio website, hosted on GitHub Pages using Jekyll.
 
 ## Website Structure
 

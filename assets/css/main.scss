@@ -20,7 +20,7 @@ body {
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
 h1, h2, h3 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
   }
 
@@ -158,14 +158,14 @@ nav {
     margin-bottom: 10px;
   
     h2 {
-      color: #2c3e50;
-      font-size: 2em;
+      color: #04084b;
+      font-size: xx-large;
       margin-bottom: 20px;
       text-align: center;
     }
   
     .summary-content {
-      font-size: 1.1em;
+      font-size: 1.3em;
       line-height: 1.6;
       color: #333;
   
@@ -499,7 +499,7 @@ nav {
     margin-bottom: 30px;
     font-size: xx-large;
     color: #04084b; // Light color for the text
-    background-color: #99bef1; // Dark background color
+    background-color: #dbdbdb; // Dark background color
     border-radius: 10px;
     text-align: center;
     width: 97%; // Full width of its container
