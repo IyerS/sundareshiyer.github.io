@@ -10,6 +10,11 @@ company: Jobber
 excerpt: This document outlines my role in maintaining the current marketing attribution logic and enhancing it to involve multi-touch attribution in marketing spend decision making.
 ---
 
+## Table of Contents
+1. [The Challenge](#the-challenge)
+2. [Key Responsibilities and Achievements](#key-responsibilities-and-achievenments)
+3. [Key Takeaways](#key-takeaways)
+
 In my role as Marketing Analytics Manager at Jobber, I was given the responsibility to maintain and improve a complex marketing attribution system. This position allowed me to apply my technical skills along with strategic thinking, while managing the expectations of various stakeholders. As a result, we adopted a more data-driven and agile approach, which helped to significantly optimize the efficiency of marketing spend and increase ROI.
 
 ## The Challenge: Evolving attribution in an ever-changing marketing environment
