@@ -12,11 +12,10 @@ company: Jobber
 
 ## Table of Contents
 1. [Migrating from Mode to Tableau](#migrating-from-mode-to-tableau)
-2. [The Challenge](#the-challenge)
-3. [Data Collection](#data-collection)
-5. [The Solution](#the-solution)
-6. [The Migration Process](#the-migration-process)
-7. [The Impact](#the-impact)
+2. [The Problem](#the-problem)
+3. [The Solution](#the-solution)
+4. [The Steps taken for Migration](#the-migration-process)
+5. [The Impact](#the-impact)
 
 
 ## Migrating from Mode to Tableau
@@ -24,7 +23,7 @@ company: Jobber
 
 In a fast-paced business environment, having accurate and efficient reporting tools is essential for making informed decisions. During my time at Jobber, I led a critical project that involved migrating our marketing reporting from Mode to Tableau. This migration was driven by the realization that Mode, while initially effective for our needs, was increasingly revealing its limitations as a business intelligence (BI) platform.
 
-## The Challenge
+## The Problem
 ### Discrepancies and Inefficiencies with Mode
 
 Mode was originally adopted for its user-friendly interface and ease of use. However, as our data needs grew, several significant issues became apparent:
@@ -38,7 +37,7 @@ Mode was originally adopted for its user-friendly interface and ease of use. How
 ## The Solution
 ### Migrating to Tableau
 
-Recognizing the need for a more robust BI solution, I led the migration to Tableau. This decision was based on several critical factors:
+Recognizing the need for a more robust BI solution, I led the migration to Tableau within the Marketing Analytics function. This decision was based on several critical factors:
 
 - **Accuracy and Reliability:** Tableau, being a dedicated BI platform, offered more accurate and reliable data reporting. Its advanced data processing capabilities reduced the discrepancies we encountered in Mode, ensuring that the marketing team could trust the data they were using.
 
@@ -46,7 +45,7 @@ Recognizing the need for a more robust BI solution, I led the migration to Table
 
 - **Advanced BI Features:** Tableau provided a wealth of features that Mode simply couldn’t match. From advanced data visualization tools to in-depth analytical capabilities, Tableau empowered our marketing team to dive deeper into the data and uncover insights that were previously hidden.
 
-## The Migration Process
+## The Steps taken for Migration
 
 The migration process was carefully orchestrated to ensure a smooth transition:
 
